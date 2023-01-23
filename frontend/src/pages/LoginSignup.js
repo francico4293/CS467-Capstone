@@ -6,6 +6,9 @@ const LoginSignup = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <Sidebar/>
+                <div className='col main'>
+                
+                </div>
             </div>
         </div>
     );

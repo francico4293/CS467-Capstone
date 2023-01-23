@@ -9,38 +9,45 @@ const Sidebar = () => {
     const dispatch = useDispatch();
 
     return (
-        <nav className='d-flex flex-column justify-content-between col-2 sidebar'>
+        <div className='col d-flex flex-column justify-content-between sidebar'>
             <div className='mt-5'>
-                <header>
+                <header className='d-none d-sm-block'>
                     <h1 className='text-center'>Job Tracker<i className="fa-solid fa-chart-line ms-2"></i></h1>
+                </header>
+                <header className='d-sm-none'>
+                    <h1 className='text-center'>JT<i className="fa-solid fa-chart-line ms-2"></i></h1>
                 </header>
                 <div>
                     <ul className='nav flex-column mt-5'>
                         <li className='nav-item'>
                             <a className='nav-link active'>
-                                <i className="fa-solid fa-user me-2"></i>Profile
+                                <i className="fa-solid fa-user me-2"></i>
+                                <span className='d-none d-sm-inline'>Profile</span>
                             </a>
                         </li>
                         <li className='nav-item'>
                             <a className='nav-link'>
-                                <i className="fa-solid fa-chess-board me-2"></i>Job Board
+                                <i className="fa-solid fa-chess-board me-2"></i>
+                                <span className='d-none d-sm-inline'>Job Board</span>
                             </a>
                         </li>
                         <li className='nav-item'>
                             <a className='nav-link'>
-                                <i className="fa-solid fa-address-book me-2"></i>Contacts
+                                <i className="fa-solid fa-address-book me-2"></i>
+                                <span className='d-none d-sm-inline'>Contacts</span>
                             </a>
                         </li>
                         <li className='nav-item'>
                             <a className='nav-link'>
-                                <i className="fa-solid fa-right-from-bracket me-2"></i>Logout
+                                <i className="fa-solid fa-right-from-bracket me-2"></i>
+                                <span className='d-none d-sm-inline'>Logout</span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
             
-            <div className='d-flex justify-content-center mb-5'>
+            <div className='d-none d-sm-flex justify-content-center mb-5'>
                 <div className="btn-group" role="group">
                     <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: LIGHT_MODE, payload: 'light' })}>
                         <i className="fa-solid fa-sun me-2"></i>Light
@@ -50,7 +57,12 @@ const Sidebar = () => {
                     </button>
                 </div>
             </div>
-        </nav>
+
+            <div className="form-check form-switch d-sm-none d-flex justify-content-center align-items-center mb-5">
+                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                <i className="fa-solid fa-moon ms-2"></i>
+            </div>
+        </div>
     );
 }
 
