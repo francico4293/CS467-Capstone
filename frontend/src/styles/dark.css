@@ -1,43 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* ----- Global Styles ----- */
+
 body {
   font-family: 'Montserrat', sans-serif;
   font-family: 'Poppins', sans-serif;
 }
 
-h1 {
+#dark .container-fluid {
+  height: 100vh;
+  background-color: rgb(25, 25, 25);
+}
+
+#dark h1 {
   font-size: 1.75rem;
   font-weight: 600;
   margin: 0;
+  color: white;
 }
 
-.sidebar {
-  background-color: #e9ecef;
+/* ----- Sidebar Styles ----- */
+
+#dark .sidebar {
+  background-color: rgb(35, 35, 35);
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
-  box-shadow: 1px 0px 3px 1px gray;
+  box-shadow: 1px 0px 3px 1px black;
 }
 
-.nav-item {
+#dark .nav-item {
   border-bottom: 1px solid #adb5bd;
 }
 
-.nav-link {
-  color: #333;
+#dark .nav-link {
+  color: white;
   cursor: pointer;
   font-weight: 300;
 }
 
-.nav-link:hover {
-  color: #333;
+#dark .nav-link:hover {
+  color: white;
 }
 
-.nav-item {
+#dark .nav-item {
   transition: all .25s;
 }
 
-.nav-item:hover {
-  background-color: #ced4da;
+#dark .nav-item:hover {
+  background-color: rgb(25, 25, 25);
 }

@@ -1,5 +1,7 @@
 import React from 'react';
-import './App.css';
+import { useSelector } from 'react-redux';
+import './styles/light.css';
+import './styles/dark.css';
 import { 
   BrowserRouter as Router, 
   Routes, 
@@ -9,8 +11,10 @@ import {
 import LoginSignup from './pages/LoginSignup';
 
 const App = () => {
+  const theme = useSelector(state => state.theme);
+
   return (
-    <div id=''>
+    <div id={theme.type}>
       <Router>
         <Routes>
           <Route path='/' element={<Navigate to='/login-signup'/>}/>

@@ -5,8 +5,9 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { themeReducer } from './reducers/themeReducers';
 
-const reducer = combineReducers({});
+const reducer = combineReducers({ theme: themeReducer });
 
 const initialState = {};
 
