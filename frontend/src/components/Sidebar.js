@@ -9,16 +9,16 @@ const Sidebar = () => {
                 </header>
                 <div>
                     <ul className='nav flex-column mt-5'>
-                        <li className='nav-item border-bottom border-dark border-opacity-25'>
+                        <li className='nav-item'>
                             <a className='nav-link active'><i className="fa-solid fa-user me-2"></i>Profile</a>
                         </li>
-                        <li className='nav-item border-bottom border-dark border-opacity-25'>
+                        <li className='nav-item'>
                             <a className='nav-link'><i className="fa-solid fa-chess-board me-2"></i>Job Board</a>
                         </li>
-                        <li className='nav-item border-bottom border-dark border-opacity-25'>
+                        <li className='nav-item'>
                             <a className='nav-link'><i className="fa-solid fa-address-book me-2"></i>Contacts</a>
                         </li>
-                        <li className='nav-item border-bottom border-dark border-opacity-25'>
+                        <li className='nav-item'>
                             <a className='nav-link'><i className="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
                         </li>
                     </ul>
