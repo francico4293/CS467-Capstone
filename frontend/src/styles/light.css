@@ -59,13 +59,13 @@ body {
   }
 }
 
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 767px) {
   .sidebar {
     width: 200px;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .sidebar {
     width: 100px;
     align-items: center;

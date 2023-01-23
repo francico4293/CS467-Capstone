@@ -28,6 +28,7 @@ body {
   bottom: 0;
   left: 0;
   box-shadow: 1px 0px 3px 1px black;
+  transition: ease all .5s;
 }
 
 #dark .nav-item {
@@ -50,4 +51,12 @@ body {
 
 #dark .nav-item:hover {
   background-color: rgb(25, 25, 25);
+}
+
+#dark .fa-sun {
+    color: white;
+}
+
+#dark .fa-moon {
+    color: white;
 }

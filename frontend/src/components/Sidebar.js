@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { 
     LIGHT_MODE, 
@@ -6,7 +6,14 @@ import {
 } from '../constants/themeConstants';
 
 const Sidebar = () => {
+    const [isChecked, setChecked] = useState(false);
+
     const dispatch = useDispatch();
+
+    const handleCheckedEvent = () => {
+        setChecked(!isChecked);
+        isChecked ? dispatch({ type: LIGHT_MODE, payload: 'light' }) : dispatch({ type: DARK_MODE, payload: 'dark' });
+    }
 
     return (
         <div className='col d-flex flex-column justify-content-between sidebar'>
@@ -57,10 +64,13 @@ const Sidebar = () => {
                     </button>
                 </div>
             </div>
-
-            <div className="form-check form-switch d-sm-none d-flex justify-content-center align-items-center mb-5">
-                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                <i className="fa-solid fa-moon ms-2"></i>
+            
+            <div className='d-sm-none d-flex justify-content-center align-items-center mb-5'>
+                <i className="fa-solid fa-sun me-2"></i>
+                <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={handleCheckedEvent} checked={isChecked}/>
+                </div>
+                <i className="fa-solid fa-moon"></i>
             </div>
         </div>
     );
