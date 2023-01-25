@@ -4,14 +4,14 @@ import Sidebar from '../components/Sidebar';
 const LoginSignup = () => {
     return (
         <div className='container-fluid'>
-            <div className='row h-100'>
+            <div className='row'>
                 <Sidebar/>
-                <div className='col main'>
-                    <div className='row h-100 d-flex flex-wrap justify-content-center align-items-center ms-3 me-3'>
-                        <div className='col-lg-4 form-half p-0 shadow login-image'>
-                            <img src={'/imgs/login.jpg'} alt={'desk with phone and planner'}/>
+                <div className='col main d-flex justify-content-center align-items-center'>
+                    <div className='row form-container d-flex flex-wrap justify-content-center align-items-center shadow-sm'>
+                        <div className='col-4 form-half p-0 d-none d-lg-block'>
+                            <img src={'/imgs/login.jpg'}/>
                         </div>
-                        <div className='col-lg-4 form-half shadow'>
+                        <div className='col-4 form-half'>
                             <form className='pe-5 ps-5'>
                                 <div className='mt-5'>
                                     <h2 className='text-center'>Welcome!</h2>

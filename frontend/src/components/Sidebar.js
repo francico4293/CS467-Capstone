@@ -16,7 +16,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className='col d-flex flex-column justify-content-between sidebar'>
+        <div className='col-3 d-flex flex-column justify-content-between sidebar'>
             <div className='mt-5'>
                 <header className='d-none d-sm-block'>
                     <h1 className='text-center text-uppercase'>Job Tracker<i className="fa-solid fa-chart-line ms-2"></i></h1>
