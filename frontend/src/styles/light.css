@@ -85,9 +85,41 @@ body {
   box-shadow: 0px 0px 5px gray;
 }
 
-/* a.form-tab.active {
+.form-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bababa;
+}
+
+.form-separator::before, .form-separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #bababa;
+}
+
+.form-separator::before {
+  margin-right: .25em;
+}
+
+.form-separator::after {
+  margin-left: .25em;
+}
+
+a.form-tab.active {
   background-color: #ced4da !important;
-} */
+}
+
+.google-button-container {
+  position: relative;
+}
+
+.fa-google {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 @media (min-width: 768px) {
   .main {
