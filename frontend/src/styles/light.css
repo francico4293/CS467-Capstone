@@ -92,6 +92,11 @@ body {
   color: #bababa;
 }
 
+.nav-link.active {
+  background-color: #ced4da !important;
+  border-bottom: 1px solid #ced4da !important;
+}
+
 .form-separator::before, .form-separator::after {
   content: '';
   flex: 1;
