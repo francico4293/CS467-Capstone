@@ -8,7 +8,7 @@ const LoginSignup = () => {
                 <Sidebar/>
                 <div className='col main'>
                     <div className='row h-100 d-flex flex-wrap justify-content-center align-items-center ms-3 me-3'>
-                        <div className='col-lg-4 form-half p-0 shadow'>
+                        <div className='col-lg-4 form-half p-0 shadow login-image'>
                             <img src={'/imgs/login.jpg'} alt={'desk with phone and planner'}/>
                         </div>
                         <div className='col-lg-4 form-half shadow'>
