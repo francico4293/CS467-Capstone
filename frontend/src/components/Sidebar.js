@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { 
-    LIGHT_MODE, 
-    DARK_MODE 
-} from '../constants/themeConstants';
+import { THEME_CHANGE_REQUEST } from '../constants/themeConstants';
 
 const Sidebar = () => {
     const [isChecked, setChecked] = useState(false);
@@ -12,7 +9,9 @@ const Sidebar = () => {
 
     const handleCheckedEvent = () => {
         setChecked(!isChecked);
-        isChecked ? dispatch({ type: LIGHT_MODE, payload: 'light' }) : dispatch({ type: DARK_MODE, payload: 'dark' });
+        isChecked 
+            ? dispatch({ type: THEME_CHANGE_REQUEST, payload: 'light' }) 
+            : dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' });
     }
 
     return (
@@ -56,10 +55,10 @@ const Sidebar = () => {
             
             <div className='d-none d-sm-flex justify-content-center mb-5'>
                 <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: LIGHT_MODE, payload: 'light' })}>
+                    <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: THEME_CHANGE_REQUEST, payload: 'light' })}>
                         <i className="fa-solid fa-sun me-2"></i>Light
                     </button>
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: DARK_MODE, payload: 'dark' })}>
+                    <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' })}>
                         <i className="fa-solid fa-moon me-2"></i>Dark
                     </button>
                 </div>
