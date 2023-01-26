@@ -26,7 +26,7 @@ const Sidebar = () => {
                 <div>
                     <ul className='nav flex-column mt-5'>
                         <li className='nav-item'>
-                            <a className='nav-link active'>
+                            <a className='nav-link active' href='/profile'>
                                 <i className="fa-solid fa-user me-2"></i>
                                 <span className='d-none d-sm-inline'>Profile</span>
                             </a>

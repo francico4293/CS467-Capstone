@@ -12,14 +12,14 @@ body {
   background-color: white;
 }
 
-#light h1 {
+/* ----- Sidebar Styles ----- */
+
+#light header > h1 {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
   color: #333;
 }
-
-/* ----- Sidebar Styles ----- */
 
 #light .sidebar {
   background-color: #e9ecef;
@@ -123,3 +123,41 @@ body {
   top: 50%;
   transform: translateY(-50%);
 }
+
+/* ----- Profile Page Styles ----- */
+
+/* h2 {
+  transition: all .25s
+}
+
+@media (max-width: 576px) {
+  h2 {
+    font-size: 2em;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  h2 {
+    font-size: 2em;
+  }
+} */
+
+h2 {
+  font-weight: 500;
+  font-size: 2em;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.25em;
+}
+
+/* @media (min-width: 768px) {
+  h2 {
+    font-size: 2em;
+  }
+
+  h3 {
+    font-size: 1.25em;
+  }
+} */
