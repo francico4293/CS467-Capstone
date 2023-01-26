@@ -16,7 +16,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className='col-3 d-flex flex-column justify-content-between sidebar'>
+        <div className='col-2 col-sm-3 col-md-2 d-flex flex-column justify-content-between sidebar'>
             <div className='mt-5'>
                 <header className='d-none d-sm-block'>
                     <h1 className='text-center text-uppercase'>Job Tracker<i className="fa-solid fa-chart-line ms-2"></i></h1>
@@ -66,7 +66,6 @@ const Sidebar = () => {
             </div>
             
             <div className='d-sm-none d-flex justify-content-center align-items-center mb-5'>
-                <i className="fa-solid fa-sun me-2"></i>
                 <div className="form-check form-switch">
                     <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={handleCheckedEvent} checked={isChecked}/>
                 </div>

@@ -54,122 +54,72 @@ body {
   background-color: #ced4da;
 }
 
-@media (min-width: 768px) {
-  .sidebar {
-    width: 300px;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767px) {
-  .sidebar {
-    width: 200px;
-  }
-}
-
-@media (max-width: 575px) {
-  .sidebar {
-    width: 100px;
-    align-items: center;
-  }
-}
 
 /* ----- Login/Signup Page Styles ----- */
 
-.main {
-  height: 100vh;
-  width: 100vw;
+#light .form {
+  height: 700px;
+  background-color: #e9ecef;
 }
 
- /* DELETE */
-.form-half {
-  background-color: #e9ecef;
-  width: 475px;
+#light .login-image {
+  position: relative;
+  display: inline;
   height: 700px;
 }
 
-.login-image {
-  position: relative;
-  display: inline;
-}
-
-.login-image::after {
+#light .login-image::after {
   content: '';
   position: absolute;
   left: 0; top: 0;
   width: 100%; height: 100%;
-  background: linear-gradient(rgba(255, 255, 255, 0.2),rgba(255, 255, 255, 0.2));
+  background: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.1));
 }
 
-img {
+#light .login-image img {
   object-fit: cover;
   height: 100%;
   width: 100%;
   z-index: -100;
 }
-/* DELETE */
 
-.form {
-  width: 950px;
-  height: 700px;
-  background-color: #e9ecef;
-  box-shadow: 0px 0px 5px gray;
-}
-
-.form-separator {
+#light .form-separator {
   display: flex;
   align-items: center;
   justify-content: center;
   color: #bababa;
 }
 
-.nav-link.active {
+#light .nav-link.active {
   background-color: #ced4da !important;
   border-bottom: 1px solid #ced4da !important;
 }
 
-.form-separator::before, .form-separator::after {
+#light .form-separator::before, #light .form-separator::after {
   content: '';
   flex: 1;
   border-bottom: 1px solid #bababa;
 }
 
-.form-separator::before {
+#light .form-separator::before {
   margin-right: .25em;
 }
 
-.form-separator::after {
+#light .form-separator::after {
   margin-left: .25em;
 }
 
-a.form-tab.active {
+#light a.form-tab.active {
   background-color: #ced4da !important;
 }
 
-.google-button-container {
+#light .google-button-container {
   position: relative;
 }
 
-.fa-google {
+#light .fa-google {
   position: absolute;
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
-}
-
-@media (min-width: 768px) {
-  .main {
-    margin-left: 305px;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767px) {
-  .main {
-    margin-left: 205px;
-  }
-}
-
-@media (max-width: 575px) {
-  .main {
-    margin-left: 105px;
-  }
 }
