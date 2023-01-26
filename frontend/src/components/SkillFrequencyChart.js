@@ -3,20 +3,21 @@ import Chart from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
 
 const SkillFrequencyChart = () => {
-    const labels = ["Java", "Docker", "Python", "Express.js"];
+    const labels = ["Java", "Docker", "Python", "Express.js", "SQL"];
     const data = {
         labels: labels,
         datasets: [
             {
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(54, 162, 235)',
-                data: [2, 1, 4, 2],
+                backgroundColor: 'rgba(34, 139, 34, 0.2)',
+                borderColor: 'rgb(34, 139, 34)',
+                data: [2, 1, 4, 2, 6],
                 borderWidth: 1
             },
         ],
     };
 
     const options = {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -24,7 +25,7 @@ const SkillFrequencyChart = () => {
                 display: false
             },
             title: {
-                text: 'Skill Frequency from Tracked Jobs',
+                text: 'Skills Frequency',
                 display: true,
                 font: {
                     size: 30
