@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
+import SkillFrequencyChart from '../components/SkillFrequencyChart';
 
 const Profile = () => {
     return (
@@ -8,8 +9,8 @@ const Profile = () => {
                 <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
                     <div className='row d-flex flex-wrap'>
-                        <div className='col-md-6 col-lg-5 d-flex flex-column align-items-center border'>
-                            <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle mt-3' width={'60%'}/>
+                        <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>
+                            <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle shadow-sm mt-3' width={'70%'}/>
                             <div className='row mt-3 me-5 ms-5 mb-3'>
                                 <div className='col-12'>
                                     <h2>Colin Francis</h2>
@@ -22,8 +23,8 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-6 col-lg-7 border'>
-
+                        <div className='col-md-6 col-lg-7'>
+                            <SkillFrequencyChart/>
                         </div>
                     </div>
                     <div className='row'>

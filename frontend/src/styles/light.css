@@ -152,6 +152,10 @@ h3 {
   font-size: 1.25em;
 }
 
+.canvas-container {
+  height: 100%;
+}
+
 /* @media (min-width: 768px) {
   h2 {
     font-size: 2em;
