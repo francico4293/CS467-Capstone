@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
 import SkillFrequencyChart from '../components/SkillFrequencyChart';
+import ProficiencyCard from '../components/ProficiencyCard';
 
 const Profile = () => {
     return (
@@ -18,12 +19,12 @@ const Profile = () => {
                                     <p className='mt-4'>Computer science student @ Oregon State University</p>
                                     <p className='mt-4'>Tracking 8 jobs</p>
                                     <div className='d-grid'>
-                                        <button type="button" class="btn btn-secondary">Edit Profile</button>
+                                        <button type="button" className="btn btn-secondary">Edit Profile</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-6 col-lg-7'>
+                        <div className='col-md-6 col-lg-7 canvas-col'>
                             <SkillFrequencyChart/>
                         </div>
                     </div>
@@ -31,6 +32,14 @@ const Profile = () => {
                         <div className='col'>
                             <h2>Your Skills</h2>
                             <p>Manage your skills and track your proficiency level</p>
+                        </div>
+                    </div>
+                    <div className='row me-5 ms-5 mb-5'>
+                        <div className='col d-flex flex-wrap justify-content-start'>
+                            <ProficiencyCard skill={'Java'} percentage={75}/>
+                            <ProficiencyCard skill={'Python'} percentage={90}/>
+                            <ProficiencyCard skill={'C++'} percentage={30}/>
+                            <ProficiencyCard skill={'Google Cloud Platform'} percentage={60}/>
                         </div>
                     </div>
                 </div>

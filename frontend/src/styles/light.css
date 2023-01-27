@@ -126,22 +126,6 @@ body {
 
 /* ----- Profile Page Styles ----- */
 
-/* h2 {
-  transition: all .25s
-}
-
-@media (max-width: 576px) {
-  h2 {
-    font-size: 2em;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 768px) {
-  h2 {
-    font-size: 2em;
-  }
-} */
-
 h2 {
   font-weight: 500;
   font-size: 2em;
@@ -154,14 +138,9 @@ h3 {
 
 .canvas-container {
   height: 100%;
+  width: 100%;
 }
 
-/* @media (min-width: 768px) {
-  h2 {
-    font-size: 2em;
-  }
-
-  h3 {
-    font-size: 1.25em;
-  }
-} */
+.fa-minus, .fa-plus {
+  cursor: pointer;
+}

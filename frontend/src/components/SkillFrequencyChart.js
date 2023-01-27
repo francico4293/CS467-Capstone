@@ -27,6 +27,7 @@ const SkillFrequencyChart = () => {
             title: {
                 text: 'Skills Frequency',
                 display: true,
+                padding: 30,
                 font: {
                     size: 30
                 }
