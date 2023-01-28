@@ -6,6 +6,7 @@ const signUpUser = async (email, password, firstName, lastName, setError) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         await createUser(user, firstName, lastName);
+        navigate('/profile');
     } catch (error) {
         setError(error);
     };
