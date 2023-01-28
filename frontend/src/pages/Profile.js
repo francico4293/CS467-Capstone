@@ -34,12 +34,22 @@ const Profile = () => {
                             <p>Manage your skills and track your proficiency level</p>
                         </div>
                     </div>
-                    <div className='row me-5 ms-5 mb-5 d-flex justify-content-center'>
-                        <div className='col-10 d-flex flex-wrap justify-content-start'>
-                            <ProficiencyCard skill={'Java'} percentage={75}/>
-                            <ProficiencyCard skill={'Python'} percentage={90}/>
-                            <ProficiencyCard skill={'C++'} percentage={30}/>
-                            <ProficiencyCard skill={'Docker'} percentage={20}/>
+                    <div className='row d-flex justify-content-center mb-5'>
+                        <div className='col-10'>
+                            <div className='row'>
+                                <div className='col-md-6 col-lg-4'> 
+                                    <ProficiencyCard skill={'Java'} percentage={75}/>
+                                </div>
+                                <div className='col-md-6 col-lg-4'> 
+                                    <ProficiencyCard skill={'Python'} percentage={90}/>
+                                </div>
+                                <div className='col-md-6 col-lg-4'> 
+                                    <ProficiencyCard skill={'C++'} percentage={30}/>
+                                </div>
+                                <div className='col-md-6 col-lg-4'> 
+                                    <ProficiencyCard skill={'Docker'} percentage={20}/> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
