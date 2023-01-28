@@ -1,8 +1,11 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../fire";
 
-const signUpUser = async (email, password, firstName, lastName, setError, navigate) => {
+const signUpUser = async (email, password, confirmPassword, firstName, lastName, setError, navigate) => {
     try {
+        if (password !== confirmPassword) {
+            throw new Error();
+        }
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         await createUser(user, firstName, lastName);

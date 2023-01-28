@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 const SignupFormPane = () => {
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const navigate = useNavigate();
 
     const setError = (e) => {
@@ -16,7 +17,7 @@ const SignupFormPane = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        signUpUser(email, password, firstName, lastName, setError, navigate);
+        signUpUser(email, password, confirmPassword, firstName, lastName, setError, navigate);
     }
 
     return (
@@ -59,7 +60,8 @@ const SignupFormPane = () => {
                 <div className='col-12'>
                     <div className="mb-2">
                         <label for="confirm-password" class="form-label">Confirm password</label>
-                        <input type="password" class="form-control" id="password" />
+                        <input type="password" class="form-control" id="password" onChange={({ target }) => 
+                            setConfirmPassword(target.value)}/>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,6 @@ import { auth } from "./fire";
 
 const App = () => {
   const theme = useSelector(state => state.theme);
-  
   const [user, setUser] = useState(null);
   const [waiting, setWaiting] = useState(true);
 
