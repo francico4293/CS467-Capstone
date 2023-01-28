@@ -21,10 +21,10 @@ const LoginSignup = () => {
                                 <div>
                                     <ul className='nav nav-tabs'>
                                         <li className='nav-item'>
-                                            <a className="nav-link active" data-bs-toggle='tab' href='#signup'>Signup</a>
+                                            <a className='nav-link active' data-bs-toggle='tab' href='#login'>Login</a>
                                         </li>
                                         <li className='nav-item'>
-                                            <a className='nav-link' data-bs-toggle='tab' href='#login'>Login</a>
+                                            <a className="nav-link" data-bs-toggle='tab' href='#signup'>Signup</a>
                                         </li>
                                     </ul>
                                 </div>
