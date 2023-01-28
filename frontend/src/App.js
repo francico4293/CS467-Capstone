@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import './styles/light.css';
 import './styles/dark.css';
@@ -13,6 +13,15 @@ import Profile from './pages/Profile';
 
 const App = () => {
   const theme = useSelector(state => state.theme);
+  const [user, setUser] = useState(null);
+
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setUser(user);
+    } else {
+      setUser(null);
+    }
+  })
 
   return (
     <div id={theme.type}>
