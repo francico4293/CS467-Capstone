@@ -16,8 +16,9 @@ const LoginFormPane = () => {
         e.preventDefault();
         signInUser(email, password, setError, navigate);
     }
+
     return (
-        <div className='tab-pane mt-3' id='login' role='tabpanel'>
+        <>
             <div className='row'>
                 <div className='col-12'>
                     <div class="mb-2">
@@ -44,7 +45,7 @@ const LoginFormPane = () => {
                     <span>Login with Google</span>
                 </button>
             </div>
-        </div>
+        </>
     );
 }
 

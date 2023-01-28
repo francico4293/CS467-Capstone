@@ -4,12 +4,14 @@ import LoginFormPane from './LoginFormPane';
 
 const LoginSignupForm = () => {
     return (
-        <form>
-            <div className='tab-content mt-3'>
-                <SignupFormPane/>
-                <LoginFormPane/>
-            </div>
-        </form>
+        <div className='tab-content mt-3'>
+            <form className='tab-pane active' id='signup' role='tabpanel'>
+                <SignupFormPane />
+            </form>
+            <form className='tab-pane mt-3' id='login' role='tabpanel'>
+                <LoginFormPane />
+            </form>
+        </div>
     );
 }
 

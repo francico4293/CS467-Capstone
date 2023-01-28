@@ -141,6 +141,6 @@ h3 {
   width: 100%;
 }
 
-.fa-minus, .fa-plus {
+.fa-minus, .fa-plus, .fa-pen-to-square, .fa-trash {
   cursor: pointer;
 }

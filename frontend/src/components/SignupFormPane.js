@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { signUpUser } from '../services/users';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const SignupFormPane = () => {
 
     const [email, setEmail] = useState();
@@ -22,7 +20,7 @@ const SignupFormPane = () => {
     }
 
     return (
-        <div className='tab-pane active' id='signup' role='tabpanel'>
+        <>
             <div className='row'>
                 <div className='col-6'>
                     <div class='mb-2'>
@@ -73,7 +71,7 @@ const SignupFormPane = () => {
                     <span>Signup with Google</span>
                 </button>
             </div>
-        </div>
+        </>
     );
 }
 

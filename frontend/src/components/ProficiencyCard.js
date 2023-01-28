@@ -8,7 +8,7 @@ const ProficiencyCard = ({ skill, percentage }) => {
     return (
         <div className="card mt-3">
             <div className="card-body shadow">
-                <h5 className="card-title">{skill}</h5>
+                <h3 className="card-title">{skill}</h3>
                 <div className='row d-flex align-items-center justify-content-center'>
                     <div className='col-8'>
                         <CircularProgressbar value={proficiency} text={`${proficiency}%`} />

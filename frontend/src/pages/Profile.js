@@ -5,7 +5,7 @@ import ProficiencyCard from '../components/ProficiencyCard';
 
 const Profile = () => {
     return (
-        <div className='container-fluid'>
+        <div className='container-fluid h-100'>
             <div className='row h-100'>
                 <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
