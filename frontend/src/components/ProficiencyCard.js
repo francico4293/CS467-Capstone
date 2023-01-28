@@ -6,7 +6,7 @@ const ProficiencyCard = ({ skill, percentage }) => {
     const [proficiency, setProficiency] = useState(percentage);
 
     return (
-        <div className="card me-3 ms-3 mt-3" style={{'width': '25rem'}}>
+        <div className="card me-3 ms-3 mt-3" style={{'width': '20rem'}}>
             <div className="card-body shadow">
                 <h5 className="card-title">{skill}</h5>
                 <div className='row d-flex align-items-center justify-content-center'>
