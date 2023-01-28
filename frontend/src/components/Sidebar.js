@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { THEME_CHANGE_REQUEST } from '../constants/themeConstants';
 import { signOutUser } from '../services/users';
 
 const Sidebar = () => {
-    const [isChecked, setChecked] = useState(false);
-
+    const theme = useSelector(state => state.theme);
+    const [isChecked, setChecked] = useState(theme.type === 'light' ? false : true);
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
-    const handleCheckedEvent = () => {
+    const handleCheckedEvent = (target) => {
+        if (theme.type === 'light') {
+            dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' });
+            sessionStorage.setItem('theme', 'dark'); 
+        } else {
+            dispatch({ type: THEME_CHANGE_REQUEST, payload: 'light' });
+            sessionStorage.setItem('theme', 'light');
+        }
         setChecked(!isChecked);
-        isChecked 
-            ? dispatch({ type: THEME_CHANGE_REQUEST, payload: 'light' }) 
-            : dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' });
     }
+
+    console.log(theme.type);
 
     return (
         <div className='col-2 col-sm-3 col-md-2 d-flex flex-column justify-content-between sidebar'>
@@ -59,10 +64,12 @@ const Sidebar = () => {
             
             <div className='d-none d-sm-flex justify-content-center mb-5'>
                 <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: THEME_CHANGE_REQUEST, payload: 'light' })}>
+                    <button type="button" className="btn btn-outline-secondary" onClick={() => 
+                            dispatch({ type: THEME_CHANGE_REQUEST, payload: 'light' })}>
                         <i className="fa-solid fa-sun me-2"></i>Light
                     </button>
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' })}>
+                    <button type="button" className="btn btn-outline-secondary" onClick={() => 
+                            dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' })}>
                         <i className="fa-solid fa-moon me-2"></i>Dark
                     </button>
                 </div>
@@ -70,7 +77,8 @@ const Sidebar = () => {
             
             <div className='d-sm-none d-flex justify-content-center align-items-center mb-5'>
                 <div className="form-check form-switch">
-                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={handleCheckedEvent} checked={isChecked}/>
+                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" 
+                        onChange={({ target }) => handleCheckedEvent(target)} checked={isChecked}/>
                 </div>
                 <i className="fa-solid fa-moon"></i>
             </div>

@@ -9,7 +9,13 @@ import { themeReducer } from './reducers/themeReducers';
 
 const reducer = combineReducers({ theme: themeReducer });
 
-const initialState = {};
+const themeFromSessionStorage = sessionStorage.getItem('theme') 
+    ? sessionStorage.getItem('theme') 
+    : 'light';
+
+const initialState = {
+    theme: { type: themeFromSessionStorage }
+};
 
 const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunk)));
 
