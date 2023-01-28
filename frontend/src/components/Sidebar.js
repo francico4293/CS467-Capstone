@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { THEME_CHANGE_REQUEST } from '../constants/themeConstants';
+import { signOutUser } from '../services/users';
 
 const Sidebar = () => {
     const [isChecked, setChecked] = useState(false);
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -44,7 +48,7 @@ const Sidebar = () => {
                             </a>
                         </li>
                         <li className='nav-item'>
-                            <a className='nav-link'>
+                            <a className='nav-link' onClick = {() => signOutUser(navigate)}>
                                 <i className="fa-solid fa-right-from-bracket me-2"></i>
                                 <span className='d-none d-sm-inline'>Logout</span>
                             </a>

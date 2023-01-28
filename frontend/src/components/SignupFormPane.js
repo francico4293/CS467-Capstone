@@ -14,6 +14,11 @@ const SignupFormPane = () => {
         alert("Signup failed!");
     }
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        signUpUser(email, password, firstName, lastName, setError);
+    }
+
     return (
         <div className='tab-pane active' id='signup' role='tabpanel'>
             <div className='row'>
@@ -58,7 +63,7 @@ const SignupFormPane = () => {
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-2" onClick={() => signUpUser(email, password, firstName, lastName, setError)}>Signup</button>
+            <button type="submit" class="btn btn-primary mt-2" onClick={submitHandler}>Signup</button>
             <div className='form-separator mt-3'>or</div>
             <div className="d-grid mt-3">
                 <button className="btn btn-primary google-button-container" type="button">
