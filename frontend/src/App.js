@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './styles/light.css';
 import './styles/dark.css';
@@ -18,22 +18,23 @@ const App = () => {
   const theme = useSelector(state => state.theme);
   
   const [user, setUser] = useState(null);
-  const [waiting, setWaiting] = useState(true)
+  const [waiting, setWaiting] = useState(true);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user);
-    } else {
-      setUser(null);
-    }
-    setWaiting(false);
-  })
-
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+      setWaiting(false);
+    });
+  }, []);
 
   if (waiting) {
     return (
       <Loading />
-    )
+    );
   } else {
     return (
       <div id={theme.type}>
@@ -49,8 +50,6 @@ const App = () => {
               <Route path='/login-signup' element={<LoginSignup />} />
             </Routes>
           )}
-
-
         </Router>
       </div>
     );
