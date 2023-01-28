@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { signUpUser } from '../services/users';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -9,6 +10,7 @@ const SignupFormPane = () => {
     const [password, setPassword] = useState();
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
+    const navigate = useNavigate();
 
     const setError = (e) => {
         alert("Signup failed!");
@@ -16,7 +18,7 @@ const SignupFormPane = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        signUpUser(email, password, firstName, lastName, setError);
+        signUpUser(email, password, firstName, lastName, setError, navigate);
     }
 
     return (
