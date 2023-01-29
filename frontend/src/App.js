@@ -12,18 +12,21 @@ import Profile from './pages/Profile';
 import Loading from './components/Loading'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fire";
+import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
   const [isLightMode, setLightMode] = useState(sessionStorage.getItem('theme') ? sessionStorage.getItem('theme') === 'true' : false);
-  const [user, setUser] = useState(null);
   const [waiting, setWaiting] = useState(true);
+
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        dispatch({ type: "LOGIN", data: user })
       } else {
-        setUser(null);
+        dispatch({ type: "LOGOUT", data: null })
       }
       setWaiting(false);
     });
