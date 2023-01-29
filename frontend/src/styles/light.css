@@ -141,7 +141,7 @@ h3 {
   width: 100%;
 }
 
-.fa-minus, .fa-plus, .fa-pen-to-square, .fa-trash {
+.fa-minus, .fa-plus, .fa-pen-to-square, .fa-trash, .fa-floppy-disk, .fa-ban {
   cursor: pointer;
 }
 

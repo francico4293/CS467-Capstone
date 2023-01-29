@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
+import EditProfile from '../components/EditProfile';
+import ShowProfile from '../components/ShowProfile';
 import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import ProficiencyCard from '../components/ProficiencyCard';
 
 const Profile = () => {
+    const [isEditing, setEditing] = useState(false);
+
     return (
         <div className='container-fluid h-100'>
             <div className='row h-100'>
@@ -14,13 +18,9 @@ const Profile = () => {
                             <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle shadow-sm mt-3' width={'70%'}/>
                             <div className='row mt-3 me-5 ms-5 mb-3'>
                                 <div className='col-12'>
-                                    <h2>Colin Francis</h2>
-                                    <h3>francico@oregonstate.edu</h3>
-                                    <p className='mt-4'>Computer science student @ Oregon State University</p>
-                                    <p className='mt-4'>Tracking 8 jobs</p>
-                                    <div className='d-grid'>
-                                        <button type="button" className="btn btn-secondary">Edit Profile</button>
-                                    </div>
+                                    {
+                                        isEditing ? <EditProfile setEditing={setEditing}/> : <ShowProfile setEditing={setEditing}/>
+                                    }
                                 </div>
                             </div>
                         </div>
