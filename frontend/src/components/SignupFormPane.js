@@ -21,7 +21,7 @@ const SignupFormPane = () => {
     }
 
     return (
-        <>
+        <form className='tab-pane mt-3' id='signup' role='tabpanel' onSubmit={submitHandler}>
             <div className='row'>
                 <div className='col-6'>
                     <div className='mb-2'>
@@ -65,7 +65,7 @@ const SignupFormPane = () => {
                     </div>
                 </div>
             </div>
-            <button type="submit" className="btn btn-primary mt-2" onClick={submitHandler}>Signup</button>
+            <button type="submit" className="btn btn-primary mt-2">Signup</button>
             <div className='form-separator mt-3'>or</div>
             <div className="d-grid mt-3">
                 <button className="btn btn-primary google-button-container" type="button">
@@ -73,7 +73,7 @@ const SignupFormPane = () => {
                     <span>Signup with Google</span>
                 </button>
             </div>
-        </>
+        </form>
     );
 }
 

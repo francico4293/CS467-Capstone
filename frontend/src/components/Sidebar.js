@@ -9,7 +9,7 @@ const Sidebar = () => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    const handleCheckedEvent = (target) => {
+    const handleCheckedEvent = () => {
         if (theme.type === 'light') {
             dispatch({ type: THEME_CHANGE_REQUEST, payload: 'dark' });
             sessionStorage.setItem('theme', 'dark'); 
@@ -51,7 +51,7 @@ const Sidebar = () => {
             <div className='d-sm-none d-flex justify-content-center align-items-center mb-5'>
                 <div className="form-check form-switch">
                     <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" 
-                        onChange={({ target }) => handleCheckedEvent(target)} checked={theme.type === 'light' ? false : true}/>
+                        onChange={() => handleCheckedEvent()} checked={theme.type === 'light' ? false : true}/>
                 </div>
                 <i className="fa-solid fa-moon"></i>
             </div>
