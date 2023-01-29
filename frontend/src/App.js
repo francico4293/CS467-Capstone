@@ -16,8 +16,11 @@ import { auth } from "./fire";
 
 const App = () => {
   const theme = useSelector(state => state.theme);
+  const _user = useSelector(state => state.user);
   const [user, setUser] = useState(null);
   const [waiting, setWaiting] = useState(true);
+
+  // TODO => consolidate: _user vs user
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -30,7 +33,7 @@ const App = () => {
     });
   }, []);
 
-  if (waiting) {
+  if (waiting || _user.isLoading) {
     return (
       <Loading />
     );

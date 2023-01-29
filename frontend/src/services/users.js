@@ -15,20 +15,6 @@ const signUpUser = async (email, password, confirmPassword, firstName, lastName,
     };
 }
 
-const signInUser = async (email, password, setError, navigate) => {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate('/profile');
-    } catch (error) {
-        setError(error);
-    };
-}
-
-const signOutUser = async (navigate) => {
-    await signOut(auth);
-    navigate('/login-signup');
-};
-
 const createUser = async (user, firstName, lastName) => {
     const token = await user.getIdToken();
     await fetch(`/users/`, {
@@ -38,7 +24,7 @@ const createUser = async (user, firstName, lastName) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
-    })
+    });
 }
 
-export { signInUser, signOutUser, signUpUser }
+export { signUpUser };

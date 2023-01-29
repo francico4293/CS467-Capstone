@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { THEME_CHANGE_REQUEST } from '../constants/themeConstants';
-import { signOutUser } from '../services/users';
+import LoggedInNavItems from './LoggedInNavItems';
+import LoggedOutNavItems from './LoggedOutNavItems';
 
 const Sidebar = () => {
     const theme = useSelector(state => state.theme);
-    const navigate = useNavigate();
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
     const handleCheckedEvent = (target) => {
@@ -29,32 +29,9 @@ const Sidebar = () => {
                     <h1 className='text-center'>JT<i className="fa-solid fa-chart-line ms-2"></i></h1>
                 </header>
                 <div>
-                    <ul className='nav flex-column mt-5'>
-                        <li className='nav-item'>
-                            <a className='nav-link active' href='/profile'>
-                                <i className="fa-solid fa-user me-2"></i>
-                                <span className='d-none d-sm-inline'>Profile</span>
-                            </a>
-                        </li>
-                        <li className='nav-item'>
-                            <a className='nav-link'>
-                                <i className="fa-solid fa-chess-board me-2"></i>
-                                <span className='d-none d-sm-inline'>Job Board</span>
-                            </a>
-                        </li>
-                        <li className='nav-item'>
-                            <a className='nav-link'>
-                                <i className="fa-solid fa-address-book me-2"></i>
-                                <span className='d-none d-sm-inline'>Contacts</span>
-                            </a>
-                        </li>
-                        <li className='nav-item'>
-                            <a className='nav-link' onClick = {() => signOutUser(navigate)}>
-                                <i className="fa-solid fa-right-from-bracket me-2"></i>
-                                <span className='d-none d-sm-inline'>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
+                    {
+                        user.isLoggedIn ? <LoggedInNavItems /> : <LoggedOutNavItems />
+                    }
                 </div>
             </div>
             
