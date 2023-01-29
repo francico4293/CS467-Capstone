@@ -24,7 +24,7 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-6 col-lg-7 canvas-col'>
+                        <div className='col-md-6 col-lg-7 d-flex flex-fill canvas-col'>
                             <SkillFrequencyChart/>
                         </div>
                     </div>

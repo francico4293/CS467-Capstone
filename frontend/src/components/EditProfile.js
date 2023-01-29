@@ -4,6 +4,12 @@ const EditProfile = ({ setEditing }) => {
     return (
         <>
             <div className='row mb-2'>
+                <div className='col-12'>
+                    <label for='profile-picture' className='form-label'>Update profile picture</label>
+                    <input type="file" className="form-control" id="profile-picture"></input>
+                </div>
+            </div>
+            <div className='row mb-2'>
                 <div className='col-6'>
                     <label for='first-name' className='form-label'>First name</label>
                     <input type='text' className='form-control' id='first-name' value='Colin'/>
