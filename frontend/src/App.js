@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import './styles/light.css';
 import './styles/dark.css';
 import {
@@ -15,12 +14,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fire";
 
 const App = () => {
-  const theme = useSelector(state => state.theme);
-  const _user = useSelector(state => state.user);
+  const [isLightMode, setLightMode] = useState(sessionStorage.getItem('theme') ? sessionStorage.getItem('theme') === 'true' : false);
   const [user, setUser] = useState(null);
   const [waiting, setWaiting] = useState(true);
-
-  // TODO => consolidate: _user vs user
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -31,25 +27,27 @@ const App = () => {
       }
       setWaiting(false);
     });
-  }, []);
 
-  if (waiting || _user.isLoading) {
+    sessionStorage.setItem('theme', isLightMode);
+  }, [isLightMode]);
+
+  if (waiting) {
     return (
       <Loading />
     );
   } else {
     return (
-      <div id={theme.type}>
+      <div id={isLightMode ? 'light' : 'dark'}>
         <Router>
           {user ? (
             <Routes>
               <Route path='/' element={<Navigate to='/profile' />} />
-              <Route path='/profile' element={<Profile />} />
+              <Route path='/profile' element={<Profile user={user} isLightMode={isLightMode} setLightMode={setLightMode} />} />
             </Routes>
           ) : (
             <Routes>
               <Route path='/' element={<Navigate to='/login-signup' />} />
-              <Route path='/login-signup' element={<LoginSignup />} />
+              <Route path='/login-signup' element={<LoginSignup user={user} isLightMode={isLightMode} setLightMode={setLightMode} />} />
             </Routes>
           )}
         </Router>

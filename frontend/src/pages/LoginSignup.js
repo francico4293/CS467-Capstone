@@ -2,11 +2,11 @@ import React from 'react';
 import Sidebar from '../components/Sidebar';
 import LoginSignupForm from '../components/LoginSignupForm';
 
-const LoginSignup = () => {
+const LoginSignup = ({ user, isLightMode, setLightMode }) => {
     return (
         <div className='container-fluid'>
             <div className='row h-100'>
-                <Sidebar/>
+                <Sidebar user={user} isLightMode={isLightMode} setLightMode={setLightMode}/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
                     <div className='row h-100 d-flex justify-content-center align-items-center'>
                         <div className='form-wrapper d-flex justify-content-center'>

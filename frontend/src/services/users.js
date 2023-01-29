@@ -1,11 +1,8 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../fire";
 
-const signUpUser = async (email, password, confirmPassword, firstName, lastName, setError, navigate) => {
+const signUpUser = async (email, password, firstName, lastName, setError, navigate) => {
     try {
-        if (password !== confirmPassword) {
-            throw new Error();
-        }
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         await createUser(user, firstName, lastName);
@@ -14,6 +11,20 @@ const signUpUser = async (email, password, confirmPassword, firstName, lastName,
         setError(error);
     };
 }
+
+const signInUser = async (email, password, setError, navigate) => {
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        navigate('/profile');
+    } catch (error) {
+        setError(error);
+    };
+}
+
+const signOutUser = async (navigate) => {
+    await signOut(auth);
+    navigate('/login-signup');
+};
 
 const createUser = async (user, firstName, lastName) => {
     const token = await user.getIdToken();
@@ -24,7 +35,7 @@ const createUser = async (user, firstName, lastName) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
-    });
+    })
 }
 
-export { signUpUser };
+export { signInUser, signOutUser, signUpUser }

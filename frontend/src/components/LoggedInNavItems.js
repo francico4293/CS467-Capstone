@@ -1,10 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { signOutUser } from '../actions/userActions';
+import { signOutUser } from '../services/users';
 
 const LoggedInNavItems = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     
     return (
@@ -28,7 +26,7 @@ const LoggedInNavItems = () => {
                 </a>
             </li>
             <li className='nav-item'>
-                <a className='nav-link' onClick = {() => dispatch(signOutUser(navigate))}>
+                <a className='nav-link' onClick = {() => signOutUser(navigate)}>
                     <i className="fa-solid fa-right-from-bracket me-2"></i>
                     <span className='d-none d-sm-inline'>Logout</span>
                 </a>
