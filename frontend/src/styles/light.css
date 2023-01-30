@@ -126,36 +126,36 @@ body {
 
 /* ----- Profile Page Styles ----- */
 
-h2 {
+#light #bio h2 {
   font-weight: 500;
   font-size: 2em;
 }
 
-h3 {
+#light #bio h3 {
   font-weight: 400;
   font-size: 1.25em;
 }
 
-.canvas-container {
+#light .canvas-container {
   height: 100%;
   width: 100%;
 }
 
-.fa-minus, .fa-plus, .fa-pen-to-square, .fa-trash, .fa-floppy-disk, .fa-ban {
+#light .fa-minus, #light .fa-plus, #light .fa-pen-to-square, #light .fa-trash, #light .fa-floppy-disk, #light .fa-ban {
   cursor: pointer;
 }
 
-.spinner-container {
+#light .spinner-container {
   width: 100vw;
   height: 100vh;
 }
 
-.card {
+#light .card {
   transition: all .25s;
   box-shadow: 1px 2px 5px gray;
 }
 
-.card:hover {
+#light .card:hover {
   transform: translateY(-3px);
   box-shadow: 1px 5px 8px rgb(175, 175, 175);
 }

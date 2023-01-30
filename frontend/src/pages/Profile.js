@@ -31,7 +31,7 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className='row mt-3 ms-3'>
-                        <div className='col'>
+                        <div className='col' id='skills'>
                             <h2>Your Skills</h2>
                             <p>Manage your skills and track your proficiency level</p>
                         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const EditProfile = ({ setEditing }) => {
     return (
-        <>
+        <div id='edit-bio'>
             <div className='row mb-2'>
                 <div className='col-12'>
                     <label for='profile-picture' className='form-label'>Update profile picture</label>
@@ -36,7 +36,7 @@ const EditProfile = ({ setEditing }) => {
                 <button type="button" className="btn btn-secondary me-2" onClick={() => setEditing(false)}>Save</button>
                 <button type="button" className="btn btn-secondary" onClick={() => setEditing(false)}>Cancel</button>
             </div>
-        </>
+        </div>
     );
 }
 

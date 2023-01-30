@@ -2,7 +2,7 @@ import React from 'react';
 
 const ShowProfile = ({ setEditing }) => {
     return (
-        <>
+        <div id='bio'>
             <h2>Colin Francis</h2>
             <h3>francico@oregonstate.edu</h3>
             <p className='mt-4'>Computer science student @ Oregon State University</p>
@@ -10,7 +10,7 @@ const ShowProfile = ({ setEditing }) => {
             <div className='d-grid'>
                 <button type="button" className="btn btn-secondary" onClick={() => setEditing(true)}>Edit Profile</button>
             </div>
-        </>
+        </div>
     );
 }
 

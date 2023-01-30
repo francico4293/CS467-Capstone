@@ -24,13 +24,6 @@ const ProficiencyCard = ({ skill, percentage }) => {
                             <CircularProgressbar value={proficiency} text={`${proficiency}%`} />
                         </div>
                     </div>
-                    {/* <div className='row mt-3'>
-                        <div className='col'>
-                            <label for="proficiencyRange" className="form-label">Adjust proficiency level</label>
-                            <input type="range" className="form-range" min={0} max={100} value={proficiency} id="proficiencyRange" 
-                                onChange={(e) => setProficiency(e.target.value)} disabled={!isEditing}></input>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </>
