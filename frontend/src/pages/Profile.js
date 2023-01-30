@@ -4,6 +4,7 @@ import EditProfile from '../components/EditProfile';
 import ShowProfile from '../components/ShowProfile';
 import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import ProficiencyCard from '../components/ProficiencyCard';
+import EditProficiencyModel from '../components/EditProficiencyModal';
 
 const Profile = () => {
     const [isEditing, setEditing] = useState(false);
@@ -13,6 +14,7 @@ const Profile = () => {
             <div className='row h-100'>
                 <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
+                    <EditProficiencyModel/>
                     <div className='row d-flex flex-wrap'>
                         <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>
                             <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle shadow-sm mt-3' width={'70%'}/>
@@ -48,6 +50,9 @@ const Profile = () => {
                                 </div>
                                 <div className='col-md-6 col-lg-4'> 
                                     <ProficiencyCard skill={'Docker'} percentage={20}/> 
+                                </div>
+                                <div className='col-md-6 col-lg-4'> 
+                                    <button type="button" className="btn btn-secondary mt-3">Add skill</button>
                                 </div>
                             </div>
                         </div>
