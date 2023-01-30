@@ -11,7 +11,7 @@ const LoginSignup = () => {
                     <div className='row h-100 d-flex justify-content-center align-items-center'>
                         <div className='form-wrapper d-flex justify-content-center'>
                             <div className='col-lg-6 col-xl-4 d-none d-lg-block login-image'>
-                                <img src={'/imgs/login.jpg'} className='img-fluid'/>
+                                <img src={'/imgs/login.jpg'} className='img-fluid' alt='work desk'/>
                             </div>
                             <div className='col-sm-10 col-md-8 col-lg-6 col-xl-4 p-5 form'>
                                 <div>
