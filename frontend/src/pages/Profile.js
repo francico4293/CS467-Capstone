@@ -52,7 +52,7 @@ const Profile = () => {
                                     <ProficiencyCard skill={'Docker'} percentage={20}/> 
                                 </div>
                                 <div className='col-md-6 col-lg-4'> 
-                                    <button type="button" className="btn btn-secondary mt-3">Add skill</button>
+                                    <button type="button" className="btn btn-secondary mt-3">Add Skill</button>
                                 </div>
                             </div>
                         </div>
