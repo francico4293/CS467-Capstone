@@ -5,13 +5,13 @@ import ShowProfile from '../components/ShowProfile';
 import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import ProficiencyCard from '../components/ProficiencyCard';
 
-const Profile = ({ user, isLightMode, setLightMode }) => {
+const Profile = () => {
     const [isEditing, setEditing] = useState(false);
 
     return (
         <div className='container-fluid h-100'>
             <div className='row h-100'>
-                <Sidebar user={user} isLightMode={isLightMode} setLightMode={setLightMode}/>
+                <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
                     <div className='row d-flex flex-wrap'>
                         <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>

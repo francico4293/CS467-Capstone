@@ -1,12 +1,12 @@
 const userReducer = (state = null, action) => {
     switch (action.type) {
         case 'LOGIN':
-            return action.data
+            return action.payload;
         case 'LOGOUT':
-            return null
+            return null;
         default:
             return state
     }
 }
 
-export { userReducer }
+export { userReducer };

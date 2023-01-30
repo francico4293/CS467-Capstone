@@ -15,24 +15,23 @@ import { auth } from "./fire";
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
-  const [isLightMode, setLightMode] = useState(sessionStorage.getItem('theme') ? sessionStorage.getItem('theme') === 'true' : false);
   const [waiting, setWaiting] = useState(true);
 
   const dispatch = useDispatch()
+
   const user = useSelector(state => state.user)
+  const theme = useSelector(state => state.theme);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch({ type: "LOGIN", data: user })
+        dispatch({ type: "LOGIN", payload: user })
       } else {
-        dispatch({ type: "LOGOUT", data: null })
+        dispatch({ type: "LOGOUT", payload: null })
       }
       setWaiting(false);
     });
-
-    sessionStorage.setItem('theme', isLightMode);
-  }, [isLightMode]);
+  }, []);
 
   if (waiting) {
     return (
@@ -40,17 +39,17 @@ const App = () => {
     );
   } else {
     return (
-      <div id={isLightMode ? 'light' : 'dark'}>
+      <div id={theme}>
         <Router>
           {user ? (
             <Routes>
               <Route path='/' element={<Navigate to='/profile' />} />
-              <Route path='/profile' element={<Profile user={user} isLightMode={isLightMode} setLightMode={setLightMode} />} />
+              <Route path='/profile' element={<Profile />} />
             </Routes>
           ) : (
             <Routes>
               <Route path='/' element={<Navigate to='/login-signup' />} />
-              <Route path='/login-signup' element={<LoginSignup user={user} isLightMode={isLightMode} setLightMode={setLightMode} />} />
+              <Route path='/login-signup' element={<LoginSignup />} />
             </Routes>
           )}
         </Router>

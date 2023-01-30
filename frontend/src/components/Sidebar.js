@@ -1,8 +1,31 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import LoggedInNavItems from './LoggedInNavItems';
 import LoggedOutNavItems from './LoggedOutNavItems';
 
-const Sidebar = ({ user, isLightMode, setLightMode }) => {
+const Sidebar = () => {
+    const theme = useSelector(state => state.theme);
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
+    const handleLightButtonEvent = () => {
+        sessionStorage.setItem('theme', 'light');
+        dispatch({ type: 'THEME_CHANGE_REQUEST', payload: 'light' });
+    }
+
+    const handleDarkButtonEvent = () => {
+        sessionStorage.setItem('theme', 'dark');
+        dispatch({ type: 'THEME_CHANGE_REQUEST', payload: 'dark' });
+    }
+
+    const handleToggleEvent = () => {
+        if (theme === 'light') {
+            handleDarkButtonEvent();
+        } else {
+            handleLightButtonEvent();
+        }
+    }
+
     return (
         <div className='col-2 col-sm-3 col-md-2 d-flex flex-column justify-content-between sidebar'>
             <div className='mt-5'>
@@ -21,10 +44,10 @@ const Sidebar = ({ user, isLightMode, setLightMode }) => {
             
             <div className='d-none d-sm-flex justify-content-center mb-5'>
                 <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => setLightMode(true)}>
+                    <button type="button" className="btn btn-outline-secondary" onClick={handleLightButtonEvent}>
                         <i className="fa-solid fa-sun me-2"></i>Light
                     </button>
-                    <button type="button" className="btn btn-outline-secondary" onClick={() => setLightMode(false)}>
+                    <button type="button" className="btn btn-outline-secondary" onClick={handleDarkButtonEvent}>
                         <i className="fa-solid fa-moon me-2"></i>Dark
                     </button>
                 </div>
@@ -33,7 +56,7 @@ const Sidebar = ({ user, isLightMode, setLightMode }) => {
             <div className='d-sm-none d-flex justify-content-center align-items-center mb-5'>
                 <div className="form-check form-switch">
                     <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" 
-                        onChange={() => setLightMode(!isLightMode)} checked={!isLightMode}/>
+                        onChange={handleToggleEvent} checked={theme === 'dark'}/>
                 </div>
                 <i className="fa-solid fa-moon"></i>
             </div>
