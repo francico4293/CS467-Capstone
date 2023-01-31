@@ -4,7 +4,7 @@ import EditProfile from '../components/EditProfile';
 import ShowProfile from '../components/ShowProfile';
 import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import ProficiencyCard from '../components/ProficiencyCard';
-import EditProficiencyModal from '../components/EditProficiencyModal';
+import EditSkillModal from '../components/EditSkillModal';
 
 const Profile = () => {
     const [isEditing, setEditing] = useState(false);
@@ -15,7 +15,7 @@ const Profile = () => {
             <div className='row h-100'>
                 <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
-                    <EditProficiencyModal skillToEdit={skillToEdit}/>
+                    <EditSkillModal skillToEdit={skillToEdit}/>
                     <div className='row d-flex flex-wrap'>
                         <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>
                             <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle shadow-sm mt-3' width={'70%'}/>

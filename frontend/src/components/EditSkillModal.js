@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
-const EditProficiencyModal = ({ skillToEdit }) => {
+const EditSkillModal = ({ skillToEdit }) => {
     const [tempSkillName, setTempSkillName] = useState(skillToEdit.skillName);
     const [tempProficiency, setTempProficiency] = useState(skillToEdit.proficiency);
 
@@ -49,4 +49,4 @@ const EditProficiencyModal = ({ skillToEdit }) => {
     );
 }
 
-export default EditProficiencyModal;
+export default EditSkillModal;
