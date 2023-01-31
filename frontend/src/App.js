@@ -9,18 +9,16 @@ import {
 } from 'react-router-dom';
 import LoginSignup from './pages/LoginSignup';
 import Profile from './pages/Profile';
-import Loading from './components/Loading'
+import LoadingSymbol from './components/LoadingSymbol'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fire";
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
-  const [waiting, setWaiting] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch()
-
-  const user = useSelector(state => state.user)
-  const theme = useSelector(state => state.theme);
+  const { user, theme } = useSelector(state => state)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -29,16 +27,15 @@ const App = () => {
       } else {
         dispatch({ type: "LOGOUT", payload: null })
       }
-      setWaiting(false);
+      setLoading(false)
     });
   }, []);
 
-  if (waiting) {
-    return (
-      <Loading />
-    );
-  } else {
-    return (
+
+  return (
+    loading ?
+      <LoadingSymbol />
+      :
       <div id={theme}>
         <Router>
           {user ? (
@@ -55,8 +52,7 @@ const App = () => {
           )}
         </Router>
       </div>
-    );
-  }
+  );
 }
 
 export default App;

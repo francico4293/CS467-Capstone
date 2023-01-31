@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loading = () => {
+const LoadingSymbol = () => {
     return (
         <div className='spinner-container d-flex justify-content-center align-items-center'>
             <div className='spinner-border' role='status'>
@@ -10,4 +10,4 @@ const Loading = () => {
     );
 }
 
-export default Loading;
+export default LoadingSymbol;

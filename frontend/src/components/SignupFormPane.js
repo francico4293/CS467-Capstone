@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { signUpUser } from '../services/users';
+import { useDispatch } from 'react-redux'
 
 const SignupFormPane = () => {
     const [email, setEmail] = useState('');
@@ -12,9 +13,14 @@ const SignupFormPane = () => {
         alert("Signup failed!");
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        signUpUser(email, password, confirmPassword, firstName, lastName, setError);
+
+        if (password != confirmPassword) {
+            alert("Passwords do not match!")
+        } else {
+            await signUpUser(email, password, firstName, lastName, setError);
+        }
     }
 
     return (

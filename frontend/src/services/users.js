@@ -1,11 +1,12 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, beforeAuthStateChanged } from "firebase/auth";
 import { auth } from "../fire";
 
 const signUpUser = async (email, password, firstName, lastName, setError) => {
     try {
+        beforeAuthStateChanged(auth, async (user) => {
+            await createUserInDatabase(user, firstName, lastName);
+        })
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        await createUserInDatabase(user, firstName, lastName);
     } catch (error) {
         setError(error);
     };
