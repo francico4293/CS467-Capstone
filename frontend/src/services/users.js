@@ -22,6 +22,7 @@ const signInUser = async (email, password, setError) => {
 
 const signOutUser = async () => {
     await signOut(auth);
+    navigate('/login');
 };
 
 const createUserInDatabase = async (user, firstName, lastName) => {

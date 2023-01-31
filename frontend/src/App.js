@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom';
 import LoginSignup from './pages/LoginSignup';
 import Profile from './pages/Profile';
+import JobBoard from './pages/JobBoard';
+import Contacts from './pages/Contacts';
 import LoadingSymbol from './components/LoadingSymbol'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fire";
@@ -42,12 +44,13 @@ const App = () => {
             <Routes>
               <Route path='/' element={<Navigate to='/profile' />} />
               <Route path='/profile' element={<Profile />} />
-              <Route path='/login-signup' element={<Navigate to='/profile' />} />
+              <Route path='/job-board' element={<JobBoard />}/>
+              <Route path='contacts' element={<Contacts />}/>
             </Routes>
           ) : (
             <Routes>
-              <Route path='/login-signup' element={<LoginSignup />} />
-              <Route path='*' element={<Navigate to='/login-signup' />} />
+              <Route path='/' element={<Navigate to='/login' />} />
+              <Route path='/login' element={<LoginSignup />} />
             </Routes>
           )}
         </Router>

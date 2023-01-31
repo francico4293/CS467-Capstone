@@ -1,29 +1,33 @@
 import React from 'react';
 import Chart from 'chart.js/auto';
-import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const SkillFrequencyChart = () => {
-    const labels = ["Java", "Docker", "Python", "Express.js", "SQL"];
+    const labels = ["Java", "Docker", "Python", "Express.js", "SQL", "React.js"];
     const data = {
         labels: labels,
         datasets: [
             {
-                backgroundColor: 'rgba(34, 139, 34, 0.2)',
-                borderColor: 'rgb(34, 139, 34)',
-                data: [2, 1, 4, 2, 6],
-                borderWidth: 1
+                backgroundColor: [
+                    'rgb(128, 206, 225)',
+                    'rgb(180, 211, 178)',
+                    'rgb(165, 137, 193)',
+                    'rgb(225, 237, 81)',
+                    'rgb(240, 232, 205)',
+                    'rgb(20, 195, 50)'
+                ],
+                borderColor: 'rgba(0, 0, 0, 0.1)',
+                data: [2, 1, 4, 2, 6, 3],
+                borderWidth: 2
             },
         ],
     };
 
     const options = {
-        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: {
-                display: false
-            },
             title: {
                 text: 'Skills Frequency',
                 display: true,
@@ -31,12 +35,11 @@ const SkillFrequencyChart = () => {
                 font: {
                     size: 30
                 }
-            }
-        },
-        scales: {
-            y: {
-                ticks: {
-                    stepSize: 1
+            },
+            datalabels: {
+                color: '#000',
+                font: {
+                    size: 20
                 }
             }
         }
@@ -45,7 +48,7 @@ const SkillFrequencyChart = () => {
     return (
         <>
             <div className='canvas-container'>
-                <Bar data={data} options={options}/>
+                <Pie data={data} plugins={[ChartDataLabels]} options={options}/>
             </div>
         </>
     );
