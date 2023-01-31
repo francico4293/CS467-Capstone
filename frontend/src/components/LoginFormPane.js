@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { signInUser } from '../services/users';
-import { useNavigate } from 'react-router-dom';
 
 const LoginFormPane = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const navigate = useNavigate();
 
     const setError = (e) => {
         alert("Login failed!");
@@ -13,7 +11,7 @@ const LoginFormPane = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        signInUser(email, password, setError, navigate);
+        signInUser(email, password, setError);
     }
 
     return (

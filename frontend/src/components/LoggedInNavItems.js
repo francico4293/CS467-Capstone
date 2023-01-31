@@ -1,9 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { signOutUser } from '../services/users';
 
 const LoggedInNavItems = () => {
-    const navigate = useNavigate();
     
     return (
         <ul className='nav flex-column mt-5'>
@@ -26,7 +24,7 @@ const LoggedInNavItems = () => {
                 </a>
             </li>
             <li className='nav-item'>
-                <a className='nav-link' onClick = {() => signOutUser(navigate)}>
+                <a className='nav-link' onClick = {() => signOutUser()}>
                     <i className="fa-solid fa-right-from-bracket me-2"></i>
                     <span className='d-none d-sm-inline'>Logout</span>
                 </a>

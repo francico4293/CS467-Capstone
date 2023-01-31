@@ -45,11 +45,12 @@ const App = () => {
             <Routes>
               <Route path='/' element={<Navigate to='/profile' />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/login-signup' element={<Navigate to='/profile' />} />
             </Routes>
           ) : (
             <Routes>
-              <Route path='/' element={<Navigate to='/login-signup' />} />
               <Route path='/login-signup' element={<LoginSignup />} />
+              <Route path='*' element={<Navigate to='/login-signup' />} />
             </Routes>
           )}
         </Router>
