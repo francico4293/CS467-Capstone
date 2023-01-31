@@ -45,7 +45,8 @@ const App = () => {
               <Route path='/' element={<Navigate to='/profile' />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/job-board' element={<JobBoard />}/>
-              <Route path='contacts' element={<Contacts />}/>
+              <Route path='/contacts' element={<Contacts />}/>
+              <Route path='/login' element={<Navigate to='/profile' />} />
             </Routes>
           ) : (
             <Routes>
