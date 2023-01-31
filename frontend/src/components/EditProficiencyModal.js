@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
-const EditProficiencyModal = () => {
-    const proficiency = useSelector(state => state.proficiency);
-    const [tempProficiency, setTempProficiency] = useState(proficiency.percentage);
-    const [skillName, setSkillName] = useState(proficiency.skill);
+const EditProficiencyModal = ({ skillToEdit }) => {
+    const [tempSkillName, setTempSkillName] = useState(skillToEdit.skillName);
+    const [tempProficiency, setTempProficiency] = useState(skillToEdit.proficiency);
 
     useEffect(() => {
-        setTempProficiency(proficiency.percentage);
-        setSkillName(proficiency.skill);
-    }, [proficiency])
+        setTempSkillName(skillToEdit.skillName);
+        setTempProficiency(skillToEdit.proficiency);
+    }, [skillToEdit])
 
     return (
         <div className="modal fade" id="proficiencyModal" tabIndex="-1" aria-labelledby="proficiencyModalLabel" aria-hidden="true">
@@ -25,7 +23,7 @@ const EditProficiencyModal = () => {
                         <div className='row mb-2'>
                             <div className='col-6'>
                                 <label for='skill' className='form-label'>Skill name</label>
-                                <input type='text' className='form-control' id='skill' value={skillName} onChange={(e) => setSkillName(e.target.value)}/>
+                                <input type='text' className='form-control' id='skill' value={tempSkillName} onChange={(e) => setTempSkillName(e.target.value)}/>
                             </div>
                         </div>
                         <div className='row d-flex align-items-center justify-content-center'>
