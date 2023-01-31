@@ -14,13 +14,13 @@ const LoggedInNavItems = () => {
                 </a>
             </li>
             <li className='nav-item'>
-                <a className='nav-link'>
+                <a className='nav-link' href='/job-board'>
                     <i className="fa-solid fa-chess-board me-2"></i>
                     <span className='d-none d-sm-inline'>Job Board</span>
                 </a>
             </li>
             <li className='nav-item'>
-                <a className='nav-link'>
+                <a className='nav-link' href='/contacts'>
                     <i className="fa-solid fa-address-book me-2"></i>
                     <span className='d-none d-sm-inline'>Contacts</span>
                 </a>
