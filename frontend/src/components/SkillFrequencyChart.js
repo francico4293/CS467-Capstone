@@ -17,9 +17,9 @@ const SkillFrequencyChart = () => {
                     'rgb(240, 232, 205)',
                     'rgb(20, 195, 50)'
                 ],
-                borderColor: 'rgba(0, 0, 0, 0.2)',
+                borderColor: 'rgba(0, 0, 0, 0.1)',
                 data: [2, 1, 4, 2, 6, 3],
-                borderWidth: 1
+                borderWidth: 2
             },
         ],
     };

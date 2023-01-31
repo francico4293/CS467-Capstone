@@ -5,24 +5,21 @@ import "react-circular-progressbar/dist/styles.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const EditSkillModal = ({ skillToEdit, show, setShow }) => {
+const AddSkillModal = ({ show, setShow }) => {
     const theme = useSelector(state => state.theme);
-    const [skillName, setSkillName] = useState(skillToEdit.skillName);
-    const [proficiency, setProficiency] = useState(skillToEdit.proficiency);
+    const [skillName, setSkillName] = useState('');
+    const [proficiency, setProficiency] = useState(50);
 
     const handleClose = () => {
+        setSkillName('');
+        setProficiency(50);
         setShow(false);
     }
-
-    useEffect(() => {
-        setSkillName(skillToEdit.skillName);
-        setProficiency(skillToEdit.proficiency);
-    }, [show]);
 
     return (
         <Modal id={`${theme}`} className='edit-proficiency-modal' show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Edit Skill</Modal.Title>
+                <Modal.Title>Add Skill</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className='row mb-2'>
@@ -56,4 +53,4 @@ const EditSkillModal = ({ skillToEdit, show, setShow }) => {
     );
 }
 
-export default EditSkillModal;
+export default AddSkillModal;
