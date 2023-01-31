@@ -3,6 +3,7 @@ require('express-async-errors')
 const express = require('express')
 const path = require('path')
 const middleware = require('./middleware')
+const usersRouter = require('./controllers/users')
 
 const PORT = process.env.PORT || 3000;
 const app = express()
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(middleware.decodeIDToken)
+app.use('/api/users', usersRouter)
 
 
 // send static files if no route matches
