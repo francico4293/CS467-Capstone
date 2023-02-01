@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInUser } from '../services/users';
+import { signInUser, signInWithGoogle } from '../services/users';
 
 const LoginFormPane = () => {
     const [email, setEmail] = useState();
@@ -19,7 +19,7 @@ const LoginFormPane = () => {
             <div className='row'>
                 <div className='col-12'>
                     <div className="mb-2">
-                        <label for="email" className="form-label">Email</label>
+                        <label htmlFor="email" className="form-label">Email</label>
                         <input type="email" className="form-control" id="email" onChange={({ target }) =>
                             setEmail(target.value)}/>
                     </div>
@@ -28,7 +28,7 @@ const LoginFormPane = () => {
             <div className='row'>
                 <div className='col-12'>
                     <div className="mb-2">
-                        <label for="password" className="form-label">Password</label>
+                        <label htmlFor="password" className="form-label">Password</label>
                         <input type="password" className="form-control" id="password" onChange={({ target }) =>
                             setPassword(target.value)}/>
                     </div>
@@ -37,7 +37,7 @@ const LoginFormPane = () => {
             <button type="submit" className="btn btn-primary mt-2">Login</button>
             <div className='form-separator mt-3'>or</div>
             <div className="d-grid mt-3">
-                <button className="btn btn-primary google-button-container" type="button">
+                <button className="btn btn-primary google-button-container" type="button" onClick={() => signInWithGoogle(setError)}>
                     <i className="fa-brands fa-google"></i>
                     <span>Login with Google</span>
                 </button>

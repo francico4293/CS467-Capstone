@@ -12,7 +12,7 @@ import Profile from './pages/Profile';
 import JobBoard from './pages/JobBoard';
 import Contacts from './pages/Contacts';
 import LoadingSymbol from './components/LoadingSymbol'
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
 import { auth } from "./fire";
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -25,6 +25,7 @@ const App = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        updatePassword(user, 'something1')
         dispatch({ type: "LOGIN", payload: user })
       } else {
         dispatch({ type: "LOGOUT", payload: null })

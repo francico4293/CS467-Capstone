@@ -1,4 +1,11 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, beforeAuthStateChanged } from "firebase/auth";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    beforeAuthStateChanged,
+    signInWithPopup,
+    GoogleAuthProvider
+} from "firebase/auth";
 import { auth } from "../fire";
 
 const signUpUser = async (email, password, firstName, lastName, setError) => {
@@ -17,7 +24,33 @@ const signInUser = async (email, password, setError) => {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
         setError(error);
+        console.log(error.message)
     };
+}
+
+const signInWithGoogle = async (setError) => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            console.log(user.displayName)
+            // ...
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(credential)
+            // ...
+        });
 }
 
 const signOutUser = async () => {
@@ -36,4 +69,4 @@ const createUserInDatabase = async (user, firstName, lastName) => {
     })
 }
 
-export { signInUser, signOutUser, signUpUser }
+export { signInUser, signOutUser, signUpUser, signInWithGoogle }

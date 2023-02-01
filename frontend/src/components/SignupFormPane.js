@@ -28,14 +28,14 @@ const SignupFormPane = () => {
             <div className='row'>
                 <div className='col-6'>
                     <div className='mb-2'>
-                        <label for='first-name' className='form-label'>First name</label>
+                        <label htmlFor='first-name' className='form-label'>First name</label>
                         <input type='text' className='form-control' id='first-name' onChange={({ target }) =>
                             setFirstName(target.value)} />
                     </div>
                 </div>
                 <div className='col-6'>
                     <div className='mb-2'>
-                        <label for='last-name' className='form-label'>Last name</label>
+                        <label htmlFor='last-name' className='form-label'>Last name</label>
                         <input type='text' className='form-control' id='last-name' onChange={({ target }) =>
                             setLastName(target.value)} />
                     </div>
@@ -44,7 +44,7 @@ const SignupFormPane = () => {
             <div className='row'>
                 <div className='col-12'>
                     <div className='mb-2'>
-                        <label for='email' className='form-label'>Email</label>
+                        <label htmlFor='email' className='form-label'>Email</label>
                         <input type='email' className='form-control' id='email' onChange={({ target }) =>
                             setEmail(target.value)} />
                     </div>
@@ -53,7 +53,7 @@ const SignupFormPane = () => {
             <div className='row'>
                 <div className='col-12'>
                     <div className="mb-2">
-                        <label for="password" className="form-label">Password</label>
+                        <label htmlFor="password" className="form-label">Password</label>
                         <input type="password" className="form-control" id="password" onChange={({ target }) =>
                             setPassword(target.value)} />
                     </div>
@@ -62,7 +62,7 @@ const SignupFormPane = () => {
             <div className='row'>
                 <div className='col-12'>
                     <div className="mb-2">
-                        <label for="confirm-password" className="form-label">Confirm password</label>
+                        <label htmlFor="confirm-password" className="form-label">Confirm password</label>
                         <input type="password" className="form-control" id="password" onChange={({ target }) => 
                             setConfirmPassword(target.value)}/>
                     </div>
