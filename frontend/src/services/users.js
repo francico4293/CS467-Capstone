@@ -37,18 +37,17 @@ const signInWithGoogle = async (setError) => {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            console.log(user.displayName)
             // ...
         }).catch((error) => {
+            setError(error)
             // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
             // The email of the user's account used.
             const email = error.customData.email;
-            
+
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
-            console.log(credential)
             // ...
         });
 }
@@ -69,4 +68,38 @@ const createUserInDatabase = async (user, firstName, lastName) => {
     })
 }
 
-export { signInUser, signOutUser, signUpUser, signInWithGoogle }
+const getUser = async (setError) => {
+    const token = await user.getIdToken();
+    const response = await fetch(`/api/users/`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    if (response.status === 200) {
+        return response.json()
+    } else {
+        const error = await response.json()
+        setError(error)
+    }
+}
+
+const editUser = async (newProps, setError) => {
+    const token = await user.getIdToken();
+    await fetch(`/api/users/`, {
+        method: 'PUT',
+        body: JSON.stringify(newProps),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    if (response.status === 200) {
+        return response.json()
+    } else {
+        const error = await response.json()
+        setError(error)
+    }
+}
+
+export { signInUser, signOutUser, signUpUser, getUser, editUser, signInWithGoogle }
