@@ -4,7 +4,7 @@ import {
     signOut,
     beforeAuthStateChanged,
     signInWithPopup,
-    GoogleAuthProvider
+    GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "../fire";
 
@@ -102,4 +102,4 @@ const editUser = async (user, newProps, setError) => {
     }
 }
 
-export { signInUser, signOutUser, signUpUser, getUser, editUser, signInWithGoogle }
+export { signInUser, signOutUser, signUpUser, getUser, editUser, signInWithGoogle };

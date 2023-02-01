@@ -17,11 +17,11 @@ const EditProfileModal = ({ show, setShow }) => {
 
     const setError = () => {
         alert("Profile update failed!");
-      }
+    }
 
     const handleSave = async () => {
         // const data = await editUser(user.auth, { firstName, lastName, email, description }, setError);
-        dispatch(editUser(user.auth, { picture, firstName, lastName, email, description }), setError);
+        dispatch(editUser(user.auth, { firstName, lastName, email, description }), setError);
         setShow(false);
     }
 

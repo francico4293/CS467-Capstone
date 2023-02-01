@@ -15,6 +15,7 @@ const Profile = () => {
     const [showAddSkillModal, setShowAddSkillModal] = useState(false);
     const [showEditSkillModal, setShowEditSkillModal] = useState(false);
     const [showEditPictureModal, setShowEditPictureModal] = useState(false);
+    const [pictureUploading, setPictureUploading] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
 
     return (
@@ -25,10 +26,17 @@ const Profile = () => {
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
                     <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal}/>
-                    <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal}/>
+                    <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal} setPictureUploading={setPictureUploading}/>
                     <div className='row d-flex flex-wrap'>
                         <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>
-                            <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle shadow-sm mt-3' width={'70%'} onClick={() => setShowEditPictureModal(true)}/>
+                            {
+                                pictureUploading 
+                                    ? (
+                                        <div className='spinner-border' role='status'>
+                                            <span className='visually-hidden'>Loading...</span>
+                                        </div>
+                                    ) : <img src={user.auth.photoURL ? user.auth.photoURL : `/imgs/profile-image.svg`} className='img-thumbnail shadow-sm mt-3' width={'70%'} onClick={() => setShowEditPictureModal(true)}/>
+                            }
                             <div className='row mt-3 me-5 ms-5 mb-3 w-75'>
                                 <div className='col-12'>
                                     <UserProfile setShowEditProfileModal={setShowEditProfileModal}/>

@@ -1,6 +1,14 @@
-const editUser = (user, newProps, setError) => {
+import { updateProfile } from "firebase/auth";
+import { 
+    ref, 
+    uploadBytes, 
+    getDownloadURL 
+} from 'firebase/storage';
+import { storage } from "../fire";
+
+const editUser = (userAuth, newProps, setError) => {
     return async function(dispatch) {
-        const token = await user.getIdToken();
+        const token = await userAuth.getIdToken();
         const response = await fetch(`/api/users/`, {
             method: 'PUT',
             body: JSON.stringify(newProps),
@@ -11,7 +19,7 @@ const editUser = (user, newProps, setError) => {
         });
         if (response.status === 200) {
             const result = await response.json();
-            dispatch({ type: 'USER_REQUEST_SUCCESS', payload: { auth: user, data: result } });
+            dispatch({ type: 'USER_REQUEST_SUCCESS', payload: { auth: userAuth, data: result } });
         } else {
             const error = await response.json();
             setError(error);
@@ -19,4 +27,18 @@ const editUser = (user, newProps, setError) => {
     }
 }
 
-export { editUser };
+const uploadProfilePicture = (user, file, setUploading) => {
+    return async function(dispatch) {
+        const fileRef = ref(storage, user.auth.uid + '.png');
+
+        setUploading(true);
+        await uploadBytes(fileRef, file);
+        const photoURL = await getDownloadURL(fileRef);
+        setUploading(false);
+
+        await updateProfile(user.auth, { photoURL });
+        dispatch({ type: 'USER_REQUEST_SUCCESS', payload: { auth: user.auth, data: user.data } });
+    }
+}
+
+export { editUser, uploadProfilePicture };
