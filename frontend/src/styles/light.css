@@ -159,3 +159,7 @@ body {
   transform: translateY(-3px);
   box-shadow: 1px 5px 8px rgb(175, 175, 175);
 }
+
+.img-thumbnail {
+  cursor: pointer;
+}

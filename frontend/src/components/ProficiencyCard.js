@@ -12,7 +12,7 @@ const ProficiencyCard = ({ skillName, proficiency, setSkillToEdit, setShowEditSk
         <div className="card mt-3">
             <div className="card-body">
                 <div className='d-flex justify-content-between'>
-                    <h3 className="card-title">{skillName} Proficiency</h3>
+                    <h3 className="card-title">{skillName}</h3>
                     <div>
                         <i className="fa-solid fa-pen-to-square me-2" onClick={handleClick}></i>
                         <i className="fa-solid fa-trash"></i>

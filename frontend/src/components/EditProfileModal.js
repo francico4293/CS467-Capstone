@@ -21,7 +21,7 @@ const EditProfileModal = ({ show, setShow }) => {
 
     const handleSave = async () => {
         // const data = await editUser(user.auth, { firstName, lastName, email, description }, setError);
-        dispatch(editUser(user.auth, { firstName, lastName, email, description }), setError);
+        dispatch(editUser(user.auth, { picture, firstName, lastName, email, description }), setError);
         setShow(false);
     }
 
@@ -40,12 +40,12 @@ const EditProfileModal = ({ show, setShow }) => {
             </Modal.Header>
             <Modal.Body>
                 <div id='edit-bio'>
-                    <div className='row mb-2'>
+                    {/* <div className='row mb-2'>
                         <div className='col-12'>
                             <label for='profile-picture' className='form-label'>Update profile picture</label>
-                            <input type="file" className="form-control" id="profile-picture"></input>
+                            <input type="file" className="form-control" id="profile-picture" onChange={(e) => setPicture(e.target.files[0])}></input>
                         </div>
-                    </div>
+                    </div> */}
                     <div className='row mb-2'>
                         <div className='col-6'>
                             <label for='first-name' className='form-label'>First name</label>
