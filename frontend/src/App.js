@@ -31,7 +31,7 @@ const App = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const data = await getUser(user, setError)
-        dispatch({ type: "LOGIN", payload: {data, ...user} })
+        dispatch({ type: "LOGIN", payload: {data, auth: user} })
       } else {
         dispatch({ type: "LOGOUT", payload: null })
       }

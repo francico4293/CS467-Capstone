@@ -5,8 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { editUser } from '../services/users';
 
 const EditProfileModal = ({ show, setShow }) => {
-    const user = useSelector(state => state.user);
-    const theme = useSelector(state => state.theme);
+    const { user, theme } = useSelector(state => state);
 
     const [picture, setPicture] = useState(user.data.picture);
     const [firstName, setFirstName] = useState(user.data.firstName);
@@ -14,8 +13,13 @@ const EditProfileModal = ({ show, setShow }) => {
     const [email, setEmail] = useState(user.data.email);
     const [description, setDescription] = useState(user.data.description);
 
-    const handleSave = () => {
+    const setError = () => {
+        alert("Profile update failed!");
+      }
 
+    const handleSave = () => {
+        editUser(user.auth, { firstName, lastName, email, description }, setError);
+        setShow(false);
     }
 
     const handleClose = () => {
@@ -67,7 +71,7 @@ const EditProfileModal = ({ show, setShow }) => {
             <Button variant="secondary" onClick={handleClose}>
                 Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleSave}>
                 Save Changes
             </Button>
             </Modal.Footer>
