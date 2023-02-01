@@ -5,7 +5,12 @@ createUser = async (uid, firstName, lastName, email) => {
     await docRef.set({
         firstName,
         lastName,
-        email
+        email,
+        picture: '',
+        description: '',
+        jobs: [],
+        contacts: [],
+        skills: []
     });
 
     const doc = await docRef.get()

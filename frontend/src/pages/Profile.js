@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import EditProfile from '../components/EditProfile';
-import ShowProfile from '../components/ShowProfile';
+import UserProfile from '../components/UserProfile';
 import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import ProficiencyCard from '../components/ProficiencyCard';
 import AddSkillModal from '../components/AddSkillModal';
 import EditSkillModal from '../components/EditSkillModal';
+import EditProfileModal from '../components/EditProfileModal';
 
 const Profile = () => {
-    const [isEditing, setEditing] = useState(false);
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showAddSkillModal, setShowAddSkillModal] = useState(false);
     const [showEditSkillModal, setShowEditSkillModal] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
@@ -20,14 +20,13 @@ const Profile = () => {
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
+                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal}/>
                     <div className='row d-flex flex-wrap'>
                         <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>
                             <img src={'imgs/profile-image.svg'} className='img-thumbnail rounded-circle shadow-sm mt-3' width={'70%'}/>
-                            <div className='row mt-3 me-5 ms-5 mb-3'>
+                            <div className='row mt-3 me-5 ms-5 mb-3 w-75'>
                                 <div className='col-12'>
-                                    {
-                                        isEditing ? <EditProfile setEditing={setEditing}/> : <ShowProfile setEditing={setEditing}/>
-                                    }
+                                    <UserProfile setShowEditProfileModal={setShowEditProfileModal}/>
                                 </div>
                             </div>
                         </div>
