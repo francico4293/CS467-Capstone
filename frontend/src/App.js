@@ -30,7 +30,7 @@ const App = () => {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const data = await getUser(user, setError)
+        const data = await getUser(user, setError);
         dispatch({ type: "LOGIN", payload: {data, auth: user} })
       } else {
         dispatch({ type: "LOGOUT", payload: null })
@@ -38,7 +38,6 @@ const App = () => {
       setLoading(false)
     });
   }, []);
-
 
   return (
     loading ?

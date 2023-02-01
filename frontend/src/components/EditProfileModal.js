@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { editUser } from '../services/users';
+import { editUser } from '../actions/userActions';
+// import { editUser } from '../services/users';
 
 const EditProfileModal = ({ show, setShow }) => {
+    const dispatch = useDispatch();
     const { user, theme } = useSelector(state => state);
 
     const [picture, setPicture] = useState(user.data.picture);
@@ -17,8 +19,9 @@ const EditProfileModal = ({ show, setShow }) => {
         alert("Profile update failed!");
       }
 
-    const handleSave = () => {
-        editUser(user.auth, { firstName, lastName, email, description }, setError);
+    const handleSave = async () => {
+        // const data = await editUser(user.auth, { firstName, lastName, email, description }, setError);
+        dispatch(editUser(user.auth, { firstName, lastName, email, description }), setError);
         setShow(false);
     }
 

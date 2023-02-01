@@ -2,7 +2,6 @@ import React from 'react';
 import { signOutUser } from '../services/users';
 
 const LoggedInNavItems = () => {
-    
     return (
         <ul className='nav flex-column mt-5'>
             <li className='nav-item'>

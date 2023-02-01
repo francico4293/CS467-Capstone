@@ -1,7 +1,9 @@
 import { 
     legacy_createStore as createStore, 
-    combineReducers 
+    combineReducers,
+    applyMiddleware
 } from 'redux'
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { userReducer } from './reducers/userReducer';
 import { themeReducer } from './reducers/themeReducer';
@@ -17,6 +19,6 @@ const themeFromSessionStorage = sessionStorage.getItem('theme')
 
 const initialState = { theme: themeFromSessionStorage };
 
-const store = createStore(reducers, initialState, composeWithDevTools());
+const store = createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
