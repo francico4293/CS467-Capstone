@@ -68,7 +68,7 @@ const createUserInDatabase = async (user, firstName, lastName) => {
     })
 }
 
-const getUser = async (setError) => {
+const getUser = async (user, setError) => {
     const token = await user.getIdToken();
     const response = await fetch(`/api/users/`, {
         headers: {
@@ -84,9 +84,9 @@ const getUser = async (setError) => {
     }
 }
 
-const editUser = async (newProps, setError) => {
+const editUser = async (user, newProps, setError) => {
     const token = await user.getIdToken();
-    await fetch(`/api/users/`, {
+    const response = await fetch(`/api/users/`, {
         method: 'PUT',
         body: JSON.stringify(newProps),
         headers: {

@@ -15,6 +15,7 @@ import LoadingSymbol from './components/LoadingSymbol'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fire";
 import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from './services/users';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -22,10 +23,15 @@ const App = () => {
   const dispatch = useDispatch()
   const { user, theme } = useSelector(state => state)
 
+  const setError = (e) => {
+    alert("Could not fetch data!");
+  }
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        dispatch({ type: "LOGIN", payload: user })
+        const data = await getUser(user, setError)
+        dispatch({ type: "LOGIN", payload: {data, ...user} })
       } else {
         dispatch({ type: "LOGOUT", payload: null })
       }
