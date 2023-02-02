@@ -6,7 +6,6 @@ createUser = async (uid, firstName, lastName, email) => {
         firstName,
         lastName,
         email,
-        picture: '',
         description: '',
         jobs: [],
         contacts: [],
