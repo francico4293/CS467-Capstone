@@ -1,15 +1,16 @@
 import React from 'react';
+import Nav from 'react-bootstrap/Nav';
 
 const LoggedOutNavItems = () => {
     return (
-        <ul className='nav flex-column mt-5'>
-            <li className='nav-item'>
-                <a className='nav-link active' href='/profile'>
+        <Nav className='flex-column mt-5' activeKey='/login'>
+            <Nav.Item>
+                <Nav.Link href='/login'>
                     <i className="fa-solid fa-right-to-bracket me-2"></i>
                     <span className='d-none d-sm-inline'>Login</span>
-                </a>
-            </li>
-        </ul>
+                </Nav.Link>
+            </Nav.Item>
+        </Nav>
     );
 }
 
