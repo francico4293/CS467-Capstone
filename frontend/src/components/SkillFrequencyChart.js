@@ -1,45 +1,41 @@
 import React from 'react';
 import Chart from 'chart.js/auto';
-import { Pie } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Bar } from 'react-chartjs-2';
 
 const SkillFrequencyChart = () => {
-    const labels = ["Java", "Docker", "Python", "Express.js", "SQL", "React.js"];
+    const labels = ["Java", "Docker", "Python", "Express.js", "SQL", "React.js", "JavaScript", "C++"];
     const data = {
         labels: labels,
         datasets: [
             {
-                backgroundColor: [
-                    'rgb(128, 206, 225)',
-                    'rgb(180, 211, 178)',
-                    'rgb(165, 137, 193)',
-                    'rgb(225, 237, 81)',
-                    'rgb(240, 232, 205)',
-                    'rgb(20, 195, 50)'
-                ],
-                borderColor: 'rgba(0, 0, 0, 0.1)',
-                data: [2, 1, 4, 2, 6, 3],
-                borderWidth: 2
+                backgroundColor: 'rgba(34, 139, 34, 0.2)',
+                borderColor: 'rgb(34, 139, 34)',
+                data: [2, 1, 4, 2, 6, 3, 1, 1],
+                borderWidth: 1
             },
         ],
     };
 
     const options = {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
+            legend: {
+                display: false
+            },
             title: {
                 text: 'Skills Frequency',
                 display: true,
-                padding: 30,
                 font: {
                     size: 30
                 }
-            },
-            datalabels: {
-                color: '#000',
-                font: {
-                    size: 20
+            }
+        },
+        scales: {
+            y: {
+                ticks: {
+                    stepSize: 1
                 }
             }
         }
@@ -48,7 +44,7 @@ const SkillFrequencyChart = () => {
     return (
         <>
             <div className='canvas-container'>
-                <Pie data={data} plugins={[ChartDataLabels]} options={options}/>
+                <Bar data={data} options={options}/>
             </div>
         </>
     );
