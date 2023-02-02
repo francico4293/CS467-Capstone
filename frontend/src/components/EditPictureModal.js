@@ -4,20 +4,32 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { uploadProfilePicture } from '../actions/userActions';
 import Cropper from 'react-easy-crop';
+import { getCroppedImg } from '../utils/imageUtils';
 
 const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
     const { user, theme } = useSelector(state => state);
     const [picture, setPicture] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const dispatch = useDispatch();
+
+    const cropComplete = (croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
 
     const setError = () => {
         alert("Profile update failed!");
     }
 
-    const handleSave = () => {
-        dispatch(uploadProfilePicture(user, picture, setPictureUploading));
+    const handleSave = async () => {
+        try {
+            const { file, url } = await getCroppedImg(picture, croppedAreaPixels);
+            dispatch(uploadProfilePicture(user, file, setPictureUploading));
+        } catch (error) {
+            console.log(error);
+        }
+        setPicture(null);
         setShow(false);
     }
 
@@ -42,6 +54,7 @@ const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
                                         aspect={1}
                                         onCropChange={setCrop}
                                         onZoomChange={setZoom}
+                                        onCropComplete={cropComplete}
                                     />
                                 </div>
                                 <div className='mt-3'>
@@ -63,7 +76,7 @@ const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
                 Close
             </Button>
             <Button variant="primary" onClick={handleSave}>
-                Save Changes
+                Upload
             </Button>
             </Modal.Footer>
         </Modal>

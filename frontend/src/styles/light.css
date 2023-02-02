@@ -160,7 +160,7 @@ body {
   box-shadow: 1px 5px 8px rgb(175, 175, 175);
 }
 
-.img-thumbnail {
+.img-fluid {
   cursor: pointer;
 }
 
