@@ -35,7 +35,10 @@ const Profile = () => {
                                         <div className='spinner-border' role='status'>
                                             <span className='visually-hidden'>Loading...</span>
                                         </div>
-                                    ) : <img src={user.auth.photoURL ? user.auth.photoURL : `/imgs/profile-image.svg`} className='img-fluid rounded-circle shadow mt-3' width={'80%'} onClick={() => setShowEditPictureModal(true)}/>
+                                    ) : <img src={user.auth.photoURL ? user.auth.photoURL : `/imgs/profile-image.svg`} 
+                                            className='img-thumbnail img-fluid rounded-circle border shadow mt-3' width={'80%'}
+                                            onClick={() => setShowEditPictureModal(true)}
+                                        />
                             }
                             <div className='row mt-3 me-5 ms-5 mb-3 w-75'>
                                 <div className='col-12'>
