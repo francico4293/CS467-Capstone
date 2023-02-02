@@ -163,3 +163,16 @@ body {
 .img-thumbnail {
   cursor: pointer;
 }
+
+.edit-picture-modal {
+  position: absolute;
+}
+
+.crop-container {
+  height: 50vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+}
