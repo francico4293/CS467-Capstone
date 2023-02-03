@@ -8,6 +8,7 @@ import AddSkillModal from '../components/AddSkillModal';
 import EditSkillModal from '../components/EditSkillModal';
 import EditProfileModal from '../components/EditProfileModal';
 import EditPictureModal from '../components/EditPictureModal';
+import Alert from 'react-bootstrap/Alert';
 
 const Profile = () => {
     const user = useSelector(state => state.user);
@@ -17,15 +18,23 @@ const Profile = () => {
     const [showEditPictureModal, setShowEditPictureModal] = useState(false);
     const [pictureUploading, setPictureUploading] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
+    const [showAlert, setShowAlert] = useState(false);
+
+    const handleClose = () => {
+        setShowAlert(false);
+    }
 
     return (
         <div className='container-fluid h-100'>
             <div className='row h-100'>
                 <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
+                    <Alert variant='success' show={showAlert} onClose={handleClose} dismissible>
+                        Password updated succesfully!
+                    </Alert>
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
-                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal}/>
+                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal} setShowAlert={setShowAlert}/>
                     <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal} setPictureUploading={setPictureUploading}/>
                     <div className='row d-flex flex-wrap'>
                         <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>

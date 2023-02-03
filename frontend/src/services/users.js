@@ -5,6 +5,9 @@ import {
     beforeAuthStateChanged,
     signInWithPopup,
     GoogleAuthProvider,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword
 } from "firebase/auth";
 import { auth } from "../fire";
 
@@ -102,4 +105,10 @@ const editUser = async (user, newProps, setError) => {
     }
 }
 
-export { signInUser, signOutUser, signUpUser, getUser, editUser, signInWithGoogle };
+const updateUserPassword = async (user, currentPassword, newPassword) => {
+    const credential = EmailAuthProvider.credential(user.auth.email, currentPassword);
+    await reauthenticateWithCredential(user.auth, credential);
+    return await updatePassword(user.auth, newPassword);
+}
+
+export { signInUser, signOutUser, signUpUser, getUser, editUser, signInWithGoogle, updateUserPassword };

@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { editUser } from '../actions/userActions';
+import { updateUserPassword } from '../services/users';
 
-const EditProfileModal = ({ show, setShow }) => {
+const EditProfileModal = ({ show, setShow, setShowAlert }) => {
     const dispatch = useDispatch();
     const { user, theme } = useSelector(state => state);
     const [firstName, setFirstName] = useState(user.data.firstName);
@@ -14,6 +15,7 @@ const EditProfileModal = ({ show, setShow }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [updatePasswordError, setUpdatePasswordError] = useState(false);
 
     const setError = () => {
         alert("Profile update failed!");
@@ -24,11 +26,31 @@ const EditProfileModal = ({ show, setShow }) => {
         setShow(false);
     }
 
+    const handlePasswordUpdate = async () => {
+        try {
+            if (newPassword !== confirmPassword) {
+                throw new Error();
+            }
+
+            await updateUserPassword(user, currentPassword, newPassword);
+
+            setShowAlert(true);
+            setShow(false);
+        } catch (error) {
+            console.log(error);
+            setUpdatePasswordError(true);
+        }
+    }
+
     const handleClose = () => {
         setFirstName(user.data.firstName);
         setLastName(user.data.lastName);
         setEmail(user.data.email);
         setDescription(user.data.description);
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setUpdatePasswordError(false);
         setShow(false);
     }
 
@@ -89,26 +111,38 @@ const EditProfileModal = ({ show, setShow }) => {
                         <div className='row mb-2'>
                             <div className='col-12'>
                                 <label for='current-password' className='form-label'>Current Password</label>
-                                <input type='password' className='form-control' id='current-password' value={email} onChange={e => setEmail(e.target.value)}/>
+                                <input type='password' className='form-control' id='current-password' value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/>
                             </div>
                         </div>
                         <div className='row mb-2'>
                             <div className='col-12'>
                                 <label for='new-password' className='form-label'>New Password</label>
-                                <input type='password' className='form-control' id='new-password' value={email} onChange={e => setEmail(e.target.value)}/>
+                                <input type='password' className='form-control' id='new-password' value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
                             </div>
                         </div>
                         <div className='row mb-3'>
                             <div className='col-12'>
                                 <label for='confirm-password' className='form-label'>Confirm Password</label>
-                                <input type='password' className='form-control' id='confirm-password' value={email} onChange={e => setEmail(e.target.value)}/>
+                                <input type='password' className='form-control' id='confirm-password' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
                             </div>
                         </div>
+                        {
+                            updatePasswordError 
+                                ? (
+                                    <div className='text-danger'>
+                                        <p>Failed to update password:</p>
+                                        <ul>
+                                            <li>Verify that current password is correct</li>  
+                                            <li>Verify that new password matches confirm password field</li> 
+                                        </ul>
+                                    </div>
+                                ) : <></>
+                        }
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close
                             </Button>
-                            <Button variant="primary">
+                            <Button variant="primary" onClick={handlePasswordUpdate}>
                                 Update
                             </Button>
                         </Modal.Footer>
