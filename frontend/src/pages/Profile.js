@@ -8,7 +8,7 @@ import AddSkillModal from '../components/AddSkillModal';
 import EditSkillModal from '../components/EditSkillModal';
 import EditProfileModal from '../components/EditProfileModal';
 import EditPictureModal from '../components/EditPictureModal';
-import Alert from 'react-bootstrap/Alert';
+import SuccessAlert from '../components/SuccessAlert';
 
 const Profile = () => {
     const user = useSelector(state => state.user);
@@ -20,18 +20,12 @@ const Profile = () => {
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
     const [showAlert, setShowAlert] = useState(false);
 
-    const handleClose = () => {
-        setShowAlert(false);
-    }
-
     return (
         <div className='container-fluid h-100'>
             <div className='row h-100'>
                 <Sidebar/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
-                    <Alert variant='success' show={showAlert} onClose={handleClose} dismissible>
-                        Password updated succesfully!
-                    </Alert>
+                    <SuccessAlert message={'Password updated succesfully!'} show={showAlert} setShow={setShowAlert}/>
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
                     <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal} setShowAlert={setShowAlert}/>
