@@ -157,9 +157,14 @@ body {
   cursor: pointer;
 }
 
-.spinner-container {
+#dark .spinner-container {
   width: 100vw;
   height: 100vh;
+  background-color: rgb(25, 25, 25);
+}
+
+#dark .spinner-border {
+  color: white;
 }
 
 #dark .card {
