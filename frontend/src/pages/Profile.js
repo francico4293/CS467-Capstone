@@ -18,7 +18,7 @@ const Profile = () => {
     const [showEditPictureModal, setShowEditPictureModal] = useState(false);
     const [pictureUploading, setPictureUploading] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
-    const [showAlert, setShowAlert] = useState(false);
+    const [showAlert, setShowAlert] = useState(sessionStorage.getItem('showPasswordUpdateAlert') === 'true');
 
     return (
         <div className='container-fluid h-100'>

@@ -33,7 +33,8 @@ usersRouter.delete('/', async (req, res) => {
     if (!req.currentUser) {
         return res.status(401).json({ error: 'token missing or invalid' })
     }
-    await deleteUser(uid)
+    const { uid } = req.currentUser;
+    await deleteUser(uid);
     res.status(204).send()
 })
 

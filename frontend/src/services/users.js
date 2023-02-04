@@ -111,4 +111,12 @@ const updateUserPassword = async (user, currentPassword, newPassword) => {
     return await updatePassword(user.auth, newPassword);
 }
 
-export { signInUser, signOutUser, signUpUser, getUser, editUser, signInWithGoogle, updateUserPassword };
+export { 
+    signInUser, 
+    signOutUser, 
+    signUpUser, 
+    getUser, 
+    editUser, 
+    signInWithGoogle, 
+    updateUserPassword
+};

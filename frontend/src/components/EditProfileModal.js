@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { 
+    useSelector, 
+    useDispatch
+} from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { editUser } from '../actions/userActions';
 import { updateUserPassword } from '../services/users';
 
-const EditProfileModal = ({ show, setShow, setShowAlert }) => {
+const EditProfileModal = ({ show, setShow }) => {
     const dispatch = useDispatch();
     const { user, theme } = useSelector(state => state);
     const [firstName, setFirstName] = useState(user.data.firstName);
@@ -15,7 +18,9 @@ const EditProfileModal = ({ show, setShow, setShowAlert }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [deleteAccountPassword, setDeleteAccountPassword] = useState('');
     const [updatePasswordError, setUpdatePasswordError] = useState(false);
+    const [deleteAccountError, setDeleteAccountError] = useState(false);
 
     const setError = () => {
         alert("Profile update failed!");
@@ -34,10 +39,11 @@ const EditProfileModal = ({ show, setShow, setShowAlert }) => {
 
             await updateUserPassword(user, currentPassword, newPassword);
 
-            setShowAlert(true);
             setShow(false);
+            sessionStorage.setItem('showPasswordUpdateAlert', true);
+
+            window.location.reload();
         } catch (error) {
-            console.log(error);
             setUpdatePasswordError(true);
         }
     }
@@ -50,7 +56,9 @@ const EditProfileModal = ({ show, setShow, setShowAlert }) => {
         setCurrentPassword('');
         setNewPassword('');
         setConfirmPassword('');
+        setDeleteAccountPassword('');
         setUpdatePasswordError(false);
+        setDeleteAccountError(false);
         setShow(false);
     }
 
@@ -149,13 +157,25 @@ const EditProfileModal = ({ show, setShow, setShowAlert }) => {
                     </div>
 
                     <div className='tab-pane' id='delete-account' role='tabpanel'>
-                        <p>Your account will be permanently deleted and will not unable to be recovered.</p>
+                        <p>Your account will be permanently deleted and will not be able to be recovered.</p>
                         <div className='row mb-2'>
                             <div className='col-12'>
                                 <label for='current-password' className='form-label'>Password</label>
-                                <input type='password' className='form-control' id='current-password' value={email} onChange={e => setEmail(e.target.value)}/>
+                                <input type='password' className='form-control' id='current-password' value={deleteAccountPassword} 
+                                    onChange={e => setDeleteAccountPassword(e.target.value)}/>
                             </div>
                         </div>
+                        {
+                            deleteAccountError 
+                                ? (
+                                    <div className='text-danger'>
+                                        <p>Failed to delete account:</p>
+                                        <ul>
+                                            <li>Verify password is correct</li>
+                                        </ul>
+                                    </div>
+                                ) : <></>
+                        }
                         <Modal.Footer className='justify-content-center'>
                             <Button variant="danger">
                                 Permanently Delete Account

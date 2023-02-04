@@ -1,4 +1,9 @@
-import { updateProfile } from "firebase/auth";
+import { 
+    updateProfile, 
+    EmailAuthProvider, 
+    reauthenticateWithCredential, 
+    updatePassword 
+} from "firebase/auth";
 import { 
     ref, 
     uploadBytes, 
@@ -41,4 +46,13 @@ const uploadProfilePicture = (user, file, setUploading) => {
     }
 }
 
-export { editUser, uploadProfilePicture };
+const updateUserPassword = (user, currentPassword, newPassword) => {
+    return async function(dispatch) {
+        const credential = EmailAuthProvider.credential(user.auth.email, currentPassword);
+        await reauthenticateWithCredential(user.auth, credential);
+        await updatePassword(user.auth, newPassword);
+        dispatch({ type: 'USER_REQUEST_SUCCESS', payload: { auth: user.auth, data: user.data } });
+    }
+}
+
+export { editUser, uploadProfilePicture, updateUserPassword };

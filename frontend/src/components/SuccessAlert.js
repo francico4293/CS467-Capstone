@@ -4,6 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 const SuccessAlert = ({ message, show, setShow }) => {
     const handleClose = () => {
         setShow(false);
+        sessionStorage.setItem('showPasswordUpdateAlert', false);
     }
 
     return (
