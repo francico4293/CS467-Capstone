@@ -141,7 +141,7 @@ body {
   width: 100%;
 }
 
-#light .fa-minus, #light .fa-plus, #light .fa-pen-to-square, #light .fa-trash, #light .fa-floppy-disk, #light .fa-ban {
+#light .fa-minus, #light .fa-plus, #light .fa-pen-to-square, #light .fa-trash, #light .fa-floppy-disk, #light .fa-ban, #forgot-password {
   cursor: pointer;
 }
 

@@ -7,7 +7,8 @@ import {
     GoogleAuthProvider,
     EmailAuthProvider,
     reauthenticateWithCredential,
-    updatePassword
+    updatePassword,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import { auth } from "../fire";
 
@@ -111,6 +112,10 @@ const updateUserPassword = async (user, currentPassword, newPassword) => {
     return await updatePassword(user.auth, newPassword);
 }
 
+const sendUserPasswordResetEmail = async (email) => {
+    return await sendPasswordResetEmail(auth, email);
+}
+
 export { 
     signInUser, 
     signOutUser, 
@@ -118,5 +123,6 @@ export {
     getUser, 
     editUser, 
     signInWithGoogle, 
-    updateUserPassword
+    updateUserPassword,
+    sendUserPasswordResetEmail
 };

@@ -29,7 +29,6 @@ const App = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
-      console.log('auth state changed');
       if (user) {
         const data = await getUser(user, setError);
         dispatch({ type: "LOGIN", payload: {data, auth: user} })

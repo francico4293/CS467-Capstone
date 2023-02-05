@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signInUser, signInWithGoogle } from '../services/users';
 
-const LoginFormPane = () => {
+const LoginFormPane = ({ setShowPasswordResetModal }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -34,6 +34,7 @@ const LoginFormPane = () => {
                     </div>
                 </div>
             </div>
+            <a id='forgot-password' className='d-block mb-3' onClick={() => setShowPasswordResetModal(true)}>Forgot password?</a>
             <button type="submit" className="btn btn-primary mt-2">Login</button>
             <div className='form-separator mt-3'>or</div>
             <div className="d-grid mt-3">

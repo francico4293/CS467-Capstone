@@ -2,11 +2,11 @@ import React from 'react';
 import SignupFormPane from './SignupFormPane';
 import LoginFormPane from './LoginFormPane';
 
-const LoginSignupForm = () => {
+const LoginSignupForm = ({ setShowPasswordResetModal }) => {
     return (
         <div className='tab-content mt-3'>
-            <LoginFormPane />
-            <SignupFormPane />
+            <LoginFormPane setShowPasswordResetModal={setShowPasswordResetModal}/>
+            <SignupFormPane/>
         </div>
     );
 }

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import LoginSignupForm from '../components/LoginSignupForm';
+import PasswordResetModal from '../components/PasswordResetModal';
 
 const LoginSignup = () => {
+    const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+
     return (
         <div className='container-fluid'>
             <div className='row h-100'>
                 <Sidebar/>
+                <PasswordResetModal show={showPasswordResetModal} setShow={setShowPasswordResetModal}/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
                     <div className='row h-100 d-flex justify-content-center align-items-center'>
                         <div className='form-wrapper d-flex justify-content-center'>
@@ -28,7 +32,7 @@ const LoginSignup = () => {
                                         </li>
                                     </ul>
                                 </div>
-                                <LoginSignupForm/>
+                                <LoginSignupForm setShowPasswordResetModal={setShowPasswordResetModal}/>
                             </div>
                         </div>
                     </div>
