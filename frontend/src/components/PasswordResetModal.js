@@ -10,7 +10,6 @@ const PasswordResetModal = ({ show, setShow, setShowPasswordResetSuccess }) => {
 
     const handleReset = async () => {
         try {
-            console.log(email);
             await sendUserPasswordResetEmail(email);
             setEmail('');
             setShow(false);

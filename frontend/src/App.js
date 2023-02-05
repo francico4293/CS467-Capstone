@@ -68,26 +68,3 @@ const App = () => {
 }
 
 export default App;
-
-// </div>
-//   loading ?
-//     <LoadingSymbol />
-//     :
-//     <div id={theme}>
-//       <Router>
-//         {user ? (
-//           <Routes>
-//             <Route path='/' element={<Navigate to='/profile' />} />
-//             <Route path='/profile' element={<Profile />} />
-//             <Route path='/job-board' element={<JobBoard />} />
-//             <Route path='/contacts' element={<Contacts />} />
-//             <Route path='/login' element={<Navigate to='/profile' />} />
-//           </Routes>
-//         ) : (
-//           <Routes>
-//             <Route path='/login' element={<LoginSignup />} />
-//             <Route path='*' element={<Navigate to='/login' />} />
-//           </Routes>
-//         )}
-//       </Router>
-//     </div>
