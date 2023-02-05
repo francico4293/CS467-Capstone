@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import LoginSignupForm from '../components/LoginSignupForm';
 import PasswordResetModal from '../components/PasswordResetModal';
+import SuccessAlert from '../components/SuccessAlert';
 
 const LoginSignup = () => {
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+    const [showPasswordResetSuccess, setShowPasswordResetSuccess] = useState(false);
 
     return (
         <div className='container-fluid'>
             <div className='row h-100'>
                 <Sidebar/>
-                <PasswordResetModal show={showPasswordResetModal} setShow={setShowPasswordResetModal}/>
+                <PasswordResetModal show={showPasswordResetModal} setShow={setShowPasswordResetModal} setShowPasswordResetSuccess={setShowPasswordResetSuccess}/>
                 <div className='col-10 col-sm-9 col-md-10 ms-auto'>
+                    <SuccessAlert message={'A password reset link has been sent to your email'} show={showPasswordResetSuccess} setShow={setShowPasswordResetSuccess}/>
                     <div className='row h-100 d-flex justify-content-center align-items-center'>
                         <div className='form-wrapper d-flex justify-content-center'>
                             <div className='col-lg-6 col-xl-4 d-none d-lg-block login-image'>

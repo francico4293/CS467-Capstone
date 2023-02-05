@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { sendUserPasswordResetEmail } from '../services/users';
 
-const PasswordResetModal = ({ show, setShow }) => {
+const PasswordResetModal = ({ show, setShow, setShowPasswordResetSuccess }) => {
     const theme = useSelector(state => state.theme);
     const [email, setEmail] = useState('');
 
@@ -14,6 +14,7 @@ const PasswordResetModal = ({ show, setShow }) => {
             await sendUserPasswordResetEmail(email);
             setEmail('');
             setShow(false);
+            setShowPasswordResetSuccess(true);
         } catch (error) {
             console.log(error);
         }
