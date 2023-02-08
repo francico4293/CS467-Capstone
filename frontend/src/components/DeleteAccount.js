@@ -34,7 +34,7 @@ const DeleteAccount = () => {
                 </Col>
             </Row>
             <Row className='mt-2 mb-2'>
-                <Form.Group className='mb-2'>
+                <Form.Group className='mb-2' as={Col}>
                     <Form.Label>Password</Form.Label>
                     <InputGroup>
                         <Form.Control type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}/>

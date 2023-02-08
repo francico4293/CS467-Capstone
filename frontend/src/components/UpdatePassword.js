@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
@@ -19,6 +20,10 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
 
     const handlePasswordUpdate = async () => {
         try {
+            if (currentPassword === newPassword || newPassword !== confirmPassword) {
+                throw new Error();
+            }
+
             await updateUserPassword(user, currentPassword, newPassword);
             setPasswordUpdateSuccess(true);
             handleClose();
@@ -29,8 +34,8 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
 
     return (
         <>
-            <Row className='mt-2 mb-2'>
-                <Form.Group className='mb-2'>
+            <Row className='mt-3 mb-2'>
+                <Form.Group as={Col}>
                     <Form.Label>Current Password</Form.Label>
                     <InputGroup>
                         <Form.Control type={showCurrentPassword ? 'text' : 'password'} value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/>
@@ -40,8 +45,8 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                     </InputGroup>
                 </Form.Group>
             </Row>
-            <Row className='mt-2 mb-2'>
-                <Form.Group className='mb-2'>
+            <Row className='mb-2'>
+                <Form.Group as={Col}>
                     <Form.Label>New Password</Form.Label>
                     <InputGroup>
                         <Form.Control type={showNewPassword ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
@@ -51,8 +56,8 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                     </InputGroup>
                 </Form.Group>
             </Row>
-            <Row className='mt-2 mb-2'>
-                <Form.Group className='mb-2'>
+            <Row className='mb-3'>
+                <Form.Group as={Col}>
                     <Form.Label>Confirm New Password</Form.Label>
                     <InputGroup>
                         <Form.Control type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
@@ -62,6 +67,21 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                     </InputGroup>
                 </Form.Group>
             </Row>
+            {
+                passwordUpdateFailure
+                    ? (
+                        <Row className='mt-2 mb-2'>
+                            <Col className='text-danger'>
+                                Password update failed:
+                                <ul>
+                                    <li>Verify current password is correct</li>
+                                    <li>Verify new password is different than current password</li>
+                                    <li>Verify new password and confirm new password are the same</li>
+                                </ul>
+                            </Col>
+                        </Row>
+                    ) : <></>
+            }
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close

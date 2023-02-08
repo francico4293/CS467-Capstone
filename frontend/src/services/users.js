@@ -12,12 +12,13 @@ import {
 } from "firebase/auth";
 import { auth } from "../fire";
 
-const signUpUser = async (email, password, firstName, lastName, setError) => {
+const signUpUser = async (email, password, firstName, lastName, setError, setErrorMessage) => {
     try {
         const { user } =  await createUserWithEmailAndPassword(auth, email, password);
         return await createUserInDatabase(user, firstName, lastName);
     } catch (error) {
         setError(true);
+        setErrorMessage('Signup failed!');
     };
 }
 

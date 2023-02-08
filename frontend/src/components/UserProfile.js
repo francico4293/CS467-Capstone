@@ -19,7 +19,7 @@ const UserProfile = ({ setShowEditProfileModal }) => {
             <div className='bio border-bottom'>
                 <p className='fw-bold'>{`${user.data.firstName} ${user.data.lastName}`}</p>
                 <p className='fw-light text-break'>{`${user.data.email}`}</p>
-                <p className='fw-light mt-4'>{`${user.data.description}`}</p>
+                <p className='fw-light mb-3'>{`${user.data.description}`}</p>
                 <div className='d-grid'>
                     <Button variant='secondary' onClick={() => setShowEditProfileModal(true)}>Edit Profile</Button>
                 </div>

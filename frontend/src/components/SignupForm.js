@@ -22,8 +22,7 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
             setSignupError(true);
             setSignupErrorMessage('Signup failed - passwords must match!');
         } else {
-            await signUpUser(email, password, firstName, lastName, setSignupError);
-            setSignupErrorMessage('Signup failed!');
+            await signUpUser(email, password, firstName, lastName, setSignupError, setSignupErrorMessage);
         }
     }
 
