@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { updateUserPassword } from '../services/users';
 
-const UpdatePassword = ({ handleClose }) => {
+const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
     const { user } = useSelector(state => state);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -15,13 +15,15 @@ const UpdatePassword = ({ handleClose }) => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [passwordUpdateFailure, setPasswordUpdateFailure] = useState(false);
 
     const handlePasswordUpdate = async () => {
         try {
             await updateUserPassword(user, currentPassword, newPassword);
+            setPasswordUpdateSuccess(true);
             handleClose();
         } catch (err) {
-            console.log(err);
+            setPasswordUpdateFailure(true);
         }
     }
 

@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import EditPictureModal from '../components/EditPictureModal';
 import EditProfileModal from '../components/EditProfileModal';
+import SuccessAlert from '../components/SuccessAlert';
 
 const Profile = () => {
     const { user, theme } = useSelector(state => state);
@@ -20,6 +21,7 @@ const Profile = () => {
     const [showEditSkillModal, setShowEditSkillModal] = useState(false);
     const [showEditPictureModal, setShowEditPictureModal] = useState(false);
     const [pictureUploading, setPictureUploading] = useState(false);
+    const [passwordUpdateSuccess, setPasswordUpdateSuccess] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
 
     return (
@@ -27,10 +29,11 @@ const Profile = () => {
             <Row>
                 <Sidebar/>
                 <Col xs={10} sm={9} md={10} className='ms-auto'>
-                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal}/>
+                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal} setPasswordUpdateSuccess={setPasswordUpdateSuccess}/>
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
                     <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal} setPictureUploading={setPictureUploading}/>
+                    <SuccessAlert message='Password successfully updated!' show={passwordUpdateSuccess} setShow={setPasswordUpdateSuccess}/>
                     <Row className='d-flex flex-wrap justify-content-evenly mt-5 me-3 ms-3'>
                         <Col md={3} className='d-flex flex-column justify-content-start align-items-center mb-3'>
                             <Image 
@@ -40,7 +43,6 @@ const Profile = () => {
                                 roundedCircle
                                 onClick={() => setShowEditPictureModal(true)}
                             />
-                            {pictureUploading}
                             <Row className='w-100 mt-3 me-5 ms-5 mb-3'>
                                 <Col>
                                     <UserProfile setShowEditProfileModal={setShowEditProfileModal}/>

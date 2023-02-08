@@ -7,7 +7,7 @@ import EditBio from './EditBio';
 import UpdatePassword from './UpdatePassword';
 import DeleteAccount from './DeleteAccount';
 
-const EditProfileModal = ({ show, setShow }) => {
+const EditProfileModal = ({ show, setShow, setPasswordUpdateSuccess }) => {
     const { theme } = useSelector(state => state);
 
     const handleClose = () => {
@@ -25,7 +25,7 @@ const EditProfileModal = ({ show, setShow }) => {
                         <EditBio handleClose={handleClose}/>
                     </Tab>
                     <Tab eventKey='password' title='Update Password'>
-                        <UpdatePassword handleClose={handleClose}/>
+                        <UpdatePassword setPasswordUpdateSuccess={setPasswordUpdateSuccess} handleClose={handleClose}/>
                     </Tab>
                     <Tab eventKey='account' title='Delete Account'>
                         <DeleteAccount/>
