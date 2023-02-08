@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import EditBio from './EditBio';
+import UpdatePassword from './UpdatePassword';
 import DeleteAccount from './DeleteAccount';
 
 const EditProfileModal = ({ show, setShow }) => {
@@ -22,6 +23,9 @@ const EditProfileModal = ({ show, setShow }) => {
                 <Tabs variant='tabs' defaultActiveKey='bio'>
                     <Tab eventKey='bio' title='Update Bio'>
                         <EditBio handleClose={handleClose}/>
+                    </Tab>
+                    <Tab eventKey='password' title='Update Password'>
+                        <UpdatePassword handleClose={handleClose}/>
                     </Tab>
                     <Tab eventKey='account' title='Delete Account'>
                         <DeleteAccount/>
