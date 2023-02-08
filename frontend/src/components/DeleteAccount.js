@@ -24,13 +24,13 @@ const DeleteAccount = () => {
     return (
         <>
             <Row className='mt-2'>
-                <Col>
-                    Your account will be permanently deleted and will not be recoverable.
+                <Col className='text-muted'>
+                    Your account will be permanently deleted and will not be recoverable. Enter your password to confirm.
                 </Col>
             </Row>
             <Row className='mt-2 mb-2'>
-            <Form.Group className='mb-2'>
-                <Form.Label>Password</Form.Label>
+                <Form.Group className='mb-2'>
+                    <Form.Label>Password</Form.Label>
                     <InputGroup>
                         <Form.Control type={showPassword ? 'text' : 'password'} onChange={e => setPassword(e.target.value)}/>
                         <InputGroup.Text onClick={() => setShowPassword(!showPassword)}>

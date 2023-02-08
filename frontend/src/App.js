@@ -10,6 +10,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import JobBoard from './pages/JobBoard';
+import Contacts from './pages/Contacts';
 import Loading from './components/Loading';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './fire';
@@ -54,6 +56,8 @@ const App = () => {
                     <Route path='/' element={<Navigate to='/profile'/>}/>
                     <Route path='/login' element={<Navigate to='/profile'/>}/>
                     <Route path='/profile' element={<Profile/>}/>
+                    <Route path='/job-board' element={<JobBoard/>}/>
+                    <Route path='/contacts' element={<Contacts/>}/> 
                   </Routes>
                 ) : (
                   <Routes>
