@@ -40,7 +40,9 @@ const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
 
     return (
         <Modal id={`${theme}`} className='edit-picture-modal' show={show} onHide={handleClose} centered>
-            <Modal.Header closeButton>Update Profile Picture</Modal.Header>
+            <Modal.Header closeButton>
+                <Modal.Title>Update Profile Picture</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 {
                     picture
@@ -84,3 +86,4 @@ const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
 }
 
 export default EditPictureModal;
+

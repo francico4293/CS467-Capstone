@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import './styles/light.css';
 import './styles/dark.css';
-import {
-  BrowserRouter as Router,
-  Routes,
+import { 
+  BrowserRouter as Router, 
+  Routes, 
   Route,
   Navigate
-} from 'react-router-dom';
-import LoginSignup from './pages/LoginSignup';
+} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import Login from './pages/Login';
 import Profile from './pages/Profile';
-import JobBoard from './pages/JobBoard';
-import Contacts from './pages/Contacts';
-import LoadingSymbol from './components/LoadingSymbol'
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./fire";
-import { useDispatch, useSelector } from 'react-redux'
+import Loading from './components/Loading';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './fire';
 import { getUser } from './services/users';
 
 const App = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-
-  const dispatch = useDispatch()
-  const { user, theme } = useSelector(state => state)
+  const { user, theme } = useSelector(state => state);
 
   const setError = (e) => {
     alert("Could not fetch data!");
@@ -31,37 +28,42 @@ const App = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const data = await getUser(user, setError);
-        dispatch({ type: "LOGIN", payload: {data, auth: user} })
+        dispatch({ type: 'LOGIN', payload: {data, auth: user} });
       } else {
-        dispatch({ type: "LOGOUT", payload: null })
+        dispatch({ type: 'LOGOUT', payload: null });
       }
-      setLoading(false)
+
+      setLoading(false);
     });
   }, []);
 
   return (
-    <div id={theme}>
+    <div className='app' id={theme}>
       {
-        loading 
-          ? <LoadingSymbol /> 
+        loading
+          ? (
+            <div className='spinner-container d-flex justify-content-center align-items-center'>
+              <Loading/>
+            </div>
+          )
           : (
             <Router>
-              {user ? (
-                <Routes>
-                  <Route path='/' element={<Navigate to='/profile' />} />
-                  <Route path='/profile' element={<Profile />} />
-                  <Route path='/job-board' element={<JobBoard />} />
-                  <Route path='/contacts' element={<Contacts />} />
-                  <Route path='/login' element={<Navigate to='/profile' />} />
-                </Routes>
-              ) : (
-                <Routes>
-                  <Route path='/login' element={<LoginSignup />} />
-                  <Route path='*' element={<Navigate to='/login' />} />
-                </Routes>
-              )}
+              {
+                user ? (
+                  <Routes>
+                    <Route path='/' element={<Navigate to='/profile'/>}/>
+                    <Route path='/login' element={<Navigate to='/profile'/>}/>
+                    <Route path='/profile' element={<Profile/>}/>
+                  </Routes>
+                ) : (
+                  <Routes>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='*' element={<Navigate to='/login'/>}/>
+                  </Routes>
+                )
+              }
             </Router>
-        )
+          )
       }
     </div>
   );

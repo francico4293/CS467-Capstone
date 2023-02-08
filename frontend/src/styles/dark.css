@@ -1,57 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-/* ----- Global Styles ----- */
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  font-family: 'Poppins', sans-serif;
-}
-
 #dark .container-fluid {
-  height: 100vh;
-  background-color: rgb(25, 25, 25);
+    background-color: rgb(25, 25, 25);
 }
 
-#dark h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-  color: white;
+#dark .spinner-container {
+    height: 100vh;
+    background-color: rgb(25, 25, 25);
 }
 
 /* ----- Sidebar Styles ----- */
-
 #dark .sidebar {
-  background-color: rgb(50, 50, 50);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  box-shadow: 1px 0px 3px 1px black;
-  transition: ease all .5s;
-  z-index: 1;
+    background-color: rgb(50, 50, 50);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0px 0px 2px 1px black;
+    transition: ease all .5s;
+    z-index: 1;
 }
 
-#dark .nav-item {
-  border-bottom: 1px solid #adb5bd;
+#dark .sidebar h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
 }
 
-#dark .nav-link {
-  color: white;
-  cursor: pointer;
-  font-weight: 300;
+#dark .sidebar .nav-item {
+    border-bottom: 1px solid #adb5bd;
 }
 
-#dark .nav-link:hover {
-  color: white;
+#dark .sidebar .nav-link {
+    color: white;
+    cursor: pointer;
+    font-weight: 300;
 }
 
-#dark .nav-item {
-  transition: all .25s;
+#dark .sidebar .nav-link:hover {
+    color: white;
 }
-
-#dark .nav-item:hover {
-  background-color: rgb(25, 25, 25);
+  
+#dark .sidebar .nav-item {
+    transition: all .5s;
+}
+  
+#dark .sidebar .nav-item:hover {
+    background-color: rgb(25, 25, 25);
 }
 
 #dark .fa-sun {
@@ -62,124 +56,172 @@ body {
     color: white;
 }
 
-/* ----- Login/Signup Page Styles ----- */
+#dark .sidebar .nav-link.active {
+    background-color: rgb(25, 25, 25) !important;
+    border-bottom: 1px solid rgb(25, 25, 25) !important;
+}
 
-#dark .form {
-  height: 700px;
-  background-color: rgb(50, 50, 50);
-  color: white;
+/* ----- Login/Signup Page Styles ----- */
+#dark .login-container {
+    height: 100vh;
 }
 
 #dark .login-image {
-  position: relative;
-  display: inline;
-  height: 700px;
+    position: relative;
+    display: inline;
+    height: 700px;
 }
-
+  
 #dark .login-image::after {
-  content: '';
-  position: absolute;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.1));
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.1));
 }
-
+  
 #dark .login-image img {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-  z-index: -100;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
-#dark .form-separator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #bababa;
+#dark .form {
+    height: 700px;
+    background-color: rgb(50, 50, 50);
+    color: white;
 }
 
-#dark .nav-link.active {
-  background-color: rgb(35, 35, 35) !important;
-  border-bottom: none !important;
+#dark .form .nav-link.active {
+    background-color: rgb(35, 35, 35) !important;
+    border-bottom: none !important;
 }
 
-#dark .form-separator::before, #dark .form-separator::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid #bababa;
+#dark .form .nav-link {
+    color: white;
+    cursor: pointer;
+    font-weight: 300;
 }
 
+#dark .form .nav-tabs {
+    border-bottom: 1px solid #bababa;
+}
+
+#dark .form .nav-link:hover {
+    border-bottom: 1px solid #bababa;
+}
+
+#dark .form-separator::before, .form-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #bababa;
+}
+  
 #dark .form-separator::before {
-  margin-right: .25em;
+    margin-right: .25em;
 }
-
+  
 #dark .form-separator::after {
-  margin-left: .25em;
-}
-
-#dark a.form-tab.active {
-  background-color: #ced4da !important;
+    margin-left: .25em;
 }
 
 #dark .google-button-container {
-  position: relative;
+    position: relative;
 }
 
 #dark .fa-google {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#dark .form .input-group-text, #dark .reset-password {
+    cursor: pointer;
 }
 
 /* ----- Profile Page Styles ----- */
-
-#dark #bio h2 {
-  font-weight: 500;
-  font-size: 2em;
+#dark .canvas-container {
+    height: 100%;
+    width: 100%;
 }
 
-#dark #bio h3, .card-title {
-  font-weight: 400;
-  font-size: 1.25em;
+#dark .profile-content {
+    background-color: rgb(50, 50, 50);
+    color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    position: relative;
 }
 
-#dark #bio, #dark #edit-bio, #dark #skills {
-  color: white;
+#dark .bio, #dark .overview {
+    color: white;
 }
 
-.canvas-container {
-  height: 100%;
-  width: 100%;
+#dark .proficiency-card {
+    background-color: rgb(25, 25, 25);
+    box-shadow: 1px 2px 5px black;
+    transition: all .25s;
 }
 
-.fa-minus, .fa-plus, .fa-pen-to-square, .fa-trash, .fa-floppy-disk, .fa-ban {
-  cursor: pointer;
+#dark .proficiency-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 1px 5px 8px black;
 }
 
-#dark .spinner-container {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgb(25, 25, 25);
-}
-
-#dark .spinner-border {
-  color: white;
-}
-
-#dark .card {
-  color: white;
-  transition: all .25s;
-  background-color: rgb(50, 50, 50);
-  box-shadow: 1px 2px 5px black;
-}
-
-#dark .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 1px 5px 8px rgb(10, 10, 10);
+#dark .fa-pen-to-square, #dark .fa-trash {
+    cursor: pointer;
 }
 
 #dark .modal-content {
-  color: white;
-  background-color: rgb(50, 50, 50) !important;
+    color: white;
+    background-color: rgb(50, 50, 50) !important;
+}
+
+#dark .round-button {
+    width: 60px;
+    min-height: 60px;
+    border-radius: 50%;
+    height: auto;
+    background-color: rgb(25, 25, 25);
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+}
+
+#dark .edit-picture-modal {
+    position: absolute;
+}
+  
+#dark .crop-container {
+    height: 50vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+}
+
+#dark .profile-picture {
+    cursor: pointer;
+}
+
+.edit-profile-modal #dark .nav-link.active {
+    background-color: rgb(35, 35, 35) !important;
+    border-bottom: none !important;
+}
+
+.edit-profile-modal #dark .nav-link {
+    color: white;
+    cursor: pointer;
+    font-weight: 300;
+}
+
+.edit-profile-modal #dark .nav-tabs {
+    border-bottom: 1px solid #bababa;
+}
+
+.edit-profile-modal #dark .nav-link:hover {
+    border-bottom: 1px solid #bababa;
 }

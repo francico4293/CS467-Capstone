@@ -1,66 +1,62 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import LoggedInNavItems from './LoggedInNavItems';
 import LoggedOutNavItems from './LoggedOutNavItems';
+import LoggedInNavItems from './LoggedInNavItems';
+import Col from 'react-bootstrap/Col';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Sidebar = () => {
-    const theme = useSelector(state => state.theme);
-    const user = useSelector(state => state.user);
+    const { user, theme } = useSelector(state => state);
     const dispatch = useDispatch();
 
-    const handleLightButtonEvent = () => {
+    const handleLightModeButtonClick = () => {
         sessionStorage.setItem('theme', 'light');
         dispatch({ type: 'THEME_CHANGE_REQUEST', payload: 'light' });
     }
 
-    const handleDarkButtonEvent = () => {
+    const handleDarkModeButtonClick = () => {
         sessionStorage.setItem('theme', 'dark');
         dispatch({ type: 'THEME_CHANGE_REQUEST', payload: 'dark' });
     }
 
     const handleToggleEvent = () => {
         if (theme === 'light') {
-            handleDarkButtonEvent();
+            handleDarkModeButtonClick();
         } else {
-            handleLightButtonEvent();
+            handleLightModeButtonClick();
         }
     }
 
     return (
-        <div className='col-2 col-sm-3 col-md-2 d-flex flex-column justify-content-between sidebar'>
+        <Col xs={2} sm={3} md={2} className='d-flex flex-column justify-content-between sidebar'>
             <div className='mt-5'>
                 <header className='d-none d-sm-block'>
-                    <h1 className='text-center text-uppercase'>Job Tracker<i className="fa-solid fa-chart-line ms-2"></i></h1>
+                    <h1 className='text-center text-uppercase'>Job Tracker<i className='fa-solid fa-chart-line ms-2'/></h1>
                 </header>
                 <header className='d-sm-none'>
-                    <h1 className='text-center'>JT<i className="fa-solid fa-chart-line ms-2"></i></h1>
+                    <h1 className='text-center'>JT<i className='fa-solid fa-chart-line ms-2'/></h1>
                 </header>
                 <div>
-                    {
-                        user ? <LoggedInNavItems /> : <LoggedOutNavItems />
-                    }
+                    {user ? <LoggedInNavItems/> : <LoggedOutNavItems/>}
                 </div>
             </div>
-            
             <div className='d-none d-sm-flex justify-content-center mb-5'>
-                <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-outline-secondary" onClick={handleLightButtonEvent}>
-                        <i className="fa-solid fa-sun me-2"></i>Light
-                    </button>
-                    <button type="button" className="btn btn-outline-secondary" onClick={handleDarkButtonEvent}>
-                        <i className="fa-solid fa-moon me-2"></i>Dark
-                    </button>
-                </div>
+                <ButtonGroup>
+                    <Button variant='outline-secondary' onClick={handleLightModeButtonClick}>
+                        <i className='fa-solid fa-sun me-2'/>Light
+                    </Button>
+                    <Button variant='outline-secondary' onClick={handleDarkModeButtonClick}>
+                        <i className='fa-solid fa-moon me-2'/>Dark
+                    </Button>
+                </ButtonGroup>
             </div>
-            
-            <div className='d-sm-none d-flex justify-content-center align-items-center mb-5'>
-                <div className="form-check form-switch">
-                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" 
-                        onChange={handleToggleEvent} checked={theme === 'dark'}/>
-                </div>
-                <i className="fa-solid fa-moon"></i>
+            <div className='d-flex d-sm-none justify-content-center align-items-center mb-5'>
+                <Form.Check type='switch' onChange={handleToggleEvent} checked={theme === 'dark'}/>
+                <i className='fa-solid fa-moon'/>
             </div>
-        </div>
+        </Col>
     );
 }
 

@@ -2,89 +2,106 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Sidebar from '../components/Sidebar';
 import UserProfile from '../components/UserProfile';
-import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import ProficiencyCard from '../components/ProficiencyCard';
+import SkillFrequencyChart from '../components/SkillFrequencyChart';
 import AddSkillModal from '../components/AddSkillModal';
 import EditSkillModal from '../components/EditSkillModal';
-import EditProfileModal from '../components/EditProfileModal';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 import EditPictureModal from '../components/EditPictureModal';
-import SuccessAlert from '../components/SuccessAlert';
+import EditProfileModal from '../components/EditProfileModal';
 
 const Profile = () => {
-    const user = useSelector(state => state.user);
+    const { user, theme } = useSelector(state => state);
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showAddSkillModal, setShowAddSkillModal] = useState(false);
     const [showEditSkillModal, setShowEditSkillModal] = useState(false);
     const [showEditPictureModal, setShowEditPictureModal] = useState(false);
     const [pictureUploading, setPictureUploading] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
-    const [showAlert, setShowAlert] = useState(sessionStorage.getItem('showPasswordUpdateAlert') === 'true');
 
     return (
-        <div className='container-fluid h-100'>
-            <div className='row h-100'>
+        <Container fluid>
+            <Row>
                 <Sidebar/>
-                <div className='col-10 col-sm-9 col-md-10 ms-auto'>
-                    <SuccessAlert message={'Password updated succesfully!'} show={showAlert} setShow={setShowAlert}/>
+                <Col xs={10} sm={9} md={10} className='ms-auto'>
+                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal}/>
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
-                    <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal} setShowAlert={setShowAlert}/>
                     <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal} setPictureUploading={setPictureUploading}/>
-                    <div className='row d-flex flex-wrap'>
-                        <div className='col-md-6 col-lg-5 d-flex flex-column justify-content-evenly align-items-center border-bottom'>
-                            {
-                                pictureUploading 
-                                    ? (
-                                        <div className='spinner-border' role='status'>
-                                            <span className='visually-hidden'>Loading...</span>
-                                        </div>
-                                    ) : <img src={user.auth.photoURL ? user.auth.photoURL : `/imgs/profile-image.svg`} 
-                                            className='img-thumbnail img-fluid rounded-circle border shadow mt-3' width={'80%'}
-                                            onClick={() => setShowEditPictureModal(true)}
-                                        />
-                            }
-                            <div className='row mt-3 me-5 ms-5 mb-3 w-75'>
-                                <div className='col-12'>
+                    <Row className='d-flex flex-wrap justify-content-evenly mt-5 me-3 ms-3'>
+                        <Col md={3} className='d-flex flex-column justify-content-start align-items-center mb-3'>
+                            <Image 
+                                src={user.auth.photoURL ? user.auth.photoURL : `/img/profile-image.svg`}
+                                className={`border shadow-sm ${theme === 'dark' ? 'bg-light' : ''} mt-3 profile-picture`}
+                                width={'100%'}
+                                roundedCircle
+                                onClick={() => setShowEditPictureModal(true)}
+                            />
+                            {pictureUploading}
+                            <Row className='w-100 mt-3 me-5 ms-5 mb-3'>
+                                <Col>
                                     <UserProfile setShowEditProfileModal={setShowEditProfileModal}/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-6 col-lg-7 canvas-col'>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col md={8} className='profile-content'>
                             <SkillFrequencyChart/>
-                        </div>
-                    </div>
-                    <div className='row mt-3 ms-3'>
-                        <div className='col' id='skills'>
-                            <h2>Your Skills</h2>
-                            <p>Manage your skills and track your proficiency level</p>
-                        </div>
-                    </div>
-                    <div className='row d-flex justify-content-center mb-5'>
-                        <div className='col-10'>
-                            <div className='row'>
-                                <div className='col-md-6 col-lg-4'> 
-                                    <ProficiencyCard skillName={'Java'} proficiency={75} setSkillToEdit={setSkillToEdit} setShowEditSkillModal={setShowEditSkillModal}/>
-                                </div>
-                                <div className='col-md-6 col-lg-4'> 
-                                    <ProficiencyCard skillName={'Python'} proficiency={90} setSkillToEdit={setSkillToEdit} setShowEditSkillModal={setShowEditSkillModal}/>
-                                </div>
-                                <div className='col-md-6 col-lg-4'> 
-                                    <ProficiencyCard skillName={'C++'} proficiency={30} setSkillToEdit={setSkillToEdit} setShowEditSkillModal={setShowEditSkillModal}/>
-                                </div>
-                                <div className='col-md-6 col-lg-4'> 
-                                    <ProficiencyCard skillName={'Docker'} proficiency={20} setSkillToEdit={setSkillToEdit} setShowEditSkillModal={setShowEditSkillModal}/> 
-                                </div>
-                                <div className='col-md-6 col-lg-4'> 
-                                    <button type="button" className="btn btn-secondary mt-3" onClick={() => setShowAddSkillModal(true)}>
-                                        Add Skill
-                                    </button>
-                                </div>
+                        </Col>
+                    </Row>
+                    <Row className='d-flex flex-wrap justify-content-evenly mt-3 me-3 ms-3 mb-5'>
+                        <Col md={3}></Col>
+                        <Col md={8} className='profile-content p-3'>
+                            <div className='d-flex justify-content-center align-items-center round-button' onClick={() => setShowAddSkillModal(true)}>
+                                <i className='fa-solid fa-plus fa-2x'/>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <Row>
+                                <Col xs={9}>
+                                    <h2>Your Skills</h2>
+                                    <p>Manage your skills and track your proficiency level</p>
+                                </Col>
+                            </Row>
+                            <Row className='d-flex flex-wrap justify-content-evenly'>
+                                <Col lg={5} className='mt-3'>
+                                    <ProficiencyCard 
+                                        skillName='Java' 
+                                        proficiency='75' 
+                                        setSkillToEdit={setSkillToEdit} 
+                                        setShowEditSkillModal={setShowEditSkillModal}
+                                    />
+                                </Col>
+                                <Col lg={5} className='mt-3'>
+                                    <ProficiencyCard 
+                                        skillName='Python' 
+                                        proficiency='95' 
+                                        setSkillToEdit={setSkillToEdit} 
+                                        setShowEditSkillModal={setShowEditSkillModal}
+                                    />
+                                </Col>
+                                <Col lg={5} className='mt-3'>
+                                    <ProficiencyCard 
+                                        skillName='Docker' 
+                                        proficiency='15' 
+                                        setSkillToEdit={setSkillToEdit} 
+                                        setShowEditSkillModal={setShowEditSkillModal}
+                                    />
+                                </Col>
+                                <Col lg={5} className='mt-3'>
+                                    <ProficiencyCard 
+                                        skillName='React.js' 
+                                        proficiency='80' 
+                                        setSkillToEdit={setSkillToEdit} 
+                                        setShowEditSkillModal={setShowEditSkillModal}
+                                    />
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

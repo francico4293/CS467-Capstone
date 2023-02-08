@@ -2,24 +2,22 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    beforeAuthStateChanged,
     signInWithPopup,
     GoogleAuthProvider,
     EmailAuthProvider,
     reauthenticateWithCredential,
     updatePassword,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    deleteUser
 } from "firebase/auth";
 import { auth } from "../fire";
 
 const signUpUser = async (email, password, firstName, lastName, setError) => {
     try {
-        beforeAuthStateChanged(auth, async (user) => {
-            await createUserInDatabase(user, firstName, lastName);
-        })
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const { user } =  await createUserWithEmailAndPassword(auth, email, password);
+        return await createUserInDatabase(user, firstName, lastName);
     } catch (error) {
-        setError(error);
+        setError(true);
     };
 }
 
@@ -27,8 +25,7 @@ const signInUser = async (email, password, setError) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-        setError(error);
-        console.log(error.message)
+        setError(true);
     };
 }
 
@@ -43,7 +40,7 @@ const signInWithGoogle = async (setError) => {
             const user = result.user;
             // ...
         }).catch((error) => {
-            setError(error)
+            setError(true);
             // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -116,6 +113,12 @@ const sendUserPasswordResetEmail = async (email) => {
     return await sendPasswordResetEmail(auth, email);
 }
 
+const deleteUserAccount = async (user, password) => {
+    const credential = EmailAuthProvider.credential(user.auth.email, password);
+    await reauthenticateWithCredential(user.auth, credential);
+    return await deleteUser(user.auth);
+}
+
 export { 
     signInUser, 
     signOutUser, 
@@ -124,5 +127,6 @@ export {
     editUser, 
     signInWithGoogle, 
     updateUserPassword,
-    sendUserPasswordResetEmail
+    sendUserPasswordResetEmail,
+    deleteUserAccount
 };

@@ -1,178 +1,202 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-/* ----- Global Styles ----- */
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  font-family: 'Poppins', sans-serif;
-}
-
-#light .container-fluid {
-  height: 100vh;
-  background-color: white;
+#light .spinner-container {
+    height: 100vh;
 }
 
 /* ----- Sidebar Styles ----- */
-
-#light header > h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0;
-  color: #333;
-}
-
 #light .sidebar {
-  background-color: #e9ecef;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  box-shadow: 0px 0px 2px 1px gray;
-  transition: ease all .5s;
-  z-index: 1;
+    background-color: #e9ecef;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0px 0px 2px 1px gray;
+    transition: ease all .5s;
+    z-index: 1;
 }
 
-#light .nav-item {
-  border-bottom: 1px solid #adb5bd;
+#light .sidebar h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #333;
 }
 
-#light .nav-link {
-  color: #333;
-  cursor: pointer;
-  font-weight: 300;
+#light .sidebar .nav-item {
+    border-bottom: 1px solid #adb5bd;
 }
 
-#light .nav-link:hover {
-  color: #333;
+#light .sidebar .nav-link {
+    color: #333;
+    cursor: pointer;
+    font-weight: 300;
 }
 
-#light .nav-item {
-  transition: all .5s;
+#light .sidebar .nav-link:hover {
+    color: #333;
+}
+  
+#light .sidebar .nav-item {
+    transition: all .5s;
+}
+  
+#light .sidebar .nav-item:hover {
+    background-color: #ced4da;
 }
 
-#light .nav-item:hover {
-  background-color: #ced4da;
+#light .sidebar .nav-link.active {
+    background-color: #ced4da !important;
+    border-bottom: 1px solid #ced4da !important;
 }
-
 
 /* ----- Login/Signup Page Styles ----- */
-
-#light .form {
-  height: 700px;
-  background-color: #e9ecef;
+#light .login-container {
+    height: 100vh;
 }
 
 #light .login-image {
-  position: relative;
-  display: inline;
-  height: 700px;
+    position: relative;
+    display: inline;
+    height: 700px;
 }
-
+  
 #light .login-image::after {
-  content: '';
-  position: absolute;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.1));
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.1));
 }
-
+  
 #light .login-image img {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-  z-index: -100;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
-#light .form-separator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #bababa;
+#light .form {
+    height: 700px;
+    background-color: #e9ecef;
 }
 
-#light .nav-link.active {
-  background-color: #ced4da !important;
-  border-bottom: 1px solid #ced4da !important;
+#light .form .nav-link.active {
+    background-color: #ced4da !important;
+    border-bottom: 1px solid #ced4da !important;
 }
 
-#light .form-separator::before, #light .form-separator::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid #bababa;
+#light .form .nav-link {
+    color: #333;
+    cursor: pointer;
+    font-weight: 300;
 }
 
+#light .form .nav-tabs {
+    border-bottom: 1px solid #bababa;
+}
+
+#light .form .nav-link:hover {
+    border-bottom: 1px solid #bababa;
+}
+
+#light .form-separator::before, .form-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #bababa;
+}
+  
 #light .form-separator::before {
-  margin-right: .25em;
+    margin-right: .25em;
 }
-
+  
 #light .form-separator::after {
-  margin-left: .25em;
-}
-
-#light a.form-tab.active {
-  background-color: #ced4da !important;
+    margin-left: .25em;
 }
 
 #light .google-button-container {
-  position: relative;
+    position: relative;
 }
 
 #light .fa-google {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#light .form .input-group-text, #light .reset-password {
+    cursor: pointer;
 }
 
 /* ----- Profile Page Styles ----- */
-
-#light #bio h2 {
-  font-weight: 500;
-  font-size: 2em;
-}
-
-#light #bio h3 {
-  font-weight: 400;
-  font-size: 1.25em;
-}
-
 #light .canvas-container {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
-#light .fa-minus, #light .fa-plus, #light .fa-pen-to-square, #light .fa-trash, #light .fa-floppy-disk, #light .fa-ban, #forgot-password {
-  cursor: pointer;
+#light .profile-content {
+    background-color: #f7f7f7;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    position: relative;
 }
 
-#light .spinner-container {
-  width: 100vw;
-  height: 100vh;
+#light .proficiency-card {
+    box-shadow: 1px 2px 5px gray;
+    transition: all .25s;
 }
 
-#light .card {
-  transition: all .25s;
-  box-shadow: 1px 2px 5px gray;
+#light .proficiency-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 1px 5px 8px rgb(175, 175, 175);
 }
 
-#light .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 1px 5px 8px rgb(175, 175, 175);
+#light .fa-pen-to-square, #light .fa-trash {
+    cursor: pointer;
 }
 
-.img-fluid {
-  cursor: pointer;
+#light .round-button {
+    width: 60px;
+    min-height: 60px;
+    border-radius: 50%;
+    height: auto;
+    background-color: #dadada;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
 }
 
-.edit-picture-modal {
-  position: absolute;
+#light .edit-picture-modal {
+    position: absolute;
+}
+  
+#light .crop-container {
+    height: 50vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 80px;
 }
 
-.crop-container {
-  height: 50vh;
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 80px;
+#light .profile-picture {
+    cursor: pointer;
+}
+
+.edit-profile-modal #light .nav-link.active {
+    background-color: #ced4da !important;
+    border-bottom: 1px solid #ced4da !important;
+}
+
+.edit-profile-modal #light .nav-link {
+    color: #333;
+    cursor: pointer;
+    font-weight: 300;
+}
+
+.edit-profile-modal #light .nav-tabs {
+    border-bottom: 1px solid #bababa;
+}
+
+.edit-profile-modal #light .nav-link:hover {
+    border-bottom: 1px solid #bababa;
 }

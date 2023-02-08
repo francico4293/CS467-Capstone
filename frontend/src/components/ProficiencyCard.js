@@ -1,6 +1,9 @@
 import React from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 const ProficiencyCard = ({ skillName, proficiency, setSkillToEdit, setShowEditSkillModal }) => {
     const handleClick = () => {
@@ -9,22 +12,24 @@ const ProficiencyCard = ({ skillName, proficiency, setSkillToEdit, setShowEditSk
     }
 
     return (
-        <div className="card mt-3">
-            <div className="card-body">
-                <div className='d-flex justify-content-between'>
-                    <h3 className="card-title">{skillName}</h3>
-                    <div>
-                        <i className="fa-solid fa-pen-to-square me-2" onClick={handleClick}></i>
-                        <i className="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-                <div className='row d-flex align-items-center justify-content-center'>
-                    <div className='col-8'>
+        <Card className='proficiency-card'>
+            <Card.Body>
+                <Row lg={8}>
+                    <Col lg={7}>
+                        <Card.Title className='fw-light fs-6'>{skillName}</Card.Title>
+                    </Col>
+                    <Col lg={5} className='d-flex justify-content-end'>
+                        <i className='fa-solid fa-pen-to-square me-2' onClick={handleClick}/>
+                        <i className='fa-solid fa-trash'/>
+                    </Col>
+                </Row>
+                <Row className='d-flex justify-content-center'>
+                    <Col lg={8}>
                         <CircularProgressbar value={proficiency} text={`${[proficiency]}%`} />
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Card>
     );
 }
 

@@ -5,12 +5,12 @@ import {
 } from 'redux'
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { userReducer } from './reducers/userReducer';
 import { themeReducer } from './reducers/themeReducer';
+import { userReducer } from './reducers/userReducer';
 
-const reducers = combineReducers({ 
-    user: userReducer,
-    theme: themeReducer
+const reducers = combineReducers({
+    theme: themeReducer,
+    user: userReducer
 });
 
 const themeFromSessionStorage = sessionStorage.getItem('theme') 
@@ -19,6 +19,10 @@ const themeFromSessionStorage = sessionStorage.getItem('theme')
 
 const initialState = { theme: themeFromSessionStorage };
 
-const store = createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(
+    reducers, 
+    initialState, 
+    composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;
