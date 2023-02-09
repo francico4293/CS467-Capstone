@@ -6,19 +6,20 @@ import Card from 'react-bootstrap/Card';
 const ContactCard = ({ name }) => {
     return (
         <Card style={{ width: '25rem', minHeight: '12rem' }}>
-            <Card.Body className='mt-3'>
+            <div className='contact-color' style={{ backgroundColor: 'aqua' }}></div>
+            <Card.Body>
                 <Card.Title>{name}<i className='fa-brands fa-linkedin ms-2'/></Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Google</Card.Subtitle>
                 <Card.Subtitle className="mb-2 text-muted">Sr. Software Engineer</Card.Subtitle>
                 <Card.Text className='mt-3'>
                     <Row>
                         <Col className='fw-light'>
-                            <i className='fa-solid fa-envelope me-2'/>fakeemail@gmail.com
+                            <i className='fa-solid fa-envelope me-1'/>fakeemail@gmail.com
                         </Col>
                     </Row>
                     <Row>
                         <Col className='fw-light'>
-                            <i className='fa-solid fa-phone me-2'/>123-456-7890
+                            <i className='fa-solid fa-phone me-1'/>123-456-7890
                         </Col>
                     </Row>
                     <Row>

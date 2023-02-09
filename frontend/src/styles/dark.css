@@ -233,6 +233,7 @@
     background-color: rgb(50, 50, 50);
     box-shadow: 1px 2px 5px black;
     transition: all .25s;
+    overflow: hidden;
 }
 
 #dark .contacts-container .card:hover {
@@ -242,4 +243,9 @@
 
 #dark .contacts-container>.row {
     min-height: 100vh;
+}
+
+#dark .contact-color {
+    height: 20px;
+    width: 100%;
 }

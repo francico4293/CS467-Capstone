@@ -36,13 +36,13 @@ const Contacts = () => {
             <Row className='test'>
                 <Sidebar/>
                 <Col xs={10} sm={9} md={10} className='d-flex flex-column justify-content-between ms-auto'>
-                    <Row className='d-flex justify-content-center mt-4'>
-                        <Col xs={11} className='d-flex flex-wrap justify-content-between align-items-center'>
+                    <Row className='d-flex justify-content-center mt-4 ms-1 me-1'>
+                        <Col className='d-flex flex-wrap justify-content-between align-items-center'>
                             <Button variant='secondary'>Add Contact</Button>
                             <Filter/>
                         </Col>
                     </Row>
-                    <Row className='h-100 d-flex justify-content-center mt-5 ms-5 me-5'>
+                    <Row className='h-100 d-flex justify-content-center mt-5 ms-3 me-3'>
                         <Col className='d-flex flex-column justify-content-between'>
                             <Row>
                                 {contacts.slice(startIdx, endIdx).map((contact, idx) => (
