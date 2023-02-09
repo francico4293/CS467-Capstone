@@ -4,34 +4,47 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 
-const ContactCard = ({ name }) => {
+const ContactCard = ({ contact }) => {
     return (
         <Card style={{ width: '25rem', minHeight: '12rem' }}>
-            <div className='contact-color' style={{ backgroundColor: 'aqua' }}></div>
-            <Card.Body>
+            <div className='contact-color' style={{ backgroundColor: `${contact.color}` }}></div>
+            <Card.Body className='d-flex flex-column justify-content-between'>
                 <Row>
                     <Col xs={9}>
-                        <Card.Title>{name}<i className='fa-brands fa-linkedin ms-2'/></Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">Google</Card.Subtitle>
-                        <Card.Subtitle className="mb-2 text-muted">Sr. Software Engineer</Card.Subtitle>
+                        <Card.Title>
+                            {contact.firstName} {contact.lastName}{contact.linkedIn ? <i className='fa-brands fa-linkedin ms-2'/> : <></>}
+                        </Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{contact.company}</Card.Subtitle>
+                        <Card.Subtitle className="mb-2 text-muted">{contact.position}</Card.Subtitle>
                     </Col>
                     <Col className='d-flex justify-content-end align-items-start'>
                         <Image 
-                            src='/img/microsoft-icon.svg'
-                            width={'50%'}
+                            src={contact.companyLogo}
+                            width={'60%'}
+                            fluid
                         />
                     </Col>
                 </Row>
                 <Card.Text className='mt-3'>
                     <Row>
-                        <Col className='fw-light'>
-                            <i className='fa-solid fa-envelope me-1'/>fakeemail@gmail.com
-                        </Col>
+                        {
+                            contact.email
+                                ? (
+                                    <Col className='fw-light'>
+                                        <i className='fa-solid fa-envelope me-1'/>{contact.email}
+                                    </Col>
+                                ) : <></>
+                        }
                     </Row>
                     <Row>
-                        <Col className='fw-light'>
-                            <i className='fa-solid fa-phone me-1'/>123-456-7890
-                        </Col>
+                        {
+                            contact.phone
+                                ? (
+                                    <Col className='fw-light'>
+                                        <i className='fa-solid fa-phone me-1'/>{contact.phone}
+                                    </Col>
+                                ) : <></>
+                        }
                     </Row>
                     <Row>
                         <Col className='d-flex justify-content-end'>

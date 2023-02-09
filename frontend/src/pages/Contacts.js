@@ -7,26 +7,28 @@ import Button from 'react-bootstrap/Button';
 import Filter from '../components/Filter';
 import ContactCard from '../components/ContactCard';
 import Pages from '../components/Pages';
+import { contacts } from '../fakeContacts';
 
 const Contacts = () => {
     const [activePage, setActivePage] = useState(0);
+    // const [contacts, setContacts] = useState(contacts);
 
-    const contacts = [
-        "Dennis Reynolds", 
-        "Harry Potter", 
-        "Shoei Otani", 
-        "Nick Chubb", 
-        "LeBron James", 
-        "Bill Gates", 
-        "Joe Smith", 
-        "John Doe", 
-        "Jane Doe", 
-        "Fake Name", 
-        "Real Name", 
-        "Mario", 
-        "Dee Reynolds", 
-        "Charlie Kelly"
-    ];
+    // const contacts = [
+    //     "Dennis Reynolds", 
+    //     "Harry Potter", 
+    //     "Shoei Otani", 
+    //     "Nick Chubb", 
+    //     "LeBron James", 
+    //     "Bill Gates", 
+    //     "Joe Smith", 
+    //     "John Doe", 
+    //     "Jane Doe", 
+    //     "Fake Name", 
+    //     "Real Name", 
+    //     "Mario", 
+    //     "Dee Reynolds", 
+    //     "Charlie Kelly"
+    // ];
 
     // based on 9 contacts per page
     const endIdx = (activePage + 1) * 9;
@@ -37,7 +39,7 @@ const Contacts = () => {
             <Row>
                 <Sidebar/>
                 <Col xs={10} className='d-flex flex-column justify-content-between ms-auto'>
-                    <Row className='d-flex justify-content-center mt-4'>
+                    <Row className='d-flex justify-content-center ms-1 me-1 mt-4'>
                         <Col className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary'>Add Contact</Button>
                             <Filter/>
@@ -48,7 +50,7 @@ const Contacts = () => {
                             <Row className='justify-content-center'>
                                 {contacts.slice(startIdx, endIdx).map((contact, idx) => (
                                     <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
-                                        <ContactCard name={contact} key={idx}/>
+                                        <ContactCard contact={contact} key={idx}/>
                                     </Col>
                                 ))}
                             </Row>
