@@ -28,6 +28,7 @@ const Contacts = () => {
         "Charlie Kelly"
     ];
 
+    // based on 9 contacts per page
     const endIdx = (activePage + 1) * 9;
     const startIdx = endIdx - 9;
 
@@ -36,7 +37,7 @@ const Contacts = () => {
             <Row>
                 <Sidebar/>
                 <Col xs={10} className='d-flex flex-column justify-content-between ms-auto'>
-                    <Row className='d-flex justify-content-center mt-4 ms-1 me-1'>
+                    <Row className='d-flex justify-content-center mt-4'>
                         <Col className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary'>Add Contact</Button>
                             <Filter/>
@@ -56,7 +57,7 @@ const Contacts = () => {
                     </Row>
                     <Row className='mt-3'>
                         <Col className='d-flex justify-content-center align-items-center'>
-                            <Pages activePage={activePage} setActivePage={setActivePage}/>
+                            <Pages numberOfContacts={contacts.length} activePage={activePage} setActivePage={setActivePage}/>
                         </Col>
                     </Row>
                 </Col>

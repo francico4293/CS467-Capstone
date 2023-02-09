@@ -1,10 +1,11 @@
 import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 
-const Pages = ({ activePage, setActivePage }) => {
+const Pages = ({ numberOfContacts, activePage, setActivePage }) => {
     const items = [];
+    const numberOfPages = numberOfContacts / 9;
 
-    for (let page = 0; page < 2; page++) {
+    for (let page = 0; page < numberOfPages; page++) {
         items.push(
             <Pagination.Item key={page} active={page === activePage} onClick={() => setActivePage(page)}>
                 {page + 1}
