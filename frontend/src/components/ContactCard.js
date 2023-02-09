@@ -1,11 +1,11 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
-const ContactCard = () => {
+const ContactCard = ({ name }) => {
     return (
         <Card style={{ width: '25rem' }}>
             <Card.Body>
-                <Card.Title>Card Title</Card.Title>
+                <Card.Title>{name}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
                 <Card.Text>
                     Some quick example text to build on the card title and make up the
