@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 const ContactCard = () => {
     return (
-        <Card style={{ width: '20rem' }}>
+        <Card style={{ width: '25rem' }}>
             <Card.Body>
                 <Card.Title>Card Title</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>

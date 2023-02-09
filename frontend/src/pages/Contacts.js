@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Filter from '../components/Filter';
 import ContactCard from '../components/ContactCard';
+import Pages from '../components/Pages';
 
 const Contacts = () => {
     return (
@@ -20,30 +21,35 @@ const Contacts = () => {
                         </Col>
                     </Row>
                     <Row className='d-flex justify-content-center m-5'>
-                        <Col xs={10}>
+                        <Col>
                             <Row>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
-                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
                                     <ContactCard/>
                                 </Col>
                             </Row>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className='d-flex justify-content-center'>
+                            <Pages/>
                         </Col>
                     </Row>
                 </Col>
