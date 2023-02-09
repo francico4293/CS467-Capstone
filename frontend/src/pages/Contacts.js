@@ -5,21 +5,46 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Filter from '../components/Filter';
+import ContactCard from '../components/ContactCard';
 
 const Contacts = () => {
     return (
-        <Container fluid>
+        <Container className='contacts-container' fluid>
             <Row>
                 <Sidebar/>
                 <Col xs={10} sm={9} md={10} className='ms-auto'>
-                    <Row className='mt-3'>
-                        <Col className='d-flex flex-wrap justify-content-between align-items-center'>
+                    <Row className='d-flex justify-content-center mt-4'>
+                        <Col xs={11} className='d-flex flex-wrap justify-content-between align-items-center'>
                             <Button variant='secondary'>Add Contact</Button>
                             <Filter/>
                         </Col>
                     </Row>
-                    <Row>
-
+                    <Row className='d-flex justify-content-center m-5'>
+                        <Col xs={10}>
+                            <Row>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                                <Col lg={4} className='d-flex justify-content-center mt-4'>
+                                    <ContactCard/>
+                                </Col>
+                            </Row>
+                        </Col>
                     </Row>
                 </Col>
             </Row>
