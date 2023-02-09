@@ -10,7 +10,7 @@ const ContactCard = ({ name }) => {
             <div className='contact-color' style={{ backgroundColor: 'aqua' }}></div>
             <Card.Body>
                 <Row>
-                    <Col xs={8}>
+                    <Col xs={9}>
                         <Card.Title>{name}<i className='fa-brands fa-linkedin ms-2'/></Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">Google</Card.Subtitle>
                         <Card.Subtitle className="mb-2 text-muted">Sr. Software Engineer</Card.Subtitle>
