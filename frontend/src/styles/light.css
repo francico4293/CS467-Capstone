@@ -1,3 +1,7 @@
+#light .container-fluid {
+    min-height: 100vh;
+}
+
 #light .spinner-container {
     height: 100vh;
 }
@@ -210,4 +214,8 @@
 #light .contacts-container .card:hover {
     transform: translateY(-3px);
     box-shadow: 1px 5px 8px rgb(175, 175, 175);
+}
+
+#light .contacts-container>.row {
+    min-height: 100vh;
 }

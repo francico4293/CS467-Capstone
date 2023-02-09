@@ -239,3 +239,7 @@
     transform: translateY(-3px);
     box-shadow: 1px 5px 8px black;
 }
+
+#dark .contacts-container>.row {
+    min-height: 100vh;
+}

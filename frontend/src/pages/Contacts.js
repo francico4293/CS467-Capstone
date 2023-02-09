@@ -33,17 +33,17 @@ const Contacts = () => {
 
     return (
         <Container className='contacts-container' fluid>
-            <Row>
+            <Row className='test'>
                 <Sidebar/>
-                <Col xs={10} sm={9} md={10} className='ms-auto'>
+                <Col xs={10} sm={9} md={10} className='d-flex flex-column justify-content-between ms-auto'>
                     <Row className='d-flex justify-content-center mt-4'>
                         <Col xs={11} className='d-flex flex-wrap justify-content-between align-items-center'>
                             <Button variant='secondary'>Add Contact</Button>
                             <Filter/>
                         </Col>
                     </Row>
-                    <Row className='d-flex justify-content-center m-5'>
-                        <Col>
+                    <Row className='h-100 d-flex justify-content-center mt-5 ms-5 me-5'>
+                        <Col className='d-flex flex-column justify-content-between'>
                             <Row>
                                 {contacts.slice(startIdx, endIdx).map((contact, idx) => (
                                     <Col md={6} lg={4} className='d-flex justify-content-center mt-4'>
@@ -51,11 +51,11 @@ const Contacts = () => {
                                     </Col>
                                 ))}
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className='d-flex justify-content-center'>
-                            <Pages activePage={activePage} setActivePage={setActivePage}/>
+                            <Row className='mt-3'>
+                                <Col className='d-flex justify-content-center align-items-center'>
+                                    <Pages activePage={activePage} setActivePage={setActivePage}/>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Col>
