@@ -226,3 +226,16 @@
 .edit-profile-modal #dark .nav-link:hover {
     border-bottom: 1px solid #bababa;
 }
+
+/* ----- Contacts Page Styles ----- */
+#dark .contacts-container .card {
+    color: white;
+    background-color: rgb(50, 50, 50);
+    box-shadow: 1px 2px 5px black;
+    transition: all .25s;
+}
+
+#dark .contacts-container .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 1px 5px 8px black;
+}
