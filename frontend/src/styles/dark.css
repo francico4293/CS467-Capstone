@@ -1,5 +1,6 @@
 #dark .container-fluid {
     background-color: rgb(25, 25, 25);
+    min-height: 100vh;
 }
 
 #dark .spinner-container {
