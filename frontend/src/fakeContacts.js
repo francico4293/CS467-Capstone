@@ -102,7 +102,7 @@ export const contacts = [
         firstName: 'Dan',
         lastName: 'Doe',
         company: 'Google',
-        companyLogo: '/img/google-icon.svg',
+        companyLogo: null,
         position: 'Software Development Engineer',
         linkedIn: null,
         email: "gdoe@amazon.com",

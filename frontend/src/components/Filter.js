@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const Filter = () => {
+const Filter = ({ items }) => {
     return (
         <Dropdown>
             <Dropdown.Toggle variant='secondary' id="dropdown-basic">
@@ -9,10 +9,9 @@ const Filter = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                <Dropdown.Item href='#/action-1'>Google</Dropdown.Item>
-                <Dropdown.Item href='#/action-2'>Meta</Dropdown.Item>
-                <Dropdown.Item href='#/action-3'>Palantir</Dropdown.Item>
-                <Dropdown.Item href='#/action-3'>Amazon</Dropdown.Item>
+                {
+                    items.map((item, idx) => <Dropdown.Item key={idx}>{item}</Dropdown.Item>)
+                }
             </Dropdown.Menu>
         </Dropdown>
     );
