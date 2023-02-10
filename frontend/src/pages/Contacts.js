@@ -23,8 +23,8 @@ const Contacts = () => {
             <Row>
                 <Sidebar/>
                 <Col xs={10} className='d-flex flex-column justify-content-between ms-auto'>
-                    <Row className='d-flex justify-content-center ms-1 me-1 mt-4'>
-                        <Col className='d-flex flex-wrap justify-content-between align-items-start'>
+                    <Row className='d-flex justify-content-center mt-4'>
+                        <Col sm={9} md={12} className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary'>Add Contact</Button>
                             <Filter items={Array.from(companies)}/>
                         </Col>
