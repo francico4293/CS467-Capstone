@@ -33,7 +33,7 @@ const Contacts = () => {
                         <Col>
                             <Row className='justify-content-center'>
                                 {contacts.slice(startIdx, endIdx).map((contact, idx) => (
-                                    <Col md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
+                                    <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
                                         <ContactCard contact={contact}/>
                                     </Col>
                                 ))}
