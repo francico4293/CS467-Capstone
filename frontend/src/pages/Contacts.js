@@ -56,13 +56,18 @@ const Contacts = () => {
                     </Row>
                     <Row className='ms-3 me-3'>
                         <Col>
-                            <Row className='justify-content-center'>
-                                {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
-                                    <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
-                                        <ContactCard contact={contact} />
-                                    </Col>
-                                ))}
-                            </Row>
+                            {
+                                contacts.length > 0 
+                                    ? (
+                                        <Row className='justify-content-center'>
+                                            {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
+                                                <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
+                                                    <ContactCard contact={contact} />
+                                                </Col>
+                                            ))}
+                                        </Row>
+                                    ) : <p className='text-center text-muted fs-1'>You don't have any contacts</p>
+                            }
                         </Col>
                     </Row>
                     <Row className='mt-3'>
