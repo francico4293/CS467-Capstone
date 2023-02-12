@@ -12,10 +12,10 @@ const ContactCard = ({ contact }) => {
                 <Row>
                     <Col xs={9}>
                         <Card.Title>
-                            {contact.firstName} {contact.lastName}{contact.linkedIn ? <i className='fa-brands fa-linkedin ms-2'/> : <></>}
+                            {contact.firstName} {contact.lastName}{contact.linkedInProfile ? <i className='fa-brands fa-linkedin ms-2'/> : <></>}
                         </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{contact.company}</Card.Subtitle>
-                        <Card.Subtitle className="mb-2 text-muted">{contact.position}</Card.Subtitle>
+                        <Card.Subtitle className="mb-2 text-muted">{contact.jobTitle}</Card.Subtitle>
                     </Col>
                     <Col className='d-flex justify-content-end align-items-start'>
                         <Image 
@@ -38,10 +38,10 @@ const ContactCard = ({ contact }) => {
                     </Row>
                     <Row>
                         {
-                            contact.phone
+                            contact.phoneNumber
                                 ? (
                                     <Col className='fw-light'>
-                                        <i className='fa-solid fa-phone me-1'/>{contact.phone}
+                                        <i className='fa-solid fa-phone me-1'/>{contact.phoneNumber}
                                     </Col>
                                 ) : <></>
                         }
