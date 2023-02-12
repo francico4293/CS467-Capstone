@@ -4,6 +4,7 @@ const express = require('express')
 const path = require('path')
 const middleware = require('./middleware')
 const usersRouter = require('./controllers/users')
+const contactsRouter = require('./controllers/contacts')
 
 const PORT = process.env.PORT || 3000;
 const app = express()
@@ -13,6 +14,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(middleware.decodeIDToken)
 app.use('/api/users', usersRouter)
+app.use('/api/contacts', contactsRouter)
 
 
 // send static files if no route matches
