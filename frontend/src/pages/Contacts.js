@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,18 +7,24 @@ import Button from 'react-bootstrap/Button';
 import Filter from '../components/Filter';
 import ContactCard from '../components/ContactCard';
 import Pages from '../components/Pages';
-import { contacts } from '../fakeContacts';
+import { fakeContacts } from '../fakeContacts';
 import AddContactModal from '../components/AddContactModal';
 
 const Contacts = () => {
     const [activePage, setActivePage] = useState(0);
     const [showAddContactModal, setShowAddContactModal] = useState(false);
+    const [company, setCompany] = useState(null);
+    const [contacts, setContacts] = useState(fakeContacts);
+    const [companies, setCompanies] = useState(new Set(fakeContacts.map(contact => contact.company)));
 
     // based on 9 contacts per page
     const endIdx = (activePage + 1) * 9;
     const startIdx = endIdx - 9;
 
-    const companies = new Set(contacts.map(contact => contact.company));
+    useEffect(() => {
+        setContacts(fakeContacts.filter(contact => company === null ? true : company === contact.company));
+        setActivePage(0);
+    }, [company]);
 
     return (
         <Container className='contacts-container' fluid>
@@ -29,7 +35,7 @@ const Contacts = () => {
                     <Row className='d-flex justify-content-center mt-4'>
                         <Col sm={9} md={12} className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary' onClick={() => setShowAddContactModal(true)}>Add Contact</Button>
-                            <Filter items={Array.from(companies)}/>
+                            <Filter items={Array.from(companies)} setItem={setCompany}/>
                         </Col>
                     </Row>
                     <Row className='ms-3 me-3'>
