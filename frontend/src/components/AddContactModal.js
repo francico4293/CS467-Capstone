@@ -32,11 +32,23 @@ const AddContactModal = ({ show, setShow }) => {
 
         const data = await getUser(user.auth, setError);
         dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
-        setShow(false)
+        hideHandler();
+    }
+
+    const hideHandler = () => {
+        setFirstName('');
+        setLastName('');
+        setCompany('');
+        setJobTitle('');
+        setColor('');
+        setEmail('');
+        setPhoneNumber('');
+        setLinkedInProfile('');
+        setShow(false);
     }
 
     return (
-        <Modal id={`${theme}`} show={show} onHide={() => setShow(false)} centered>
+        <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
             <Modal.Header closeButton>
                 <Modal.Title>Add Contact</Modal.Title>
             </Modal.Header>
@@ -44,17 +56,17 @@ const AddContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>First name</Form.Label>
-                        <Form.Control value={firstName} onChange={e => setFirstName(e.target.value)} />
+                        <Form.Control value={firstName} onChange={e => setFirstName(e.target.value)} required/>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Last name</Form.Label>
-                        <Form.Control value={lastName} onChange={e => setLastName(e.target.value)} />
+                        <Form.Control value={lastName} onChange={e => setLastName(e.target.value)} required/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Company</Form.Label>
-                        <Form.Control value={company} onChange={e => setCompany(e.target.value)} />
+                        <Form.Control value={company} onChange={e => setCompany(e.target.value)} required/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
@@ -66,7 +78,7 @@ const AddContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Title</Form.Label>
-                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)} />
+                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)} required/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
@@ -91,7 +103,7 @@ const AddContactModal = ({ show, setShow }) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShow(false)}>
+                <Button variant="secondary" onClick={hideHandler}>
                     Close
                 </Button>
                 <Button variant="primary" onClick={submitHandler}>
