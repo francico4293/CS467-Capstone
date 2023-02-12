@@ -226,3 +226,7 @@
     height: 20px;
     width: 100%;
 }
+
+#light .fa-pen, #light .fa-linkedin {
+    cursor: pointer;
+}
