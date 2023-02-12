@@ -1,4 +1,4 @@
-export const contacts = [
+export const fakeContacts = [
     {
         firstName: 'Dennis',
         lastName: 'Reynolds',

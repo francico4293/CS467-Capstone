@@ -15,13 +15,15 @@ const Contacts = () => {
     const [activePage, setActivePage] = useState(0);
     const [showAddContactModal, setShowAddContactModal] = useState(false);
     const [contacts, setContacts] = useState([]);
+    const [company, setCompany] = useState(null);
     const user = useSelector(state => state.user);
+    
+    const companies = new Set(contacts.map(contact => contact.company));
+    const filteredContacts = contacts.filter(contact => company === null ? true : company === contact.company)
 
     // based on 9 contacts per page
     const endIdx = (activePage + 1) * 9;
     const startIdx = endIdx - 9;
-
-    const companies = new Set(contacts.map(contact => contact.company));
 
     const setError = (e) => {
         alert(e)
@@ -35,6 +37,11 @@ const Contacts = () => {
         populateContacts()
     }, [user])
 
+    useEffect(() => {
+        setActivePage(0);
+    }, [company]);
+
+
     return (
         <Container className='contacts-container' fluid>
             <Row>
@@ -44,13 +51,13 @@ const Contacts = () => {
                     <Row className='d-flex justify-content-center mt-4'>
                         <Col sm={9} md={12} className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary' onClick={() => setShowAddContactModal(true)}>Add Contact</Button>
-                            <Filter items={Array.from(companies)} />
+                            <Filter items={Array.from(companies)} setItem={setCompany}/>
                         </Col>
                     </Row>
                     <Row className='ms-3 me-3'>
                         <Col>
                             <Row className='justify-content-center'>
-                                {contacts.slice(startIdx, endIdx).map((contact, idx) => (
+                                {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
                                     <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
                                         <ContactCard contact={contact} />
                                     </Col>
@@ -60,7 +67,7 @@ const Contacts = () => {
                     </Row>
                     <Row className='mt-3'>
                         <Col className='d-flex justify-content-center align-items-center'>
-                            <Pages numberOfContacts={contacts.length} activePage={activePage} setActivePage={setActivePage} />
+                            <Pages numberOfContacts={filteredContacts.length} activePage={activePage} setActivePage={setActivePage} />
                         </Col>
                     </Row>
                 </Col>
