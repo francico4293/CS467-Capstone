@@ -10,13 +10,14 @@ import Pages from '../components/Pages';
 import { getContacts } from '../services/contacts';
 import AddContactModal from '../components/AddContactModal';
 import { useSelector } from 'react-redux';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Loading from '../components/Loading';
 
 const Contacts = () => {
     const [activePage, setActivePage] = useState(0);
     const [showAddContactModal, setShowAddContactModal] = useState(false);
     const [contacts, setContacts] = useState([]);
     const [company, setCompany] = useState(null);
+    const [loading, setLoading] = useState(true);
     const user = useSelector(state => state.user);
     
     const companies = new Set(contacts.map(contact => contact.company));
@@ -32,8 +33,10 @@ const Contacts = () => {
     
     useEffect(() => {
         async function populateContacts() {
+            setLoading(true);
             const contacts = await getContacts(user.auth, setError)
             setContacts(contacts)
+            setLoading(false);
         }
         populateContacts()
     }, [user])
@@ -41,7 +44,6 @@ const Contacts = () => {
     useEffect(() => {
         setActivePage(0);
     }, [company]);
-
 
     return (
         <Container className='contacts-container' fluid>
@@ -57,17 +59,18 @@ const Contacts = () => {
                     </Row>
                     <Row className='ms-3 me-3'>
                         <Col>
-                            {   
-                                contacts.length > 0 
-                                    ? (
-                                        <Row className='justify-content-center'>
-                                            {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
-                                                <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
-                                                    <ContactCard contact={contact} />
-                                                </Col>
-                                            ))}
-                                        </Row>
-                                    ) : <p className='text-center text-muted fs-1'>You don't have any contacts</p>
+                            {   loading 
+                                    ? <p className='text-center text-muted fs-1'>Fetching your contacts...</p>
+                                    : contacts.length > 0 
+                                        ? (
+                                            <Row className='justify-content-center'>
+                                                {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
+                                                    <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
+                                                        <ContactCard contact={contact} />
+                                                    </Col>
+                                                ))}
+                                            </Row>
+                                        ) : <p className='text-center text-muted fs-1'>You don't have any contacts</p>
                             }
                         </Col>
                     </Row>
