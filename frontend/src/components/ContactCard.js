@@ -8,7 +8,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Button from 'react-bootstrap/Button';
 
-const ContactCard = ({ contact }) => {
+const ContactCard = ({ contact, setShowEditContactModal }) => {
     const { theme } = useSelector(state => state);
     const [showPopover, setShowPopover] = useState(false);
 
@@ -46,7 +46,7 @@ const ContactCard = ({ contact }) => {
                     </Row>
                     <Row>
                         <Col className='d-flex justify-content-end'>
-                            <i className='fa-solid fa-pen me-2'/>
+                            <i className='fa-solid fa-pen me-2' onClick={() => setShowEditContactModal(true)}/>
                             <OverlayTrigger 
                                 trigger='click' 
                                 placement='top'
