@@ -253,3 +253,19 @@
 #dark .fa-pen, #dark .fa-linkedin {
     cursor: pointer;
 }
+
+#dark .popover-header {
+    background-color: rgb(25, 25, 25);
+    color: white;
+}
+
+#dark .popover-body {
+    background-color: #333;
+    color: white;
+}
+
+#dark .popover-arrow::before, #dark .popover-arrow::after {
+    border-color: #333 !important;
+    border-right-color: transparent !important;
+    border-left-color: transparent !important;
+}

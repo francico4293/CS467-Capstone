@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -8,6 +9,7 @@ import Popover from 'react-bootstrap/Popover';
 import Button from 'react-bootstrap/Button';
 
 const ContactCard = ({ contact }) => {
+    const { theme } = useSelector(state => state);
     const [showPopover, setShowPopover] = useState(false);
 
     return (
@@ -50,7 +52,7 @@ const ContactCard = ({ contact }) => {
                                 placement='top'
                                 show={showPopover}
                                 overlay={
-                                    <Popover>
+                                    <Popover id={theme}>
                                         <Popover.Header as="h3">Delete Contact</Popover.Header>
                                         <Popover.Body>
                                             <Row>
@@ -59,7 +61,7 @@ const ContactCard = ({ contact }) => {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col className='d-flex justify-content-end border-top pt-3'>
+                                                <Col className='d-flex justify-content-end border-top pt-1'>
                                                     <Button className='me-1' onClick={() => setShowPopover(false)}>Cancel</Button>
                                                     <Button onClick={() => setShowPopover(false)}>Confirm</Button>
                                                 </Col>
