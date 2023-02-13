@@ -1,7 +1,7 @@
 const { db } = require('../fire-admin');
 const { FieldValue } = require('firebase-admin/firestore');
 
-createContact = async (uid, { firstName, lastName, email, phoneNumber, linkedInProfile, company, color, jobTitle }) => {
+createContact = async (uid, { firstName, lastName, email, phoneNumber, linkedInProfile, company, companyLogo, color, jobTitle }) => {
     const contactRef = await db.collection('contacts').add({
         firstName,
         lastName,
@@ -9,9 +9,10 @@ createContact = async (uid, { firstName, lastName, email, phoneNumber, linkedInP
         phoneNumber,
         linkedInProfile,
         company,
+        companyLogo,
         color,
         jobTitle
-    })
+    });
 
     const userRef = db.collection('users').doc(uid);
     await userRef.update({

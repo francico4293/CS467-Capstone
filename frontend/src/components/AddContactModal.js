@@ -14,6 +14,7 @@ const AddContactModal = ({ show, setShow }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
+    const [companyLogo, setCompanyLogo] = useState(null);
     const [jobTitle, setJobTitle] = useState('');
     const [color, setColor] = useState('');
     const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const AddContactModal = ({ show, setShow }) => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        const newContact = {firstName, lastName, company, jobTitle, color, email, phoneNumber, linkedInProfile}
+        const newContact = {firstName, lastName, company, companyLogo, jobTitle, color, email, phoneNumber, linkedInProfile}
         await createContact(user.auth, newContact, setError)
 
         const data = await getUser(user.auth, setError);
@@ -72,7 +73,7 @@ const AddContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Company Logo (.svg)</Form.Label>
-                        <Form.Control type='file' />
+                        <Form.Control type='file' onChange={e => setCompanyLogo(e.target.files[0])}/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>

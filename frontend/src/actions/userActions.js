@@ -29,7 +29,7 @@ const editUser = (userAuth, newProps, setError) => {
 
 const uploadProfilePicture = (user, file, setUploading) => {
     return async function(dispatch) {
-        const fileRef = ref(storage, user.auth.uid + '.png');
+        const fileRef = ref(storage, 'profile-pictures/' + user.auth.uid + '.png');
 
         setUploading(true);
         await uploadBytes(fileRef, file);

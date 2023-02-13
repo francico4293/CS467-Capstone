@@ -56,7 +56,7 @@ const Contacts = () => {
                     </Row>
                     <Row className='ms-3 me-3'>
                         <Col>
-                            {
+                            {   
                                 contacts.length > 0 
                                     ? (
                                         <Row className='justify-content-center'>
