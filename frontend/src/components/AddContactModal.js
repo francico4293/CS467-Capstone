@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createContact } from '../services/contacts';
 import { getUser } from '../services/users';
+import Cropper from 'react-easy-crop';
+import { getCroppedImg } from '../utils/imageUtils';
 
 const AddContactModal = ({ show, setShow }) => {
     const { theme, user } = useSelector(state => state);
@@ -14,22 +16,35 @@ const AddContactModal = ({ show, setShow }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
-    const [companyLogo, setCompanyLogo] = useState(null);
+    const [contactPhoto, setContactPhoto] = useState(null);
     const [jobTitle, setJobTitle] = useState('');
     const [color, setColor] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [linkedInProfile, setLinkedInProfile] = useState('');
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
     const setError = (e) => {
         alert(e)
     }
 
+    const cropComplete = (croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
+
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        const newContact = {firstName, lastName, company, companyLogo, jobTitle, color, email, phoneNumber, linkedInProfile}
-        await createContact(user.auth, newContact, setError)
+        let photo = null;
+        if (contactPhoto !== null) {
+            const { file, url } = await getCroppedImg(contactPhoto, croppedAreaPixels);
+            photo = file;
+        }
+
+        const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
+        await createContact(user.auth, newContact, photo, setError)
 
         const data = await getUser(user.auth, setError);
         dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
@@ -45,6 +60,7 @@ const AddContactModal = ({ show, setShow }) => {
         setEmail('');
         setPhoneNumber('');
         setLinkedInProfile('');
+        setContactPhoto(null);
         setShow(false);
     }
 
@@ -56,29 +72,52 @@ const AddContactModal = ({ show, setShow }) => {
             <Modal.Body>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
-                        <Form.Label>First name</Form.Label>
+                        <Form.Label>First name*</Form.Label>
                         <Form.Control value={firstName} onChange={e => setFirstName(e.target.value)} required/>
                     </Form.Group>
                     <Form.Group as={Col}>
-                        <Form.Label>Last name</Form.Label>
+                        <Form.Label>Last name*</Form.Label>
                         <Form.Control value={lastName} onChange={e => setLastName(e.target.value)} required/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
+                    {
+                        contactPhoto
+                            ? (
+                                <>
+                                    <div className='crop-container d-flex justify-content-center'>
+                                        <Cropper
+                                            image={contactPhoto}
+                                            crop={crop}
+                                            zoom={zoom}
+                                            aspect={1}
+                                            onCropChange={setCrop}
+                                            onZoomChange={setZoom}
+                                            onCropComplete={cropComplete}
+                                        />
+                                    </div>
+                                    <div className='mt-3'>
+                                        <label for="pictureZoom" className="form-label">Zoom</label>
+                                        <input type="range" className="form-range" min={1} max={3} step={0.1} value={zoom} id="pictureZoom" 
+                                            onChange={e => setZoom(e.target.value)}></input>
+                                    </div>
+                                </>
+                            ) : <></>
+                    }
                     <Form.Group as={Col}>
-                        <Form.Label>Company</Form.Label>
+                        <Form.Label>Contact photo</Form.Label>
+                        <Form.Control type='file' onChange={e => setContactPhoto(URL.createObjectURL(e.target.files[0]))}/>
+                    </Form.Group>
+                </Row>
+                <Row className='mb-2'>
+                    <Form.Group as={Col}>
+                        <Form.Label>Company*</Form.Label>
                         <Form.Control value={company} onChange={e => setCompany(e.target.value)} required/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
-                        <Form.Label>Company Logo (.svg)</Form.Label>
-                        <Form.Control type='file' onChange={e => setCompanyLogo(e.target.files[0])}/>
-                    </Form.Group>
-                </Row>
-                <Row className='mb-2'>
-                    <Form.Group as={Col}>
-                        <Form.Label>Job Title</Form.Label>
+                        <Form.Label>Job Title*</Form.Label>
                         <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)} required/>
                     </Form.Group>
                 </Row>

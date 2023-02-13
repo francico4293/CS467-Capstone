@@ -22,9 +22,9 @@ const getContacts = async (userAuth, setError) => {
     }
 }
 
-const createContact = async (userAuth, newContact, setError) => {
-    if (newContact.companyLogo !== null) {
-        newContact.companyLogo = await uploadCompanyLogo(newContact.companyLogo);
+const createContact = async (userAuth, newContact, photo, setError) => {
+    if (newContact.contactPhoto !== null) {
+        newContact.contactPhoto = await uploadContactPhoto(photo);
     }
 
     const token = await userAuth.getIdToken();
@@ -45,9 +45,9 @@ const createContact = async (userAuth, newContact, setError) => {
     }
 }
 
-const uploadCompanyLogo = async (companyLogo) => {
-    const fileRef = ref(storage, 'company-logos/' + uuidv4() + '-' + companyLogo.name);
-    await uploadBytes(fileRef, companyLogo);
+const uploadContactPhoto = async (contactPhoto) => {
+    const fileRef = ref(storage, 'contact-photos/' + uuidv4() + '.png');
+    await uploadBytes(fileRef, contactPhoto);
     return await getDownloadURL(fileRef);
 }
 
