@@ -10,6 +10,7 @@ import Pages from '../components/Pages';
 import { getContacts } from '../services/contacts';
 import AddContactModal from '../components/AddContactModal';
 import { useSelector } from 'react-redux';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const Contacts = () => {
     const [activePage, setActivePage] = useState(0);
