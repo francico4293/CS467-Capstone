@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import Button from 'react-bootstrap/Button';
 
 const ContactCard = ({ contact }) => {
+    const [showPopover, setShowPopover] = useState(false);
+
     return (
         <Card style={{ width: '25rem', minHeight: '12rem' }}>
             <div className='contact-color' style={{ backgroundColor: `${contact.color}` }}></div>
@@ -40,7 +45,29 @@ const ContactCard = ({ contact }) => {
                     <Row>
                         <Col className='d-flex justify-content-end'>
                             <i className='fa-solid fa-pen me-2'/>
-                            <i className='fa-solid fa-trash'/>
+                            <OverlayTrigger 
+                                trigger='click' 
+                                placement='top'
+                                show={showPopover}
+                                overlay={
+                                    <Popover>
+                                        <Popover.Header as="h3">Delete Contact</Popover.Header>
+                                        <Popover.Body>
+                                            <Row>
+                                                <Col className='pb-3'>
+                                                    Are you sure you want to delete this contact?
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col className='d-flex justify-content-end border-top pt-3'>
+                                                    <Button className='me-1' onClick={() => setShowPopover(false)}>Cancel</Button>
+                                                    <Button onClick={() => setShowPopover(false)}>Confirm</Button>
+                                                </Col>
+                                            </Row>
+                                        </Popover.Body>
+                                    </Popover>}>
+                                <i className='fa-solid fa-trash' onClick={() => setShowPopover(true)}/>
+                            </OverlayTrigger>
                         </Col>
                     </Row>
                 </Card.Text>
