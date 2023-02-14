@@ -1,4 +1,5 @@
 import {
+    beforeAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
@@ -14,11 +15,13 @@ import { auth } from "../fire";
 
 const signUpUser = async (email, password, firstName, lastName, setError, setErrorMessage) => {
     try {
-        const { user } =  await createUserWithEmailAndPassword(auth, email, password);
-        return await createUserInDatabase(user, firstName, lastName);
+        const unsubscribe = beforeAuthStateChanged(auth, async (user) => {
+            await createUserInDatabase(user, firstName, lastName);
+        })
+        await createUserWithEmailAndPassword(auth, email, password);
+        unsubscribe();
     } catch (error) {
-        setError(true);
-        setErrorMessage('Signup failed!');
+        setError(error);
     };
 }
 
