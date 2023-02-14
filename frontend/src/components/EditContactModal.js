@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { createContact } from '../services/contacts';
-import { getUser } from '../services/users';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
 
-const AddContactModal = ({ show, setShow }) => {
-    const { theme, user } = useSelector(state => state);
-    const dispatch = useDispatch();
+const EditContactModal = ({ show, setShow }) => {  
+    const { theme } = useSelector(state => state); 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
@@ -26,48 +23,22 @@ const AddContactModal = ({ show, setShow }) => {
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
-    const setError = (e) => {
-        alert(e)
-    }
-
     const cropComplete = (croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
-    const submitHandler = async (e) => {
-        e.preventDefault();
+    const submitHandler = () => {
 
-        let photo = null;
-        if (contactPhoto !== null) {
-            const { file, url } = await getCroppedImg(contactPhoto, croppedAreaPixels);
-            photo = file;
-        }
-
-        const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
-        await createContact(user.auth, newContact, photo, setError)
-
-        const data = await getUser(user.auth, setError);
-        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
-        hideHandler();
     }
 
     const hideHandler = () => {
-        setFirstName('');
-        setLastName('');
-        setCompany('');
-        setJobTitle('');
-        setColor('');
-        setEmail('');
-        setPhoneNumber('');
-        setLinkedInProfile('');
-        setContactPhoto(null);
         setShow(false);
     }
 
     return (
         <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Add Contact</Modal.Title>
+                <Modal.Title>Edit Contact</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Row className='mb-2'>
@@ -154,4 +125,4 @@ const AddContactModal = ({ show, setShow }) => {
     );
 }
 
-export default AddContactModal;
+export default EditContactModal;

@@ -9,13 +9,16 @@ import ContactCard from '../components/ContactCard';
 import Pages from '../components/Pages';
 import { getContacts } from '../services/contacts';
 import AddContactModal from '../components/AddContactModal';
+import EditContactModal from '../components/EditContactModal';
 import { useSelector } from 'react-redux';
 
 const Contacts = () => {
     const [activePage, setActivePage] = useState(0);
     const [showAddContactModal, setShowAddContactModal] = useState(false);
+    const [showEditContactModal, setShowEditContactModal] = useState(false);
     const [contacts, setContacts] = useState([]);
     const [company, setCompany] = useState(null);
+    const [loading, setLoading] = useState(true);
     const user = useSelector(state => state.user);
     
     const companies = new Set(contacts.map(contact => contact.company));
@@ -31,8 +34,10 @@ const Contacts = () => {
     
     useEffect(() => {
         async function populateContacts() {
+            setLoading(true);
             const contacts = await getContacts(user.auth, setError)
             setContacts(contacts)
+            setLoading(false);
         }
         populateContacts()
     }, [user])
@@ -41,13 +46,13 @@ const Contacts = () => {
         setActivePage(0);
     }, [company]);
 
-
     return (
         <Container className='contacts-container' fluid>
             <Row>
                 <Sidebar />
                 <Col xs={10} className='d-flex flex-column justify-content-between ms-auto'>
-                    <AddContactModal show={showAddContactModal} setShow={setShowAddContactModal} />
+                    <AddContactModal show={showAddContactModal} setShow={setShowAddContactModal}/>
+                    <EditContactModal show={showEditContactModal} setShow={setShowEditContactModal}/>
                     <Row className='d-flex justify-content-center mt-4'>
                         <Col sm={9} md={12} className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary' onClick={() => setShowAddContactModal(true)}>Add Contact</Button>
@@ -56,13 +61,19 @@ const Contacts = () => {
                     </Row>
                     <Row className='ms-3 me-3'>
                         <Col>
-                            <Row className='justify-content-center'>
-                                {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
-                                    <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
-                                        <ContactCard contact={contact} />
-                                    </Col>
-                                ))}
-                            </Row>
+                            {   loading 
+                                    ? <p className='text-center text-muted fs-1'>Fetching your contacts...</p>
+                                    : contacts.length > 0 
+                                        ? (
+                                            <Row className='justify-content-center'>
+                                                {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
+                                                    <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
+                                                        <ContactCard contact={contact} setShowEditContactModal={setShowEditContactModal}/>
+                                                    </Col>
+                                                ))}
+                                            </Row>
+                                        ) : <p className='text-center text-muted fs-1'>You don't have any contacts</p>
+                            }
                         </Col>
                     </Row>
                     <Row className='mt-3'>

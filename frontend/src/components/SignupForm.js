@@ -18,7 +18,7 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
     const handleSignIn = async (e) => {
         e.preventDefault();
 
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
             setSignupError(true);
             setSignupErrorMessage('Signup failed - passwords must match!');
         } else {

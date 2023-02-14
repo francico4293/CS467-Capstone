@@ -1,3 +1,11 @@
+import { 
+    ref, 
+    uploadBytes, 
+    getDownloadURL 
+} from 'firebase/storage';
+import { storage } from "../fire";
+import { v4 as uuidv4 } from 'uuid';
+
 const getContacts = async (userAuth, setError) => {
     const token = await userAuth.getIdToken();
     const response = await fetch(`/api/contacts/`, {
@@ -14,7 +22,10 @@ const getContacts = async (userAuth, setError) => {
     }
 }
 
-const createContact = async (userAuth, newContact, setError) => {
+const createContact = async (userAuth, newContact, photo, setError) => {
+    if (newContact.contactPhoto !== null) {
+        newContact.contactPhoto = await uploadContactPhoto(photo);
+    }
 
     const token = await userAuth.getIdToken();
     const response = await fetch('/api/contacts', {
@@ -32,7 +43,12 @@ const createContact = async (userAuth, newContact, setError) => {
         const error = await response.json()
         setError(error.error);
     }
+}
 
+const uploadContactPhoto = async (contactPhoto) => {
+    const fileRef = ref(storage, 'contact-photos/' + uuidv4() + '.png');
+    await uploadBytes(fileRef, contactPhoto);
+    return await getDownloadURL(fileRef);
 }
 
 export { getContacts, createContact }
