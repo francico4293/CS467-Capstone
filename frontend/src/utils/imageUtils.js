@@ -1,7 +1,10 @@
-// NOTE: All code below is not my own
-// Utilitiy functions copied from -> https://github.com/codelikepro22/react-firebase-images-gallery/blob/sixth-part/src/components/crop/utils/cropImage.js
-// Will work on refactoring and analyzing in future work
-
+// BEGIN CODE CITATION
+// The following function is not my own
+// Code copied from https://github.com/codelikepro22/react-firebase-images-gallery/blob/sixth-part/src/components/crop/utils/cropImage.js
+// Description: This function creates a new Image object. Event listeners for 'load' and 'error' are then attached to the Image object. The 'load'
+// event listener creates a handler that resolves the returned Promise to the Image object. The 'error' event listener creates a handler that
+// rejects the returned Promise with the associated error. The cross origin attribute is set to anonymous to allow sharing of resources across different
+// domains. Finally, the image src is set to the provided image URL.
 const createImage = (url) => new Promise((resolve, reject) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image));
@@ -9,21 +12,20 @@ const createImage = (url) => new Promise((resolve, reject) => {
     image.setAttribute('crossOrigin', 'anonymous');
     image.src = url;
 });
+// END CODE CITATION
 
-const getRadianAngle = (degreeValue) => {
-    return (degreeValue * Math.PI) / 180;
-}
-
-const rotateSize = (width, height, rotation) => {
-    const rotRad = getRadianAngle(rotation);
-  
-    return {
-      width: Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
-      height:Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
-    };
-}
-
-const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0, flip = { horizontal: false, vertical: false }) => {
+// BEGIN CODE CITATION
+// The following function is not my own
+// Code copied and modified from https://github.com/codelikepro22/react-firebase-images-gallery/blob/sixth-part/src/components/crop/utils/cropImage.js
+// Description: The goal of this function is to take a provided image and crop it based on the pixelCrop parameter representing the cropped area pixels.
+// The function begins by creating a new Image object based on the image source and using the createImage function above. A 'canvas' element is created
+// and then a 2-dimensional drawing context is created on the 'canvas' element. The canvas height and width are then based on the source image height and 
+// width and the image is placed inside the canvas context starting in the upper left-hand corner, i.e., position x = 0, y = 0. Once the source image is 
+// placed on the canvas context, the getImageData method is called on the context to extract the image data based on the provided pixelCrop parameter - 
+// we extract data based on a distance from the x and y axes and based on a width and height. The canvas is then resized based on the pixelCrop width and 
+// height and the extracted image data is then placed on the resized canvas. Finally, a promise is retruned that resolves to an object containing the
+// cropped image File object and the cropped image URL.
+const getCroppedImg = async (imageSrc, pixelCrop) => {
     const image = await createImage(imageSrc);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -31,22 +33,9 @@ const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0, flip = { horizon
     if (!ctx) {
       return null;
     }
-  
-    const rotRad = getRadianAngle(rotation);
-  
-    const { width: bBoxWidth, height: bBoxHeight } = rotateSize(
-      image.width,
-      image.height,
-      rotation
-    );
-  
-    canvas.width = bBoxWidth;
-    canvas.height = bBoxHeight;
-  
-    ctx.translate(bBoxWidth / 2, bBoxHeight / 2);
-    ctx.rotate(rotRad);
-    ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1);
-    ctx.translate(-image.width / 2, -image.height / 2);
+
+    canvas.width = image.width;
+    canvas.height = image.height;
   
     ctx.drawImage(image, 0, 0);
   
@@ -69,5 +58,6 @@ const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0, flip = { horizon
       }, 'image/jpeg');
     });
 }
+// END CODE CITATION
 
 export { getCroppedImg };
