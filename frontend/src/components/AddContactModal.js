@@ -14,10 +14,14 @@ const AddContactModal = ({ show, setShow }) => {
     const { theme, user } = useSelector(state => state);
     const dispatch = useDispatch();
     const [firstName, setFirstName] = useState('');
+    const [firstNameClicked, setFirstNameClicked] = useState(false);
     const [lastName, setLastName] = useState('');
+    const [lastNameClicked, setLastNameClicked] = useState(false);
     const [company, setCompany] = useState('');
+    const [companyClicked, setCompanyClicked] = useState(false);
     const [contactPhoto, setContactPhoto] = useState(null);
     const [jobTitle, setJobTitle] = useState('');
+    const [jobTitleClicked, setJobTitleClicked] = useState(false);
     const [color, setColor] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -35,27 +39,31 @@ const AddContactModal = ({ show, setShow }) => {
     };
 
     const submitHandler = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
 
-        let photo = null;
-        if (contactPhoto !== null) {
-            const { file, url } = await getCroppedImg(contactPhoto, croppedAreaPixels);
-            photo = file;
-        }
+        // let photo = null;
+        // if (contactPhoto !== null) {
+        //     const { file, url } = await getCroppedImg(contactPhoto, croppedAreaPixels);
+        //     photo = file;
+        // }
 
-        const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
-        await createContact(user.auth, newContact, photo, setError)
+        // const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
+        // await createContact(user.auth, newContact, photo, setError)
 
-        const data = await getUser(user.auth, setError);
-        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
-        hideHandler();
+        // const data = await getUser(user.auth, setError);
+        // dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        // hideHandler();
     }
 
     const hideHandler = () => {
         setFirstName('');
+        setFirstNameClicked(false);
         setLastName('');
+        setLastNameClicked(false);
         setCompany('');
+        setCompanyClicked(false);
         setJobTitle('');
+        setJobTitleClicked(false);
         setColor('');
         setEmail('');
         setPhoneNumber('');
@@ -71,13 +79,29 @@ const AddContactModal = ({ show, setShow }) => {
             </Modal.Header>
             <Modal.Body>
                 <Row className='mb-2'>
-                    <Form.Group as={Col}>
+                    <Form.Group as={Col} className='position-relative'>
                         <Form.Label>First name*</Form.Label>
-                        <Form.Control value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+                        <Form.Control 
+                            value={firstName} 
+                            onChange={e => setFirstName(e.target.value)} 
+                            isValid={firstName !== ''} 
+                            isInvalid={firstNameClicked && firstName === ''}
+                            onBlur={() => setFirstNameClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a first name</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Last name*</Form.Label>
-                        <Form.Control value={lastName} onChange={e => setLastName(e.target.value)} required/>
+                        <Form.Control 
+                            value={lastName} 
+                            onChange={e => setLastName(e.target.value)} 
+                            isValid={lastName !== ''} 
+                            isInvalid={lastNameClicked && lastName === ''}
+                            onBlur={() => setLastNameClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a last name</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
@@ -112,13 +136,29 @@ const AddContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Company*</Form.Label>
-                        <Form.Control value={company} onChange={e => setCompany(e.target.value)} required/>
+                        <Form.Control 
+                            value={company} 
+                            onChange={e => setCompany(e.target.value)} 
+                            isValid={company !== ''} 
+                            isInvalid={companyClicked && company === ''}
+                            onBlur={() => setCompanyClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a company</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Title*</Form.Label>
-                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)} required/>
+                        <Form.Control 
+                            value={jobTitle} 
+                            onChange={e => setJobTitle(e.target.value)} 
+                            isValid={jobTitle !== ''} 
+                            isInvalid={jobTitleClicked && jobTitle === ''}
+                            onBlur={() => setJobTitleClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a job title</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>

@@ -23,10 +23,10 @@ const LoginForm = ({ setLoginError, setShowPasswordResetModal }) => {
             <Form.Group className='mb-2'>
                 <Form.Label>Password</Form.Label>
                 <InputGroup>
-                    <Form.Control type={showPassword ? 'text' : 'password'} onChange={e => setPassword(e.target.value)}/>
                     <InputGroup.Text onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                     </InputGroup.Text>
+                    <Form.Control type={showPassword ? 'text' : 'password'} onChange={e => setPassword(e.target.value)}/>
                 </InputGroup>
             </Form.Group>
             <a className='d-block mb-3 reset-password' onClick={() => setShowPasswordResetModal(true)}>Forgot password?</a>

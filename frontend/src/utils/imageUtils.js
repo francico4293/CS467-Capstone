@@ -23,7 +23,7 @@ const createImage = (url) => new Promise((resolve, reject) => {
 // width and the image is placed inside the canvas context starting in the upper left-hand corner, i.e., position x = 0, y = 0. Once the source image is 
 // placed on the canvas context, the getImageData method is called on the context to extract the image data based on the provided pixelCrop parameter - 
 // we extract data based on a distance from the x and y axes and based on a width and height. The canvas is then resized based on the pixelCrop width and 
-// height and the extracted image data is then placed on the resized canvas. Finally, a promise is retruned that resolves to an object containing the
+// height and the extracted image data is then placed on the resized canvas. Finally, a promise is returned that resolves to an object containing the
 // cropped image File object and the cropped image URL.
 const getCroppedImg = async (imageSrc, pixelCrop) => {
     const image = await createImage(imageSrc);

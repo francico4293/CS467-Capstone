@@ -38,10 +38,10 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                 <Form.Group as={Col}>
                     <Form.Label>Current Password</Form.Label>
                     <InputGroup>
-                        <Form.Control type={showCurrentPassword ? 'text' : 'password'} value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/>
                         <InputGroup.Text onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                             {showCurrentPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                         </InputGroup.Text>
+                        <Form.Control type={showCurrentPassword ? 'text' : 'password'} value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/>
                     </InputGroup>
                 </Form.Group>
             </Row>
@@ -49,10 +49,10 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                 <Form.Group as={Col}>
                     <Form.Label>New Password</Form.Label>
                     <InputGroup>
-                        <Form.Control type={showNewPassword ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
                         <InputGroup.Text onClick={() => setShowNewPassword(!showNewPassword)}>
                             {showNewPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                         </InputGroup.Text>
+                        <Form.Control type={showNewPassword ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
                     </InputGroup>
                 </Form.Group>
             </Row>
@@ -60,10 +60,10 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                 <Form.Group as={Col}>
                     <Form.Label>Confirm New Password</Form.Label>
                     <InputGroup>
-                        <Form.Control type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
                         <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                             {showConfirmPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                         </InputGroup.Text>
+                        <Form.Control type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
                     </InputGroup>
                 </Form.Group>
             </Row>
