@@ -41,7 +41,7 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
                     <Form.Control onChange={e => setLastName(e.target.value)}/>
                 </Form.Group>
             </Row>
-            <Form.Group className='mb-2'>
+            <Form.Group className='mb-2 position-relative'>
                 <Form.Label>Email*</Form.Label>
                 <Form.Control 
                     type='email' 

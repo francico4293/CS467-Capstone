@@ -41,7 +41,6 @@ const AddContactModal = ({ show, setShow }) => {
     };
 
     const submitHandler = async (e) => {
-        setCreatingContact(true);
         e.preventDefault();
 
         if (firstName === '' || lastName === '' || company === '' || jobTitle === '') {
@@ -51,6 +50,8 @@ const AddContactModal = ({ show, setShow }) => {
             jobTitle === '' && setJobTitleClicked(true);
             return;
         }
+
+        setCreatingContact(true);
 
         let photo = null;
         if (contactPhoto !== null) {
