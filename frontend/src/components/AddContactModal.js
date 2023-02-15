@@ -9,6 +9,7 @@ import { createContact } from '../services/contacts';
 import { getUser } from '../services/users';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
+import Spinner from 'react-bootstrap/Spinner';
 
 const AddContactModal = ({ show, setShow }) => {
     const { theme, user } = useSelector(state => state);
@@ -29,6 +30,7 @@ const AddContactModal = ({ show, setShow }) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [creatingContact, setCreatingContact] = useState(false);
 
     const setError = (e) => {
         alert(e)
@@ -39,7 +41,16 @@ const AddContactModal = ({ show, setShow }) => {
     };
 
     const submitHandler = async (e) => {
+        setCreatingContact(true);
         e.preventDefault();
+
+        if (firstName === '' || lastName === '' || company === '' || jobTitle === '') {
+            firstName === '' && setFirstNameClicked(true);
+            lastName === '' && setLastNameClicked(true);
+            company === '' && setCompanyClicked(true);
+            jobTitle === '' && setJobTitleClicked(true);
+            return;
+        }
 
         let photo = null;
         if (contactPhoto !== null) {
@@ -52,6 +63,7 @@ const AddContactModal = ({ show, setShow }) => {
 
         const data = await getUser(user.auth, setError);
         dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        setCreatingContact(false);
         hideHandler();
     }
 
@@ -183,12 +195,28 @@ const AddContactModal = ({ show, setShow }) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={hideHandler}>
+                <Button variant='secondary' onClick={hideHandler}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={submitHandler}>
-                    Save Changes
-                </Button>
+                {
+                    creatingContact
+                        ? (
+                            <Button variant='primary' disabled>
+                                <Spinner
+                                    as='span'
+                                    animation='border'
+                                    size='sm'
+                                    role='status'
+                                    className='me-1'
+                                />
+                                Creating Contact
+                            </Button>
+                        ) : (
+                            <Button variant='primary' onClick={submitHandler}>
+                                Save Changes
+                            </Button>
+                        )
+                }
             </Modal.Footer>
         </Modal>
     );
