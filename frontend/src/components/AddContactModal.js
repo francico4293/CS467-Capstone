@@ -39,20 +39,20 @@ const AddContactModal = ({ show, setShow }) => {
     };
 
     const submitHandler = async (e) => {
-        // e.preventDefault();
+        e.preventDefault();
 
-        // let photo = null;
-        // if (contactPhoto !== null) {
-        //     const { file, url } = await getCroppedImg(contactPhoto, croppedAreaPixels);
-        //     photo = file;
-        // }
+        let photo = null;
+        if (contactPhoto !== null) {
+            const { file, url } = await getCroppedImg(contactPhoto, croppedAreaPixels);
+            photo = file;
+        }
 
-        // const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
-        // await createContact(user.auth, newContact, photo, setError)
+        const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
+        await createContact(user.auth, newContact, photo, setError)
 
-        // const data = await getUser(user.auth, setError);
-        // dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
-        // hideHandler();
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        hideHandler();
     }
 
     const hideHandler = () => {
