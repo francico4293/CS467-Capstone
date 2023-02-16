@@ -11,10 +11,14 @@ import { getCroppedImg } from '../utils/imageUtils';
 const EditContactModal = ({ show, setShow }) => {  
     const { theme } = useSelector(state => state); 
     const [firstName, setFirstName] = useState('');
+    const [firstNameClicked, setFirstNameClicked] = useState(false);
     const [lastName, setLastName] = useState('');
+    const [lastNameClicked, setLastNameClicked] = useState(false);
     const [company, setCompany] = useState('');
+    const [companyClicked, setCompanyClicked] = useState(false);
     const [contactPhoto, setContactPhoto] = useState(null);
     const [jobTitle, setJobTitle] = useState('');
+    const [jobTitleClicked, setJobTitleClicked] = useState(false);
     const [color, setColor] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -27,11 +31,23 @@ const EditContactModal = ({ show, setShow }) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault();
 
+        if (firstName === '' || lastName === '' || company === '' || jobTitle === '') {
+            firstName === '' && setFirstNameClicked(true);
+            lastName === '' && setLastNameClicked(true);
+            company === '' && setCompanyClicked(true);
+            jobTitle === '' && setJobTitleClicked(true);
+            return;
+        }
     }
 
     const hideHandler = () => {
+        setFirstNameClicked(false);
+        setLastNameClicked(false);
+        setCompanyClicked(false);
+        setJobTitleClicked(false);
         setShow(false);
     }
 
@@ -44,11 +60,27 @@ const EditContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>First name*</Form.Label>
-                        <Form.Control value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+                        <Form.Control 
+                            value={firstName} 
+                            onChange={e => setFirstName(e.target.value)}
+                            isValid={firstName !== ''} 
+                            isInvalid={firstNameClicked && firstName === ''}
+                            onBlur={() => setFirstNameClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a first name</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Last name*</Form.Label>
-                        <Form.Control value={lastName} onChange={e => setLastName(e.target.value)} required/>
+                        <Form.Control 
+                            value={lastName} 
+                            onChange={e => setLastName(e.target.value)} 
+                            isValid={lastName !== ''} 
+                            isInvalid={lastNameClicked && lastName === ''}
+                            onBlur={() => setLastNameClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a last name</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
@@ -83,13 +115,29 @@ const EditContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Company*</Form.Label>
-                        <Form.Control value={company} onChange={e => setCompany(e.target.value)} required/>
+                        <Form.Control 
+                            value={company} 
+                            onChange={e => setCompany(e.target.value)}
+                            isValid={company !== ''} 
+                            isInvalid={companyClicked && company === ''}
+                            onBlur={() => setCompanyClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a company</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Title*</Form.Label>
-                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)} required/>
+                        <Form.Control 
+                            value={jobTitle} 
+                            onChange={e => setJobTitle(e.target.value)}
+                            isValid={jobTitle !== ''} 
+                            isInvalid={jobTitleClicked && jobTitle === ''}
+                            onBlur={() => setJobTitleClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a job title</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
