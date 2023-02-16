@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { editUser } from '../actions/userActions';
+import Spinner from 'react-bootstrap/Spinner';
 
 const EditBio = ({ handleClose }) => {
     const dispatch = useDispatch();
@@ -13,13 +14,14 @@ const EditBio = ({ handleClose }) => {
     const [firstName, setFirstName] = useState(user.data.firstName);
     const [lastName, setLastName] = useState(user.data.lastName);
     const [description, setDescription] = useState(user.data.description);
+    const [updatingBio, setUpdatingBio] = useState(false);
 
     const setError = () => {
         alert("Profile update failed!");
     }
 
     const handleBioUpdate = async () => {
-        dispatch(editUser(user.auth, { firstName, lastName, description }), setError);
+        dispatch(editUser(user.auth, { firstName, lastName, description }, setUpdatingBio, setError));
         handleClose();
     }
 
@@ -45,9 +47,25 @@ const EditBio = ({ handleClose }) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleBioUpdate}>
-                    Update
-                </Button>
+                {
+                    updatingBio
+                        ? (
+                            <Button>
+                                <Spinner
+                                    as='span'
+                                    animation='border'
+                                    size='sm'
+                                    role='status'
+                                    className='me-1'
+                                />
+                                Updating
+                            </Button>
+                        ) : (
+                            <Button variant="primary" onClick={handleBioUpdate}>
+                                Update
+                            </Button>
+                        )
+                }
             </Modal.Footer>
         </>
     );

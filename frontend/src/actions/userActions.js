@@ -1,13 +1,6 @@
-import { updateProfile } from "firebase/auth";
-import { 
-    ref, 
-    uploadBytes, 
-    getDownloadURL 
-} from 'firebase/storage';
-import { storage } from "../fire";
-
-const editUser = (userAuth, newProps, setError) => {
+const editUser = (userAuth, newProps, setUpdating, setError) => {
     return async function(dispatch) {
+        setUpdating(true);
         const token = await userAuth.getIdToken();
         const response = await fetch(`/api/users/`, {
             method: 'PUT',
@@ -24,21 +17,8 @@ const editUser = (userAuth, newProps, setError) => {
             const error = await response.json();
             setError(error);
         }
+        setUpdating(false);
     }
 }
 
-const uploadProfilePicture = (user, file, setUploading) => {
-    return async function(dispatch) {
-        const fileRef = ref(storage, 'profile-pictures/' + user.auth.uid + '.png');
-
-        setUploading(true);
-        await uploadBytes(fileRef, file);
-        const photoURL = await getDownloadURL(fileRef);
-        setUploading(false);
-
-        await updateProfile(user.auth, { photoURL });
-        dispatch({ type: 'USER_REQUEST_SUCCESS', payload: { auth: user.auth, data: user.data } });
-    }
-}
-
-export { editUser, uploadProfilePicture };
+export { editUser };

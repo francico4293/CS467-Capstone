@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { uploadProfilePicture } from '../actions/userActions';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
+import { uploadProfilePicture } from '../services/users';
+import Spinner from 'react-bootstrap/Spinner';
 
-const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
+const EditPictureModal = ({ show, setShow }) => {
     const { user, theme } = useSelector(state => state);
     const [picture, setPicture] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    const dispatch = useDispatch();
+    const [pictureUploading, setPictureUploading] = useState(false);
 
     const cropComplete = (croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
-    const setError = () => {
-        alert("Profile update failed!");
-    }
-
     const handleSave = async () => {
         try {
+            setPictureUploading(true);
             const { file, url } = await getCroppedImg(picture, croppedAreaPixels);
-            dispatch(uploadProfilePicture(user, file, setPictureUploading));
+            await uploadProfilePicture(user, file);
+            setPictureUploading(false);
         } catch (error) {
             console.log(error);
         }
@@ -77,9 +76,25 @@ const EditPictureModal = ({ show, setShow, setPictureUploading }) => {
             <Button variant="secondary" onClick={handleClose}>
                 Close
             </Button>
-            <Button variant="primary" onClick={handleSave}>
-                Upload
-            </Button>
+            {
+                pictureUploading
+                    ? (
+                        <Button>
+                            <Spinner
+                                as='span'
+                                animation='border'
+                                size='sm'
+                                role='status'
+                                className='me-1'
+                            />
+                            Uploading
+                        </Button>
+                    ) : (
+                        <Button variant="primary" onClick={handleSave}>
+                            Upload
+                        </Button>
+                    )
+            }
             </Modal.Footer>
         </Modal>
     );

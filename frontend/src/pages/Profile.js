@@ -20,7 +20,6 @@ const Profile = () => {
     const [showAddSkillModal, setShowAddSkillModal] = useState(false);
     const [showEditSkillModal, setShowEditSkillModal] = useState(false);
     const [showEditPictureModal, setShowEditPictureModal] = useState(false);
-    const [pictureUploading, setPictureUploading] = useState(false);
     const [passwordUpdateSuccess, setPasswordUpdateSuccess] = useState(false);
     const [skillToEdit, setSkillToEdit] = useState({ skillName: '', proficiency: 0 });
 
@@ -32,7 +31,7 @@ const Profile = () => {
                     <EditProfileModal show={showEditProfileModal} setShow={setShowEditProfileModal} setPasswordUpdateSuccess={setPasswordUpdateSuccess}/>
                     <AddSkillModal show={showAddSkillModal} setShow={setShowAddSkillModal}/>
                     <EditSkillModal skillToEdit={skillToEdit} show={showEditSkillModal} setShow={setShowEditSkillModal}/>
-                    <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal} setPictureUploading={setPictureUploading}/>
+                    <EditPictureModal show={showEditPictureModal} setShow={setShowEditPictureModal}/>
                     <SuccessAlert message='Password successfully updated!' show={passwordUpdateSuccess} setShow={setPasswordUpdateSuccess}/>
                     <Row className='d-flex flex-wrap justify-content-evenly mt-5 me-3 ms-3'>
                         <Col md={3} className='d-flex flex-column justify-content-start align-items-center mb-3'>

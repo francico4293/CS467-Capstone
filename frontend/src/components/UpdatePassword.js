@@ -36,18 +36,22 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
         <>
             <Row className='mt-3 mb-2'>
                 <Form.Group as={Col}>
-                    <Form.Label>Current Password</Form.Label>
+                    <Form.Label>Current Password*</Form.Label>
                     <InputGroup>
                         <InputGroup.Text onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                             {showCurrentPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                         </InputGroup.Text>
-                        <Form.Control type={showCurrentPassword ? 'text' : 'password'} value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/>
+                        <Form.Control 
+                            type={showCurrentPassword ? 'text' : 'password'} 
+                            value={currentPassword} 
+                            onChange={e => setCurrentPassword(e.target.value)}
+                        />
                     </InputGroup>
                 </Form.Group>
             </Row>
             <Row className='mb-2'>
                 <Form.Group as={Col}>
-                    <Form.Label>New Password</Form.Label>
+                    <Form.Label>New Password*</Form.Label>
                     <InputGroup>
                         <InputGroup.Text onClick={() => setShowNewPassword(!showNewPassword)}>
                             {showNewPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
@@ -58,7 +62,7 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
             </Row>
             <Row className='mb-3'>
                 <Form.Group as={Col}>
-                    <Form.Label>Confirm New Password</Form.Label>
+                    <Form.Label>Confirm New Password*</Form.Label>
                     <InputGroup>
                         <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                             {showConfirmPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}

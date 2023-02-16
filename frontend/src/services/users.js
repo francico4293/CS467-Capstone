@@ -12,6 +12,13 @@ import {
     deleteUser
 } from "firebase/auth";
 import { auth } from "../fire";
+import { updateProfile } from "firebase/auth";
+import { 
+    ref, 
+    uploadBytes, 
+    getDownloadURL 
+} from 'firebase/storage';
+import { storage } from "../fire";
 
 const signUpUser = async (email, password, firstName, lastName, setError, setErrorMessage) => {
     try {
@@ -123,6 +130,15 @@ const deleteUserAccount = async (user, password) => {
     return await deleteUser(user.auth);
 }
 
+const uploadProfilePicture = async (user, file) => {
+    const fileRef = ref(storage, 'profile-pictures/' + user.auth.uid + '.png');
+
+    await uploadBytes(fileRef, file);
+    const photoURL = await getDownloadURL(fileRef);
+
+    await updateProfile(user.auth, { photoURL });
+}
+
 export { 
     signInUser, 
     signOutUser, 
@@ -132,5 +148,6 @@ export {
     signInWithGoogle, 
     updateUserPassword,
     sendUserPasswordResetEmail,
-    deleteUserAccount
+    deleteUserAccount,
+    uploadProfilePicture
 };
