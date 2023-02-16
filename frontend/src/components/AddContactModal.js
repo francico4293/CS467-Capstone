@@ -10,6 +10,7 @@ import { getUser } from '../services/users';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
 import Spinner from 'react-bootstrap/Spinner';
+import validator from 'validator';
 
 const AddContactModal = ({ show, setShow }) => {
     const { theme, user } = useSelector(state => state);
@@ -25,6 +26,7 @@ const AddContactModal = ({ show, setShow }) => {
     const [jobTitleClicked, setJobTitleClicked] = useState(false);
     const [color, setColor] = useState('');
     const [email, setEmail] = useState('');
+    const [invalidEmail, setInvalidEmail] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [linkedInProfile, setLinkedInProfile] = useState('');
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -43,11 +45,12 @@ const AddContactModal = ({ show, setShow }) => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        if (firstName === '' || lastName === '' || company === '' || jobTitle === '') {
+        if (firstName === '' || lastName === '' || company === '' || jobTitle === '' || (email !== '' && !validator.isEmail(email))) {
             firstName === '' && setFirstNameClicked(true);
             lastName === '' && setLastNameClicked(true);
             company === '' && setCompanyClicked(true);
             jobTitle === '' && setJobTitleClicked(true);
+            email !== '' && !validator.isEmail(email) && setInvalidEmail(true);
             return;
         }
 
@@ -82,6 +85,7 @@ const AddContactModal = ({ show, setShow }) => {
         setPhoneNumber('');
         setLinkedInProfile('');
         setContactPhoto(null);
+        setInvalidEmail(false);
         setShow(false);
     }
 
@@ -95,7 +99,7 @@ const AddContactModal = ({ show, setShow }) => {
                     <Form.Group as={Col} className='position-relative'>
                         <Form.Label>First name*</Form.Label>
                         <Form.Control 
-                            value={firstName} 
+                            value={firstName}
                             onChange={e => setFirstName(e.target.value)} 
                             isValid={firstName !== ''} 
                             isInvalid={firstNameClicked && firstName === ''}
@@ -177,7 +181,16 @@ const AddContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type='email' value={email} onChange={e => setEmail(e.target.value)} />
+                        <Form.Control 
+                            type='email' 
+                            value={email} 
+                            onChange={e => setEmail(e.target.value)} 
+                            isInvalid={invalidEmail}
+                            onClick={() => setInvalidEmail(false)}
+                            isValid={validator.isEmail(email)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Invalid email</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Phone number</Form.Label>

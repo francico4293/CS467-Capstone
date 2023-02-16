@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
+import validator from 'validator';
 
 const EditContactModal = ({ show, setShow }) => {  
     const { theme } = useSelector(state => state); 
@@ -21,6 +22,7 @@ const EditContactModal = ({ show, setShow }) => {
     const [jobTitleClicked, setJobTitleClicked] = useState(false);
     const [color, setColor] = useState('');
     const [email, setEmail] = useState('');
+    const [isInvalidEmail, setIsInvalidEmail] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [linkedInProfile, setLinkedInProfile] = useState('');
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -34,7 +36,8 @@ const EditContactModal = ({ show, setShow }) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        if (firstName === '' || lastName === '' || company === '' || jobTitle === '') {
+        if (firstName === '' || lastName === '' || company === '' || jobTitle === '' || (email !== '' && !validator.isEmail(email))) {
+            email !== '' && !validator.isEmail(email) && setIsInvalidEmail(true);
             firstName === '' && setFirstNameClicked(true);
             lastName === '' && setLastNameClicked(true);
             company === '' && setCompanyClicked(true);
@@ -48,8 +51,11 @@ const EditContactModal = ({ show, setShow }) => {
         setLastNameClicked(false);
         setCompanyClicked(false);
         setJobTitleClicked(false);
+        setIsInvalidEmail(false);
         setShow(false);
     }
+
+    console.log(validator.isEmail(email));
 
     return (
         <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
@@ -143,7 +149,16 @@ const EditContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type='email' value={email} onChange={e => setEmail(e.target.value)} />
+                        <Form.Control 
+                            type='email' 
+                            value={email} 
+                            isInvalid={isInvalidEmail}
+                            onChange={e => setEmail(e.target.value)}
+                            isValid={validator.isEmail(email)}
+                            onClick={() => setIsInvalidEmail(false)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Invalid email address</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Phone number</Form.Label>
