@@ -60,7 +60,7 @@
 #light .login-image {
     position: relative;
     display: inline;
-    height: auto;
+    height: 760px;
 }
   
 #light .login-image::after {
@@ -79,7 +79,7 @@
 }
 
 #light .form {
-    height: auto;
+    height: 760px;
     background-color: #e9ecef;
 }
 

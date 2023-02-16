@@ -70,7 +70,7 @@
 #dark .login-image {
     position: relative;
     display: inline;
-    height: auto;
+    height: 760px;
 }
   
 #dark .login-image::after {
@@ -89,7 +89,7 @@
 }
 
 #dark .form {
-    height: auto;
+    height: 760px;
     background-color: rgb(50, 50, 50);
     color: white;
 }
