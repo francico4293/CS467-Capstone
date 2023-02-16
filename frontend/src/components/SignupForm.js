@@ -22,12 +22,16 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
     const handleSignIn = async (e) => {
         e.preventDefault();
 
-        if (password !== confirmPassword) {
+        if (!validator.isEmail(email) || password === '' || password !== confirmPassword) {
+            !validator.isEmail(email) && setEmailClicked(true);
+            password === '' && setPasswordClicked(true);
+            password !== confirmPassword && setConfirmPasswordClicked(true);
             setSignupError(true);
-            setSignupErrorMessage('Signup failed - passwords must match!');
-        } else {
-            await signUpUser(email, password, firstName, lastName, setSignupError, setSignupErrorMessage);
+            setSignupErrorMessage('Signup failed!');
+            return;
         }
+
+        await signUpUser(email, password, firstName, lastName, setSignupError, setSignupErrorMessage);
     }
 
     return (
@@ -45,14 +49,14 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
             <Form.Group className='mb-2 position-relative'>
                 <Form.Label>Email*</Form.Label>
                 <Form.Control 
-                    type='email' 
+                    value={email}
                     onChange={e => setEmail(e.target.value)} 
                     isValid={validator.isEmail(email)} 
                     isInvalid={emailClicked && !validator.isEmail(email)} 
                     onBlur={() => setEmailClicked(true)}
                 />
                 <Form.Control.Feedback type='valid'/>
-                <Form.Control.Feedback type='invalid'>Enter an email</Form.Control.Feedback>
+                <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className='mb-2'>
                 <Form.Label>Password*</Form.Label>
@@ -81,7 +85,7 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
                         type={showConfirmPassword ? 'text' : 'password'} 
                         onChange={e => setConfirmPassword(e.target.value)} 
                         isValid={confirmPassword !== '' && confirmPassword === password} 
-                        isInvalid={confirmPasswordClicked && (confirmPassword === ''|| confirmPassword !== password)}
+                        isInvalid={confirmPasswordClicked && (confirmPassword === '' || confirmPassword !== password)}
                         onBlur={() => setConfirmPasswordClicked(true)}
                     />
                     <Form.Control.Feedback type='valid'/>
