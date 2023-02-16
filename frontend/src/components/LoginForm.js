@@ -3,14 +3,22 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { signInUser, signInWithGoogle } from '../services/users';
+import validator from 'validator';
 
 const LoginForm = ({ setLoginError, setShowPasswordResetModal }) => {
     const [email, setEmail] = useState('');
+    const [isEmailInvalid, setIsEmailInvalid] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const handleLogIn = (e) => {
         e.preventDefault();
+
+        if (!validator.isEmail(email)) {
+            setIsEmailInvalid(true);
+            return;
+        }
+
         signInUser(email, password, setLoginError);
     }
 
@@ -18,7 +26,15 @@ const LoginForm = ({ setLoginError, setShowPasswordResetModal }) => {
         <Form className='mt-3' onSubmit={handleLogIn}>
             <Form.Group className='mb-2'>
                 <Form.Label>Email</Form.Label>
-                <Form.Control type='email' onChange={e => setEmail(e.target.value)}/>
+                <Form.Control
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    isInvalid={isEmailInvalid}
+                    onClick={() => setIsEmailInvalid(false)}
+                    isValid={validator.isEmail(email)}
+                />
+                <Form.Control.Feedback type='valid'/>
+                <Form.Control.Feedback type='invalid'>Invalid email address</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className='mb-2'>
                 <Form.Label>Password</Form.Label>

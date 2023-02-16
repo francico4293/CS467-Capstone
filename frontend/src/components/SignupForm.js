@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { signUpUser } from '../services/users';
+import validator from 'validator';
 
 const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
     const [firstName, setFirstName] = useState('');
@@ -46,8 +47,8 @@ const SignupForm = ({ setSignupError, setSignupErrorMessage }) => {
                 <Form.Control 
                     type='email' 
                     onChange={e => setEmail(e.target.value)} 
-                    isValid={email !== ''} 
-                    isInvalid={emailClicked && email === ''} 
+                    isValid={validator.isEmail(email)} 
+                    isInvalid={emailClicked && !validator.isEmail(email)} 
                     onBlur={() => setEmailClicked(true)}
                 />
                 <Form.Control.Feedback type='valid'/>
