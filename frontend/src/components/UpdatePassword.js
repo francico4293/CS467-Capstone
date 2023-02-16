@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { updateUserPassword } from '../services/users';
+import Spinner from 'react-bootstrap/Spinner';
 
 const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
     const { user } = useSelector(state => state);
@@ -17,6 +18,7 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [passwordUpdateFailure, setPasswordUpdateFailure] = useState(false);
+    const [updatingPassword, setUpdatingPassword] = useState(false);
 
     const handlePasswordUpdate = async () => {
         try {
@@ -24,10 +26,13 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                 throw new Error();
             }
 
+            setUpdatingPassword(true);
             await updateUserPassword(user, currentPassword, newPassword);
             setPasswordUpdateSuccess(true);
+            setUpdatingPassword(false);
             handleClose();
         } catch (err) {
+            setUpdatingPassword(false);
             setPasswordUpdateFailure(true);
         }
     }
@@ -56,7 +61,11 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                         <InputGroup.Text onClick={() => setShowNewPassword(!showNewPassword)}>
                             {showNewPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                         </InputGroup.Text>
-                        <Form.Control type={showNewPassword ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
+                        <Form.Control 
+                            type={showNewPassword ? 'text' : 'password'} 
+                            value={newPassword} 
+                            onChange={e => setNewPassword(e.target.value)}
+                        />
                     </InputGroup>
                 </Form.Group>
             </Row>
@@ -67,7 +76,11 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                         <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                             {showConfirmPassword ? <i className='fa-solid fa-eye-slash'/> : <i className='fa-solid fa-eye'/>}
                         </InputGroup.Text>
-                        <Form.Control type={showConfirmPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
+                        <Form.Control 
+                            type={showConfirmPassword ? 'text' : 'password'} 
+                            value={confirmPassword} 
+                            onChange={e => setConfirmPassword(e.target.value)}
+                        />
                     </InputGroup>
                 </Form.Group>
             </Row>
@@ -90,9 +103,25 @@ const UpdatePassword = ({ setPasswordUpdateSuccess, handleClose }) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handlePasswordUpdate}>
-                    Update
-                </Button>
+                {
+                    updatingPassword
+                        ? (
+                            <Button>
+                                <Spinner
+                                    as='span'
+                                    animation='border'
+                                    size='sm'
+                                    role='status'
+                                    className='me-1'
+                                />
+                                Updating
+                            </Button>
+                        ) : (
+                            <Button variant="primary" onClick={handlePasswordUpdate}>
+                                Update
+                            </Button>
+                        )
+                }
             </Modal.Footer>
         </>
     );
