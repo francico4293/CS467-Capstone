@@ -230,3 +230,10 @@
 #light .fa-pen, #light .fa-linkedin {
     cursor: pointer;
 }
+
+/* ----- Job Board Page Styles ----- */
+#light .test {
+    min-height: 20rem;
+    width: 20rem;
+    background-color: steelblue;
+}
