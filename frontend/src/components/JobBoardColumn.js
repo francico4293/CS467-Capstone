@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/card';
+import JobCard from './JobCard';
 
 const JobBoardColumn = ({ column, ...props }) => {
     return (
@@ -16,6 +17,8 @@ const JobBoardColumn = ({ column, ...props }) => {
                     <i className='fa-solid fa-plus fa-2x'/>
                 </Card.Body>
             </Card>
+            <JobCard/>
+            <JobCard/>
         </div>
     );
 }

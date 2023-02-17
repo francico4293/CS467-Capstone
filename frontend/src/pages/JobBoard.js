@@ -11,7 +11,7 @@ const JobBoard = () => {
     const [columns, setColumns] = useState(['Interested', 'Applied']);
 
     const addColumn = () => {
-        setColumns([...columns, (columns.length + 1).toString()]);
+        setColumns([...columns, `Column ${columns.length + 1}`]);
     }
 
     const onDragEndHandler = (result) => {
@@ -42,7 +42,7 @@ const JobBoard = () => {
                         </Row>
                         <Droppable droppableId='job-columns' direction='horizontal'>
                             {provided => (
-                                <Row className='d-flex flex-nowrap d-inline-block horizontal-scrollable' {...provided.droppableProps} ref={provided.innerRef}>
+                                <Row className='d-flex flex-nowrap d-inline-block horizontal-scrollable pb-5' {...provided.droppableProps} ref={provided.innerRef}>
                                     {
                                         columns.map((column, idx) => {
                                             return (
