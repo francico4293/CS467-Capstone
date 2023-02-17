@@ -1,11 +1,11 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const Filter = ({ name, items, setItem }) => {
+const Filter = ({ filterName, defaultItem, items, setItem }) => {
     return (
         <Dropdown className='ms-2'>
             <Dropdown.Toggle variant='secondary' id="dropdown-basic">
-                {name}
+                {filterName}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -13,7 +13,7 @@ const Filter = ({ name, items, setItem }) => {
                     items.map((item, idx) => <Dropdown.Item key={idx} onClick={() => setItem(item)}>{item}</Dropdown.Item>)
                 }
                 <Dropdown.Divider/>
-                <Dropdown.Item onClick={() => setItem(null)}>All companies</Dropdown.Item>
+                <Dropdown.Item onClick={() => setItem(null)}>{defaultItem}</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

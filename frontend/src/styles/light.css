@@ -234,16 +234,17 @@
 /* ----- Job Board Page Styles ----- */
 #light .test {
     min-height: 20rem;
-    /* width: 25rem; */
+    width: 25rem;
     background-color: #e9ecef85;
     border-radius: 10px;
     overflow: hidden;
 }
 
 .horizontal-scrollable {
-    overflow-x: auto;
+    overflow-x: scroll;
     white-space: nowrap;
     float: none;
+    min-width: 500px;
 }
 
 #light .add-col {
