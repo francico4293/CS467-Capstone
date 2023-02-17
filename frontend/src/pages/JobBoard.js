@@ -48,8 +48,8 @@ const JobBoard = () => {
                                             return (
                                                 <Draggable key={column} draggableId={column} index={idx}>
                                                     {provided => (
-                                                        <div className='col' {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                            <JobBoardColumn column={column}/>
+                                                        <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
+                                                            <JobBoardColumn column={column} {...provided.dragHandleProps}/>
                                                         </div>
                                                     )}
                                                 </Draggable>
