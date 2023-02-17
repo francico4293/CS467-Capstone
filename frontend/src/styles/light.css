@@ -240,7 +240,7 @@
     overflow: hidden;
 }
 
-.horizontal-scrollable {
+#dark .horizontal-scrollable {
     overflow-x: scroll;
     white-space: nowrap;
     float: none;

@@ -15,7 +15,7 @@ const JobBoard = () => {
     }
 
     const onDragEndHandler = (result) => {
-        const { destination, source, draggableId } = result;
+        const { destination, source } = result;
 
         if (!result.destination) {
             return;

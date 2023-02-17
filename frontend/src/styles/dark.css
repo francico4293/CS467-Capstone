@@ -269,3 +269,36 @@
     border-right-color: transparent !important;
     border-left-color: transparent !important;
 }
+
+/* ----- Job Board Page Styles ----- */
+#dark .test {
+    min-height: 20rem;
+    width: 25rem;
+    background-color: rgb(50, 50, 50);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#dark .horizontal-scrollable {
+    overflow-x: scroll;
+    white-space: nowrap;
+    float: none;
+    min-width: 500px;
+}
+
+#dark .add-col {
+    width: 60px;
+    min-height: 60px;
+    border-radius: 50%;
+    height: auto;
+    background-color: rgb(35, 35, 35);
+    color: white;
+    right: 20px;
+    cursor: pointer;
+}
+
+#dark .col-name {
+    background-color: rgb(35, 35, 35);
+    color: white;
+    cursor: pointer;
+}
