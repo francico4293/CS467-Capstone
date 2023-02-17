@@ -1,11 +1,11 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const Filter = ({ items, setItem }) => {
+const Filter = ({ name, items, setItem }) => {
     return (
-        <Dropdown>
+        <Dropdown className='ms-2'>
             <Dropdown.Toggle variant='secondary' id="dropdown-basic">
-                Filter by Company
+                {name}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

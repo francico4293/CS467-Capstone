@@ -56,7 +56,7 @@ const Contacts = () => {
                     <Row className='d-flex justify-content-center mt-4'>
                         <Col sm={9} md={12} className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary' onClick={() => setShowAddContactModal(true)}>Add Contact</Button>
-                            <Filter items={Array.from(companies)} setItem={setCompany}/>
+                            <Filter name={'Filter by Company'} items={Array.from(companies)} setItem={setCompany}/>
                         </Col>
                     </Row>
                     <Row className='ms-3 me-3'>
