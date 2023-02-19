@@ -272,6 +272,7 @@
 
 /* ----- Job Board Page Styles ----- */
 #dark .test {
+    /* min-height: 20rem; */
     width: 25rem;
     background-color: rgb(50, 50, 50, .5);
     border-radius: 10px;
@@ -311,4 +312,8 @@
 #dark .card {
     background-color: rgb(25, 25, 25);
     color: white;
+}
+
+#dark .drop-zone {
+    min-height: 2rem;
 }

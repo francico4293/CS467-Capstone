@@ -45,7 +45,10 @@ const JobBoard = () => {
                 const [reorderedJob] = jobs.splice(source.index, 1);
                 jobs.splice(destination.index, 0, reorderedJob);
             } else {
-
+                const sourceJobs = userJobData.columns.filter(column => column.name === source.droppableId)[0].jobs;
+                const destinationJobs = userJobData.columns.filter(column => column.name === destination.droppableId)[0].jobs;
+                const [reorderJob] = sourceJobs.splice(source.index, 1);
+                destinationJobs.splice(destination.index, 0, reorderJob);
             }
         }
     }

@@ -265,3 +265,7 @@
 #light .add-job {
     cursor: pointer;
 }
+
+#light .drop-zone {
+    min-height: 2rem;
+}
