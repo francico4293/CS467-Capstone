@@ -233,7 +233,7 @@
 
 /* ----- Job Board Page Styles ----- */
 #light .test {
-    min-height: 20rem;
+    /* min-height: 20rem; */
     width: 25rem;
     background-color: #e9ecef85;
     border-radius: 10px;
@@ -259,5 +259,9 @@
 
 #light .col-name {
     background-color: #cdcdcd;
+    cursor: pointer;
+}
+
+#light .add-job {
     cursor: pointer;
 }

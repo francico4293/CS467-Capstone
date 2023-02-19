@@ -8,23 +8,46 @@ import JobBoardColumn from '../components/JobBoardColumn';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const JobBoard = () => {
-    const [columns, setColumns] = useState(['Interested', 'Applied']);
+    const [userJobData, setUserJobData] = useState(
+        {
+            columns: [
+                {
+                    name: 'interested',
+                    jobs: ['1', '2']
+                },
+                {
+                    name: 'applied',
+                    jobs: ['3']
+                },
+            ]
+        }
+    );
 
     const addColumn = () => {
-        setColumns([...columns, `Column ${columns.length + 1}`]);
+        setUserJobData({ columns: [...userJobData.columns, { name: `Column ${userJobData.columns.length + 1}`, jobs: [] }] });
     }
 
     const onDragEndHandler = (result) => {
-        const { destination, source } = result;
+        const { destination, source, type } = result;
 
         if (!result.destination) {
             return;
         }
 
-        const newColumns = Array.from(columns);
-        const [sourceColumn] = newColumns.splice(source.index, 1);
-        newColumns.splice(destination.index, 0, sourceColumn);
-        setColumns(newColumns);
+        if (type === 'job-columns') {
+            const newColumns = Array.from(userJobData.columns);
+            const [sourceColumn] = newColumns.splice(source.index, 1);
+            newColumns.splice(destination.index, 0, sourceColumn);
+            setUserJobData({ columns: newColumns });
+        } else {
+            if (source.droppableId === destination.droppableId) {
+                const jobs = userJobData.columns.filter(column => column.name === source.droppableId)[0].jobs;
+                const [reorderedJob] = jobs.splice(source.index, 1);
+                jobs.splice(destination.index, 0, reorderedJob);
+            } else {
+
+            }
+        }
     }
 
     return (
@@ -40,13 +63,13 @@ const JobBoard = () => {
                                 <Filter filterName={'Filter by Contact'} defaultItem={'All contacts'} items={[]} setItems={null}/>
                             </Col>
                         </Row>
-                        <Droppable droppableId='job-columns' direction='horizontal'>
+                        <Droppable droppableId='job-columns' direction='horizontal' type='job-columns'>
                             {provided => (
                                 <Row className='d-flex flex-nowrap d-inline-block horizontal-scrollable pb-5' {...provided.droppableProps} ref={provided.innerRef}>
                                     {
-                                        columns.map((column, idx) => {
+                                        userJobData.columns.map((column, idx) => {
                                             return (
-                                                <Draggable key={column} draggableId={column} index={idx}>
+                                                <Draggable key={column.name} draggableId={column.name} index={idx}>
                                                     {provided => (
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
                                                             <JobBoardColumn column={column} {...provided.dragHandleProps}/>
