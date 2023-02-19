@@ -26,15 +26,29 @@ createContact = async (uid, { firstName, lastName, email, phoneNumber, linkedInP
 getContacts = async (uid) => {
     const userRef = db.collection('users').doc(uid);
     const user = await userRef.get()
-    const contact_ids = user.data().contacts
+    const contactIds = user.data().contacts
 
-    const contacts = await Promise.all(contact_ids.map(async contact_id => {
+    const contacts = await Promise.all(contactIds.map(async contact_id => {
         const contactRef = db.collection('contacts').doc(contact_id)
         const contact = await contactRef.get()
         return {...contact.data(), id: contact_id}
     }))
     return contacts
-
 }
 
-module.exports = { createContact, getContacts }
+deleteContact = async (uid, contactId) => {
+    const userRef = db.collection('users').doc(uid);
+    const user = await userRef.get()
+    const contactIds = user.data().contacts
+
+    if (!contactIds.includes(contactId)) {
+        throw new Error("Contact does not belong to user")
+    } 
+
+    await userRef.update({
+        contacts: FieldValue.arrayRemove(contactId)
+    });
+    await db.collection('contacts').doc(contactId).delete();
+}
+
+module.exports = { createContact, getContacts, deleteContact }

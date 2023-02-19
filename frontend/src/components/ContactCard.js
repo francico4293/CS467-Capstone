@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -7,11 +7,25 @@ import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Button from 'react-bootstrap/Button';
+import { deleteContact } from '../services/contacts';
+import { getUser } from '../services/users';
 
 const ContactCard = ({ contact, setShowEditContactModal }) => {
-    const { theme } = useSelector(state => state);
+    const { theme, user } = useSelector(state => state); 
+    const dispatch = useDispatch();
     const [showPopover, setShowPopover] = useState(false);
 
+    const setError = (e) => {
+        alert(e)
+    }
+
+    const deleteHandler = async () => {
+        await deleteContact(user.auth, contact.id, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        setShowPopover(false)
+    }
     return (
         <Card style={{ width: '25rem', minHeight: '12rem' }}>
             <div className='contact-color' style={{ backgroundColor: `${contact.color}` }}></div>
@@ -63,7 +77,7 @@ const ContactCard = ({ contact, setShowEditContactModal }) => {
                                             <Row>
                                                 <Col className='d-flex justify-content-end border-top pt-1'>
                                                     <Button className='me-1' onClick={() => setShowPopover(false)}>Cancel</Button>
-                                                    <Button onClick={() => setShowPopover(false)}>Confirm</Button>
+                                                    <Button onClick={deleteHandler}>Confirm</Button>
                                                 </Col>
                                             </Row>
                                         </Popover.Body>

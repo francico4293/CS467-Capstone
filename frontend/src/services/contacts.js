@@ -45,10 +45,26 @@ const createContact = async (userAuth, newContact, photo, setError) => {
     }
 }
 
+
+const deleteContact = async (userAuth, contactId, setError) => {
+    const token = await userAuth.getIdToken();
+    const response = await fetch(`/api/contacts/${contactId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    if (response.status !== 204) {
+        const error = await response.json()
+        setError(error.error);
+    }
+}
+
 const uploadContactPhoto = async (contactPhoto) => {
     const fileRef = ref(storage, 'contact-photos/' + uuidv4() + '.png');
     await uploadBytes(fileRef, contactPhoto);
     return await getDownloadURL(fileRef);
 }
 
-export { getContacts, createContact }
+export { getContacts, createContact, deleteContact }
