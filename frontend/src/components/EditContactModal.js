@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
@@ -8,32 +8,41 @@ import Form from 'react-bootstrap/Form';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
 import validator from 'validator';
+import Spinner from 'react-bootstrap/Spinner';
+import { editContact } from '../services/contacts';
+import { getUser } from '../services/users';
 
-const EditContactModal = ({ show, setShow }) => {  
-    const { theme } = useSelector(state => state); 
-    const [firstName, setFirstName] = useState('');
+const EditContactModal = ({ show, contact, setContactToEdit }) => {
+    const { theme, user } = useSelector(state => state);
+    const dispatch = useDispatch();
+    const [firstName, setFirstName] = useState(contact.firstName || '');
     const [firstNameClicked, setFirstNameClicked] = useState(false);
-    const [lastName, setLastName] = useState('');
+    const [lastName, setLastName] = useState(contact.lastName || '');
     const [lastNameClicked, setLastNameClicked] = useState(false);
-    const [company, setCompany] = useState('');
+    const [company, setCompany] = useState(contact.company || '');
     const [companyClicked, setCompanyClicked] = useState(false);
-    const [contactPhoto, setContactPhoto] = useState(null);
-    const [jobTitle, setJobTitle] = useState('');
+    const [newContactPhoto, setNewContactPhoto] = useState(null);
+    const [jobTitle, setJobTitle] = useState(contact.jobTitle || '');
     const [jobTitleClicked, setJobTitleClicked] = useState(false);
-    const [color, setColor] = useState('');
-    const [email, setEmail] = useState('');
+    const [color, setColor] = useState(contact.color || '');
+    const [email, setEmail] = useState(contact.email || '');
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [linkedInProfile, setLinkedInProfile] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState(contact.phoneNumber || '');
+    const [linkedInProfile, setLinkedInProfile] = useState(contact.linkedInProfile || '');
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [editingContact, setEditingContact] = useState(false);
+
+    const setError = (e) => {
+        alert(e)
+    }
 
     const cropComplete = (croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         if (firstName === '' || lastName === '' || company === '' || jobTitle === '' || (email !== '' && !validator.isEmail(email))) {
@@ -44,6 +53,32 @@ const EditContactModal = ({ show, setShow }) => {
             jobTitle === '' && setJobTitleClicked(true);
             return;
         }
+
+        setEditingContact(true);
+
+        let photo = null;
+        if (newContactPhoto !== null) {
+            const { file, url } = await getCroppedImg(newContactPhoto, croppedAreaPixels);
+            photo = file;
+        }
+
+        const newContactInfo = {
+            firstName,
+            lastName,
+            company,
+            contactPhoto: newContactPhoto || contact.contactPhoto,
+            jobTitle,
+            color,
+            email,
+            phoneNumber,
+            linkedInProfile,
+        }
+        await editContact(user.auth, contact.id, newContactInfo, photo, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: { data, auth: user.auth } });
+        setEditingContact(false);
+        hideHandler();
     }
 
     const hideHandler = () => {
@@ -52,10 +87,8 @@ const EditContactModal = ({ show, setShow }) => {
         setCompanyClicked(false);
         setJobTitleClicked(false);
         setIsInvalidEmail(false);
-        setShow(false);
+        setContactToEdit(null);
     }
-
-    console.log(validator.isEmail(email));
 
     return (
         <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
@@ -66,37 +99,37 @@ const EditContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>First name*</Form.Label>
-                        <Form.Control 
-                            value={firstName} 
+                        <Form.Control
+                            value={firstName}
                             onChange={e => setFirstName(e.target.value)}
-                            isValid={firstName !== ''} 
+                            isValid={firstName !== ''}
                             isInvalid={firstNameClicked && firstName === ''}
                             onBlur={() => setFirstNameClicked(true)}
                         />
-                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='valid' />
                         <Form.Control.Feedback type='invalid'>Please provide a first name</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Last name*</Form.Label>
-                        <Form.Control 
-                            value={lastName} 
-                            onChange={e => setLastName(e.target.value)} 
-                            isValid={lastName !== ''} 
+                        <Form.Control
+                            value={lastName}
+                            onChange={e => setLastName(e.target.value)}
+                            isValid={lastName !== ''}
                             isInvalid={lastNameClicked && lastName === ''}
                             onBlur={() => setLastNameClicked(true)}
                         />
-                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='valid' />
                         <Form.Control.Feedback type='invalid'>Please provide a last name</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     {
-                        contactPhoto
+                        newContactPhoto
                             ? (
                                 <>
                                     <div className='crop-container d-flex justify-content-center'>
                                         <Cropper
-                                            image={contactPhoto}
+                                            image={newContactPhoto}
                                             crop={crop}
                                             zoom={zoom}
                                             aspect={1}
@@ -107,7 +140,7 @@ const EditContactModal = ({ show, setShow }) => {
                                     </div>
                                     <div className='mt-3'>
                                         <label for="pictureZoom" className="form-label">Zoom</label>
-                                        <input type="range" className="form-range" min={1} max={3} step={0.1} value={zoom} id="pictureZoom" 
+                                        <input type="range" className="form-range" min={1} max={3} step={0.1} value={zoom} id="pictureZoom"
                                             onChange={e => setZoom(e.target.value)}></input>
                                     </div>
                                 </>
@@ -115,49 +148,49 @@ const EditContactModal = ({ show, setShow }) => {
                     }
                     <Form.Group as={Col}>
                         <Form.Label>Contact photo</Form.Label>
-                        <Form.Control type='file' onChange={e => setContactPhoto(URL.createObjectURL(e.target.files[0]))}/>
+                        <Form.Control type='file' onChange={e => setNewContactPhoto(URL.createObjectURL(e.target.files[0]))} />
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Company*</Form.Label>
-                        <Form.Control 
-                            value={company} 
+                        <Form.Control
+                            value={company}
                             onChange={e => setCompany(e.target.value)}
-                            isValid={company !== ''} 
+                            isValid={company !== ''}
                             isInvalid={companyClicked && company === ''}
                             onBlur={() => setCompanyClicked(true)}
                         />
-                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='valid' />
                         <Form.Control.Feedback type='invalid'>Please provide a company</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Title*</Form.Label>
-                        <Form.Control 
-                            value={jobTitle} 
+                        <Form.Control
+                            value={jobTitle}
                             onChange={e => setJobTitle(e.target.value)}
-                            isValid={jobTitle !== ''} 
+                            isValid={jobTitle !== ''}
                             isInvalid={jobTitleClicked && jobTitle === ''}
                             onBlur={() => setJobTitleClicked(true)}
                         />
-                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='valid' />
                         <Form.Control.Feedback type='invalid'>Please provide a job title</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control 
-                            type='email' 
-                            value={email} 
+                        <Form.Control
+                            type='email'
+                            value={email}
                             isInvalid={isInvalidEmail}
                             onChange={e => setEmail(e.target.value)}
                             isValid={validator.isEmail(email)}
                             onClick={() => setIsInvalidEmail(false)}
                         />
-                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='valid' />
                         <Form.Control.Feedback type='invalid'>Invalid email address</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
@@ -180,9 +213,25 @@ const EditContactModal = ({ show, setShow }) => {
                 <Button variant="secondary" onClick={hideHandler}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={submitHandler}>
-                    Save Changes
-                </Button>
+                {
+                    editingContact
+                        ? (
+                            <Button variant='primary' disabled>
+                                <Spinner
+                                    as='span'
+                                    animation='border'
+                                    size='sm'
+                                    role='status'
+                                    className='me-1'
+                                />
+                                Editing Contact
+                            </Button>
+                        ) : (
+                            <Button variant='primary' onClick={submitHandler}>
+                                Save Changes
+                            </Button>
+                        )
+                }
             </Modal.Footer>
         </Modal>
     );

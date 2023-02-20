@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { deleteContact } from '../services/contacts';
 import { getUser } from '../services/users';
 
-const ContactCard = ({ contact, setShowEditContactModal }) => {
+const ContactCard = ({ contact, setContactToEdit }) => {
     const { theme, user } = useSelector(state => state); 
     const dispatch = useDispatch();
     const [showPopover, setShowPopover] = useState(false);
@@ -60,7 +60,7 @@ const ContactCard = ({ contact, setShowEditContactModal }) => {
                     </Row>
                     <Row>
                         <Col className='d-flex justify-content-end'>
-                            <i className='fa-solid fa-pen me-2' onClick={() => setShowEditContactModal(true)}/>
+                            <i className='fa-solid fa-pen me-2' onClick={() => setContactToEdit(contact)}/>
                             <OverlayTrigger 
                                 trigger='click' 
                                 placement='top'

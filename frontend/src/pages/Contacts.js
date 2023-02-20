@@ -19,6 +19,7 @@ const Contacts = () => {
     const [contacts, setContacts] = useState([]);
     const [company, setCompany] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [contactToEdit, setContactToEdit] = useState(null);
     const user = useSelector(state => state.user);
     
     const companies = new Set(contacts.map(contact => contact.company));
@@ -52,7 +53,7 @@ const Contacts = () => {
                 <Sidebar />
                 <Col xs={10} className='d-flex flex-column justify-content-between ms-auto'>
                     <AddContactModal show={showAddContactModal} setShow={setShowAddContactModal}/>
-                    <EditContactModal show={showEditContactModal} setShow={setShowEditContactModal}/>
+                    {contactToEdit && <EditContactModal show={contactToEdit != null} contact={contactToEdit} setContactToEdit={setContactToEdit}/>}
                     <Row className='d-flex justify-content-center mt-4'>
                         <Col sm={9} md={12} className='d-flex flex-wrap justify-content-between align-items-start'>
                             <Button variant='secondary' onClick={() => setShowAddContactModal(true)}>Add Contact</Button>
@@ -68,7 +69,7 @@ const Contacts = () => {
                                             <Row className='justify-content-center'>
                                                 {filteredContacts.slice(startIdx, endIdx).map((contact, idx) => (
                                                     <Col sm={10} md={6} lg={4} className='d-flex justify-content-center mt-4' key={idx}>
-                                                        <ContactCard contact={contact} setShowEditContactModal={setShowEditContactModal}/>
+                                                        <ContactCard contact={contact} setContactToEdit={setContactToEdit}/>
                                                     </Col>
                                                 ))}
                                             </Row>
