@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/card';
 import JobCard from './JobCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const JobBoardColumn = ({ column, ...props }) => {
+const JobBoardColumn = ({ column, setShowAddJobOffCanvas, ...props }) => {
     return (
         <div className='test'>
             <h3 className='d-flex justify-content-between fw-light fs-5 p-3 col-name' {...props}>
@@ -13,7 +13,7 @@ const JobBoardColumn = ({ column, ...props }) => {
                     <i className='fa-solid fa-trash'/>
                 </div>
             </h3>
-            <Card className='add-job m-2'>
+            <Card className='add-job m-2' onClick={() => setShowAddJobOffCanvas(true)}>
                 <Card.Body className='d-flex justify-content-center'>
                     <i className='fa-solid fa-plus fa-2x'/>
                 </Card.Body>
