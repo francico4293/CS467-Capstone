@@ -15,11 +15,40 @@ const JobBoard = () => {
             columns: [
                 {
                     name: 'interested',
-                    jobs: ['1', '2']
+                    jobs: [
+                        {
+                            id: '1',
+                            color: 'green',
+                            company: 'Google', 
+                            companyLogo: 'img/google-icon.svg',
+                            jobTitle: 'Software Engineer',  
+                            city: 'Sunnyvale', 
+                            state: 'CA'
+                        }, 
+                        {
+                            id: '2',
+                            color: 'red',
+                            company: 'Microsoft',
+                            companyLogo: 'img/microsoft-icon.svg',
+                            jobTitle: 'Backend Software Engineer',
+                            city: 'Seattle',
+                            state: 'WA'
+                        }
+                    ]
                 },
                 {
                     name: 'applied',
-                    jobs: ['3']
+                    jobs: [
+                        {
+                            id: '3',
+                            color: 'black',
+                            company: 'Palantir',
+                            companyLogo: null,
+                            jobTitle: 'Software Development Engineer',
+                            city: 'Denver',
+                            state: 'CO'
+                        }
+                    ]
                 },
             ]
         }

@@ -269,3 +269,17 @@
 #light .drop-zone {
     min-height: 2rem;
 }
+
+#light .job-card {
+    overflow: hidden;
+}
+
+#light .job-card-color {
+    height: 20px;
+}
+
+#light .company-logo {
+    position: absolute;
+    top: 25%;
+    right: 3%;
+}

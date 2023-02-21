@@ -24,10 +24,10 @@ const JobBoardColumn = ({ column, setShowAddJobOffCanvas, ...props }) => {
                         {
                             column.jobs.map((job, idx) => {
                                 return (
-                                    <Draggable key={job} draggableId={job} index={idx}>
+                                    <Draggable key={job.id} draggableId={job.id} index={idx}>
                                         {provided => (
                                             <div className='d-flex flex-column' {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                <JobCard name={job}/>
+                                                <JobCard job={job}/>
                                             </div>
                                         )}
                                     </Draggable>

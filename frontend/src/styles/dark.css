@@ -309,11 +309,22 @@
     cursor: pointer;
 }
 
-#dark .card {
+#dark .job-card {
     background-color: rgb(25, 25, 25);
     color: white;
+    overflow: hidden;
+}
+
+#dark .job-card-color {
+    height: 20px;
 }
 
 #dark .drop-zone {
     min-height: 2rem;
+}
+
+#dark .company-logo {
+    position: absolute;
+    top: 25%;
+    right: 3%;
 }
