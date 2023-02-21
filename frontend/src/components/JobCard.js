@@ -29,7 +29,7 @@ const JobCard = ({ job }) => {
                     <Row className='mt-2'>
                         <Col className='d-flex justify-content-between text-muted'>
                             <div>
-                                Job created: <ReactTimeAgo date={job.created} locale='en-US'/>
+                                Job created <ReactTimeAgo date={job.created} locale='en-US'/>
                             </div>
                             <div>
                                 <i className='fa-solid fa-pen me-2'/>
