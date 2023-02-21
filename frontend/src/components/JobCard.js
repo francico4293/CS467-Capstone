@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import ReactTimeAgo from 'react-time-ago';
 
 const JobCard = ({ job }) => {
     return (
@@ -24,6 +25,17 @@ const JobCard = ({ job }) => {
                     </Row>
                     <Row>
                         <Col className='text-muted'>{`${job.city}, ${job.state}`}</Col>
+                    </Row>
+                    <Row className='mt-2'>
+                        <Col className='d-flex justify-content-between text-muted'>
+                            <div>
+                                Job created: <ReactTimeAgo date={job.created} locale='en-US'/>
+                            </div>
+                            <div>
+                                <i className='fa-solid fa-pen me-2'/>
+                                <i className='fa-solid fa-trash'/>
+                            </div>
+                        </Col>
                     </Row>
                 </Card.Text>
             </Card.Body>

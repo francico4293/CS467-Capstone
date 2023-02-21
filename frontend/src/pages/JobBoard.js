@@ -23,7 +23,8 @@ const JobBoard = () => {
                             companyLogo: 'img/google-icon.svg',
                             jobTitle: 'Software Engineer',  
                             city: 'Sunnyvale', 
-                            state: 'CA'
+                            state: 'CA',
+                            created: '1/5/2023'
                         }, 
                         {
                             id: '2',
@@ -32,7 +33,8 @@ const JobBoard = () => {
                             companyLogo: 'img/microsoft-icon.svg',
                             jobTitle: 'Backend Software Engineer',
                             city: 'Seattle',
-                            state: 'WA'
+                            state: 'WA',
+                            created: '2/1/2023'
                         }
                     ]
                 },
@@ -46,7 +48,8 @@ const JobBoard = () => {
                             companyLogo: null,
                             jobTitle: 'Software Development Engineer',
                             city: 'Denver',
-                            state: 'CO'
+                            state: 'CO',
+                            created: '10/10/2022'
                         }
                     ]
                 },
