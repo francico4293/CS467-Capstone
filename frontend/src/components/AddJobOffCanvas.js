@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,12 +13,20 @@ import ContactsDropdown from './ContactsDropdown';
 const AddJobOffCanvas = ({ show, setShow }) => {
     const [contacts, setContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
+    const [skills, setSkills] = useState([]);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
     const { user, theme } = useSelector(state => state);
 
     const handleClose = () => {
         setLinkedContacts([]);
         setShow(false);
+    }
+
+    const addSkill = (e) => {
+        if (e.keyCode === 13) {
+            setSkills([...skills, e.target.value]);
+            setShowSkillSearch(false);
+        }
     }
 
     const setError = (e) => {
@@ -82,7 +90,14 @@ const AddJobOffCanvas = ({ show, setShow }) => {
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
                 <div className='d-flex flex-wrap'>
-                    <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
+                    {
+                        skills.map((skill, idx) => (
+                            <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2' key={idx}>
+                                {skill}<i className='fa-solid fa-xmark ms-2'/>
+                            </div>
+                        ))
+                    }
+                    {/* <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
                         React.js<i className='fa-solid fa-xmark ms-2'/>
                     </div>
                     <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
@@ -108,13 +123,24 @@ const AddJobOffCanvas = ({ show, setShow }) => {
                     </div>
                     <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
                         x86<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
+                    </div> */}
                 </div>
-                <div className='d-flex mb-3'>
-                    <div className='add-skill bg-primary-outline d-flex justify-content-center align-items-center mt-2 me-2' onClick={() => setShowSkillSearch(true)}>
-                        <i className='fa-solid fa-plus me-1'/>Add Skill
-                    </div>
-                </div>
+                {
+                    showSkillSearch
+                        ? (
+                            <Row className='mb-3'>
+                                <FormGroup className='mt-2' onBlur={() => setShowSkillSearch(false)} onKeyDown={e => addSkill(e)}>
+                                    <Form.Control size='sm' autoFocus='true'/>
+                                </FormGroup>
+                            </Row>
+                        ) : (
+                            <div className='d-flex mb-3'>
+                                <div className='add-skill bg-primary-outline d-flex justify-content-center align-items-center mt-2 me-2' onClick={() => setShowSkillSearch(true)}>
+                                    <i className='fa-solid fa-plus me-1'/>Add Skill
+                                </div>
+                            </div>
+                        )
+                }
                 <Offcanvas.Title className='border-bottom mb-3'>Job Contacts</Offcanvas.Title>
                 <ContactsTable contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>
                 {contacts && <ContactsDropdown contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>}
