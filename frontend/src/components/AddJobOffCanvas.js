@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { getContacts } from '../services/contacts';
 import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddJobOffCanvas = ({ show, setShow }) => {
     const [contacts, setContacts] = useState([]);
@@ -24,9 +25,14 @@ const AddJobOffCanvas = ({ show, setShow }) => {
 
     const addSkill = (e) => {
         if (e.keyCode === 13) {
-            setSkills([...skills, e.target.value]);
+            setSkills([...skills, { id: uuidv4(), name: e.target.value }]);
             setShowSkillSearch(false);
         }
+    }
+
+    const removeSkill = (skillToRemove) => {
+        const result = skills.filter(skill => skill.id !== skillToRemove.id);
+        setSkills(result);
     }
 
     const setError = (e) => {
@@ -93,37 +99,10 @@ const AddJobOffCanvas = ({ show, setShow }) => {
                     {
                         skills.map((skill, idx) => (
                             <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2' key={idx}>
-                                {skill}<i className='fa-solid fa-xmark ms-2'/>
+                                {skill.name}<i className='fa-solid fa-xmark ms-2' onClick={() => removeSkill(skill)}/>
                             </div>
                         ))
                     }
-                    {/* <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
-                        React.js<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
-                        A really, really, really long skill<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
-                        Python<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
-                        Java<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
-                        Google Cloud Platform<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
-                        JavaScript<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
-                        TypeScript<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
-                        Docker<i className='fa-solid fa-xmark ms-2'/>
-                    </div>
-                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
-                        x86<i className='fa-solid fa-xmark ms-2'/>
-                    </div> */}
                 </div>
                 {
                     showSkillSearch
