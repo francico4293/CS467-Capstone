@@ -284,6 +284,6 @@
     right: 3%;
 }
 
-.offcanvas {
-    min-width: 30%;
+.light.offcanvas {
+    min-width: 35%;
 }
