@@ -339,6 +339,35 @@
     font-size: .75rem;
 }
 
-.light.contacts-table .fa-trash {
+.dark.contacts-table .fa-trash {
+    cursor: pointer;
+}
+
+.dark.offcanvas .skill-badge {
+    height: 30px;
+    padding: 10px;
+    color: white;
+    font-size: .75rem;
+    border-radius: 20px;
+    background-color: green;
+}
+
+.dark.offcanvas .add-skill {
+    height: 30px;
+    padding: 10px;
+    font-size: .75rem;
+    border-radius: 20px;
+    border: 1px solid green;
+    color: green;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.dark.offcanvas .add-skill:hover {
+    background-color: rgb(0, 128, 0);
+    color: white;
+}
+
+.dark.offcanvas .fa-xmark {
     cursor: pointer;
 }

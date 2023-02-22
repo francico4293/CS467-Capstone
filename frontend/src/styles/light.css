@@ -295,3 +295,32 @@
 .light.contacts-table .fa-trash {
     cursor: pointer;
 }
+
+.light.offcanvas .skill-badge {
+    height: 30px;
+    padding: 10px;
+    font-size: .75rem;
+    border-radius: 20px;
+    color: white;
+    background-color: green;
+}
+
+.light.offcanvas .add-skill {
+    height: 30px;
+    padding: 10px;
+    font-size: .75rem;
+    border-radius: 20px;
+    border: 1px solid green;
+    color: green;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.light.offcanvas .add-skill:hover {
+    background-color: rgb(0, 128, 0);
+    color: white;
+}
+
+.light.offcanvas .fa-xmark {
+    cursor: pointer;
+}

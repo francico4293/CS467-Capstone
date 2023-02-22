@@ -13,6 +13,7 @@ import ContactsDropdown from './ContactsDropdown';
 const AddJobOffCanvas = ({ show, setShow }) => {
     const [contacts, setContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
+    const [showSkillSearch, setShowSkillSearch] = useState(false);
     const { user, theme } = useSelector(state => state);
 
     const handleClose = () => {
@@ -79,7 +80,41 @@ const AddJobOffCanvas = ({ show, setShow }) => {
                         <Form.Control/>
                     </FormGroup>
                 </Row>
-                <Offcanvas.Title className='border-bottom mb-3'>Job Skills</Offcanvas.Title>
+                <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
+                <div className='d-flex flex-wrap'>
+                    <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
+                        React.js<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
+                        A really, really, really long skill<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
+                        Python<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center mt-2 me-2'>
+                        Java<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
+                        Google Cloud Platform<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
+                        JavaScript<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
+                        TypeScript<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
+                        Docker<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                    <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2'>
+                        x86<i className='fa-solid fa-xmark ms-2'/>
+                    </div>
+                </div>
+                <div className='d-flex mb-3'>
+                    <div className='add-skill bg-primary-outline d-flex justify-content-center align-items-center mt-2 me-2' onClick={() => setShowSkillSearch(true)}>
+                        <i className='fa-solid fa-plus me-1'/>Add Skill
+                    </div>
+                </div>
                 <Offcanvas.Title className='border-bottom mb-3'>Job Contacts</Offcanvas.Title>
                 <ContactsTable contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>
                 {contacts && <ContactsDropdown contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>}
