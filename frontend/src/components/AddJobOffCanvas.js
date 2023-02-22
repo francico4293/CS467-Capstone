@@ -6,7 +6,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import FormGroup from 'react-bootstrap/FormGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { getContacts } from '../services/contacts';
 import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
@@ -82,13 +81,8 @@ const AddJobOffCanvas = ({ show, setShow }) => {
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-3'>Job Skills</Offcanvas.Title>
                 <Offcanvas.Title className='border-bottom mb-3'>Job Contacts</Offcanvas.Title>
-                <ContactsTable contacts={linkedContacts}/>
-                {contacts && <ContactsDropdown 
-                                contacts={contacts} 
-                                linkedContacts={linkedContacts}
-                                setContacts={setContacts} 
-                                setLinkedContacts={setLinkedContacts}
-                            />}
+                <ContactsTable contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>
+                {contacts && <ContactsDropdown contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>}
                 <Row className='mt-3'>
                     <Col className='d-flex justify-content-end'>
                         <Button className='me-2'>Create</Button>

@@ -334,3 +334,11 @@
     background-color: #333;
     color: white;
 }
+
+.dark.contacts-table {
+    font-size: .75rem;
+}
+
+.light.contacts-table .fa-trash {
+    cursor: pointer;
+}

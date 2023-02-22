@@ -287,3 +287,11 @@
 .light.offcanvas {
     min-width: 35%;
 }
+
+.light.contacts-table {
+    font-size: .75rem;
+}
+
+.light.contacts-table .fa-trash {
+    cursor: pointer;
+}
