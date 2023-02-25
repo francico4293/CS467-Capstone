@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -51,7 +51,7 @@ const JobBoard = () => {
                             city: 'Denver',
                             state: 'CO',
                             created: '10/10/2022'
-                        }
+                        },
                     ]
                 },
             ]
@@ -95,7 +95,8 @@ const JobBoard = () => {
                 <DragDropContext onDragEnd={onDragEndHandler}>
                     <Col xs={10} sm={9} md={10} className='ms-auto'>
                         <AddJobOffCanvas 
-                            columns={userJobData.columns.map(column => column.name)} 
+                            userJobData={userJobData}
+                            setUserJobData={setUserJobData}
                             selectedJobColumn={selectedJobColumn} 
                             show={showAddJobOffCanvas} 
                             setShow={setShowAddJobOffCanvas}

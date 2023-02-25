@@ -11,7 +11,15 @@ import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
 import { v4 as uuidv4 } from 'uuid';
 
-const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
+const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show, setShow }) => {
+    const [company, setCompany] = useState('');
+    const [color, setColor] = useState('');
+    const [jobStage, setJobStage] = useState('');
+    const [companyLogo, setCompanyLogo] = useState(null);
+    const [jobTitle, setJobTitle] = useState('');
+    const [linkToJobPosting, setLinkToJobPosting] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const [contacts, setContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
@@ -35,6 +43,17 @@ const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
         setSkills(result);
     }
 
+    const addJob = () => {
+        userJobData.columns.forEach(column => {
+            if (column.name === jobStage) {
+                column.jobs.push({ id: uuidv4(), color, company, jobTitle, city, state, created: new Date() });
+            }
+        });
+
+        setUserJobData(userJobData);
+        setShow(false);
+    }
+
     const setError = (e) => {
         alert(e)
     }
@@ -46,6 +65,8 @@ const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
         }
 
         loadContacts();
+        setJobStage(selectedJobColumn);
+        setColor('#563d7c');
     }, [show]);
 
     return (
@@ -58,21 +79,22 @@ const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
                 <Row className='mb-2'>
                     <FormGroup as={Col} xs={9}>
                         <Form.Label>Company</Form.Label>
-                        <Form.Control/>
+                        <Form.Control onChange={e => setCompany(e.target.value)}/>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Job Color</Form.Label>
                         <Form.Control
                             type='color'
-                            defaultValue="#563d7c"
+                            defaultValue={color}
+                            onChange={e => setColor(e.target.value)}
                         />
                     </FormGroup>
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Stage</Form.Label>
-                        <Form.Select>
-                            {columns.map((column, idx) => <option key={idx} selected={column === selectedJobColumn}>{column.charAt(0).toUpperCase() + column.slice(1)}</option>)}
+                        <Form.Select onChange={e => setJobStage(e.target.value.toLowerCase())}>
+                            {userJobData.columns.map((column, idx) => <option key={idx} selected={column.name === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col}>
@@ -83,21 +105,21 @@ const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
                 <Row className='mb-2'>
                     <FormGroup as={Col}>
                         <Form.Label>Job Title</Form.Label>
-                        <Form.Control/>
+                        <Form.Control onChange={e => setJobTitle(e.target.value)}/>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
-                        <Form.Control/>
+                        <Form.Control onChange={e => setLinkToJobPosting(e.target.value)}/>
                     </FormGroup>
                 </Row>
                 <Row className='mb-3'>
                     <FormGroup as={Col}>
                         <Form.Label>City</Form.Label>
-                        <Form.Control/>
+                        <Form.Control onChange={e => setCity(e.target.value)}/>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>State</Form.Label>
-                        <Form.Control/>
+                        <Form.Control onChange={e => setState(e.target.value)}/>
                     </FormGroup>
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
@@ -131,7 +153,7 @@ const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
                 {contacts && <ContactsDropdown contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>}
                 <Row className='mt-3'>
                     <Col className='d-flex justify-content-end'>
-                        <Button className='me-2'>Create</Button>
+                        <Button className='me-2' onClick={addJob}>Create</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </Col>
                 </Row>
