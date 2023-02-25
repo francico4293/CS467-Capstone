@@ -10,6 +10,7 @@ import AddJobOffCanvas from '../components/AddJobOffCanvas';
 
 const JobBoard = () => {
     const [showAddJobOffCanvas, setShowAddJobOffCanvas] = useState(false);
+    const [selectedJobColumn, setSelectedJobColumn] = useState("");
     const [userJobData, setUserJobData] = useState(
         {
             columns: [
@@ -93,7 +94,12 @@ const JobBoard = () => {
                 <Sidebar/>
                 <DragDropContext onDragEnd={onDragEndHandler}>
                     <Col xs={10} sm={9} md={10} className='ms-auto'>
-                        <AddJobOffCanvas show={showAddJobOffCanvas} setShow={setShowAddJobOffCanvas}/>
+                        <AddJobOffCanvas 
+                            columns={userJobData.columns.map(column => column.name)} 
+                            selectedJobColumn={selectedJobColumn} 
+                            show={showAddJobOffCanvas} 
+                            setShow={setShowAddJobOffCanvas}
+                        />
                         <Row className='mt-3 mb-3'>
                             <Col className='d-flex border-bottom justify-content-end pb-3'>
                                 <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={[]} setItems={null}/>
@@ -112,7 +118,8 @@ const JobBoard = () => {
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
                                                             <JobBoardColumn 
                                                                 column={column} 
-                                                                setShowAddJobOffCanvas={setShowAddJobOffCanvas} 
+                                                                setShowAddJobOffCanvas={setShowAddJobOffCanvas}
+                                                                setSelectedJobColumn={setSelectedJobColumn} 
                                                                 {...provided.dragHandleProps}
                                                             />
                                                         </div>

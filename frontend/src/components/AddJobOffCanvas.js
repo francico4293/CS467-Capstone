@@ -11,7 +11,7 @@ import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
 import { v4 as uuidv4 } from 'uuid';
 
-const AddJobOffCanvas = ({ show, setShow }) => {
+const AddJobOffCanvas = ({ columns, selectedJobColumn, show, setShow }) => {
     const [contacts, setContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
@@ -69,6 +69,12 @@ const AddJobOffCanvas = ({ show, setShow }) => {
                     </FormGroup>
                 </Row>
                 <Row className='mb-2'>
+                    <Form.Group as={Col}>
+                        <Form.Label>Job Stage</Form.Label>
+                        <Form.Select>
+                            {columns.map((column, idx) => <option key={idx} selected={column === selectedJobColumn}>{column.charAt(0).toUpperCase() + column.slice(1)}</option>)}
+                        </Form.Select>
+                    </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Company Logo (.svg)</Form.Label>
                         <Form.Control type="file"/>
