@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,9 +9,9 @@ import Button from 'react-bootstrap/Button';
 import { getContacts } from '../services/contacts';
 import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
-import { v4 as uuidv4 } from 'uuid';
 import { getUser } from '../services/users';
 import { createJob } from '../services/jobs';
+import { states } from '../data/states';
 
 const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -83,6 +83,8 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
         setColor('#563d7c');
     }, [show]);
 
+    console.log(state);
+
     return (
         <Offcanvas className={`${theme}`} show={show} onHide={handleClose} placement='end'>
             <Offcanvas.Header closeButton>
@@ -133,7 +135,9 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>State</Form.Label>
-                        <Form.Control onChange={e => setState(e.target.value)}/>
+                        <Form.Select onChange={e => setState(e.target.value)}>(
+                            {states.map((state, idx) => <option key={idx}>{state.name}</option>)}
+                        </Form.Select>
                     </FormGroup>
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
