@@ -12,7 +12,11 @@ createJob = async (uid, columnName, jobData) => {
         }
     });
     await userRef.update(userData)
+
+    const job = await jobRef.get()
+    return {...job.data(), id: job.id}
 }
+
 
 getJobs = async (uid) => {
     const userRef = db.collection('users').doc(uid);
