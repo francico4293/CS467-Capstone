@@ -7,13 +7,21 @@ createUser = async (uid, firstName, lastName, email) => {
         lastName,
         email,
         description: '',
-        jobs: [],
+        columns: [
+            {
+                name: "Interested",
+                jobs: []
+            },
+            {
+                name: 'Applied',
+                jobs: []
+            }],
         contacts: [],
         skills: []
     });
 
     const doc = await docRef.get()
-    return {...doc.data(), id: doc.id}
+    return { ...doc.data(), id: doc.id }
 }
 
 getUser = async (uid, email) => {
@@ -21,8 +29,8 @@ getUser = async (uid, email) => {
     const doc = await docRef.get()
     if (!doc.exists) {
         return createUser(uid, '', '', email)
-    } else{
-        return {...doc.data(), id: doc.id}
+    } else {
+        return { ...doc.data(), id: doc.id }
     }
 }
 
@@ -31,7 +39,7 @@ editUser = async (uid, props) => {
     await docRef.update(props)
 
     const doc = await docRef.get()
-    return {...doc.data(), id: doc.id}
+    return { ...doc.data(), id: doc.id }
 }
 
 deleteUser = async (uid) => {
