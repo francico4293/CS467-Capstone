@@ -7,56 +7,26 @@ import Filter from '../components/Filter';
 import JobBoardColumn from '../components/JobBoardColumn';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import AddJobOffCanvas from '../components/AddJobOffCanvas';
+import { useSelector } from 'react-redux';
+import { getJobs } from '../services/jobs';
 
 const JobBoard = () => {
     const [showAddJobOffCanvas, setShowAddJobOffCanvas] = useState(false);
     const [selectedJobColumn, setSelectedJobColumn] = useState("");
-    const [userJobData, setUserJobData] = useState(
-        {
-            columns: [
-                {
-                    name: 'interested',
-                    jobs: [
-                        {
-                            id: '1',
-                            color: 'green',
-                            company: 'Google', 
-                            companyLogo: 'img/google-icon.svg',
-                            jobTitle: 'Software Engineer',  
-                            city: 'Sunnyvale', 
-                            state: 'CA',
-                            created: '1/5/2023'
-                        }, 
-                        {
-                            id: '2',
-                            color: 'red',
-                            company: 'Microsoft',
-                            companyLogo: 'img/microsoft-icon.svg',
-                            jobTitle: 'Backend Software Engineer',
-                            city: 'Seattle',
-                            state: 'WA',
-                            created: '2/1/2023'
-                        }
-                    ]
-                },
-                {
-                    name: 'applied',
-                    jobs: [
-                        {
-                            id: '3',
-                            color: 'black',
-                            company: 'Palantir',
-                            companyLogo: null,
-                            jobTitle: 'Software Development Engineer',
-                            city: 'Denver',
-                            state: 'CO',
-                            created: '10/10/2022'
-                        },
-                    ]
-                },
-            ]
+    const [userJobData, setUserJobData] = useState({ columns: [] });
+    const user = useSelector(state => state.user);
+
+    const setError = (e) => {
+        alert(e)
+    }
+
+    useEffect(() => {
+        async function populateJobs() {
+            const jobData = await getJobs(user.auth, setError)
+            setUserJobData({columns: jobData})
         }
-    );
+        populateJobs()
+    }, [user])
 
     const addColumn = () => {
         setUserJobData({ columns: [...userJobData.columns, { name: `Column ${userJobData.columns.length + 1}`, jobs: [] }] });
@@ -91,21 +61,21 @@ const JobBoard = () => {
     return (
         <Container fluid>
             <Row>
-                <Sidebar/>
+                <Sidebar />
                 <DragDropContext onDragEnd={onDragEndHandler}>
                     <Col xs={10} sm={9} md={10} className='ms-auto'>
-                        <AddJobOffCanvas 
+                        <AddJobOffCanvas
                             userJobData={userJobData}
                             setUserJobData={setUserJobData}
-                            selectedJobColumn={selectedJobColumn} 
-                            show={showAddJobOffCanvas} 
+                            selectedJobColumn={selectedJobColumn}
+                            show={showAddJobOffCanvas}
                             setShow={setShowAddJobOffCanvas}
                         />
                         <Row className='mt-3 mb-3'>
                             <Col className='d-flex border-bottom justify-content-end pb-3'>
-                                <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={[]} setItems={null}/>
-                                <Filter filterName={'Filter by Skill'} defaultItem={'All skills'} items={[]} setItems={null}/>
-                                <Filter filterName={'Filter by Contact'} defaultItem={'All contacts'} items={[]} setItems={null}/>
+                                <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={[]} setItems={null} />
+                                <Filter filterName={'Filter by Skill'} defaultItem={'All skills'} items={[]} setItems={null} />
+                                <Filter filterName={'Filter by Contact'} defaultItem={'All contacts'} items={[]} setItems={null} />
                             </Col>
                         </Row>
                         <Droppable droppableId='job-columns' direction='horizontal' type='job-columns'>
@@ -117,10 +87,10 @@ const JobBoard = () => {
                                                 <Draggable key={column.name} draggableId={column.name} index={idx}>
                                                     {provided => (
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
-                                                            <JobBoardColumn 
-                                                                column={column} 
+                                                            <JobBoardColumn
+                                                                column={column}
                                                                 setShowAddJobOffCanvas={setShowAddJobOffCanvas}
-                                                                setSelectedJobColumn={setSelectedJobColumn} 
+                                                                setSelectedJobColumn={setSelectedJobColumn}
                                                                 {...provided.dragHandleProps}
                                                             />
                                                         </div>
@@ -132,7 +102,7 @@ const JobBoard = () => {
                                     {provided.placeholder}
                                     <Col xs={6}>
                                         <div className='d-flex justify-content-center align-items-center add-col' onClick={addColumn}>
-                                            <i className='fa-solid fa-plus fa-2x'/>
+                                            <i className='fa-solid fa-plus fa-2x' />
                                         </div>
                                     </Col>
                                 </Row>

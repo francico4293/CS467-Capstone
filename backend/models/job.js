@@ -33,3 +33,5 @@ getJobs = async (uid) => {
     }))
     return populatedColumns
 }
+
+module.exports = {createJob, getJobs}

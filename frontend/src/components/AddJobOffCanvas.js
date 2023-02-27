@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -10,6 +10,8 @@ import { getContacts } from '../services/contacts';
 import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
 import { v4 as uuidv4 } from 'uuid';
+import { getUser } from '../services/users';
+import { createJob } from '../services/jobs';
 
 const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -25,6 +27,7 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
     const [skills, setSkills] = useState([]);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
     const { user, theme } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         setLinkedContacts([]);
@@ -33,24 +36,35 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
 
     const addSkill = (e) => {
         if (e.keyCode === 13) {
-            setSkills([...skills, { id: uuidv4(), name: e.target.value }]);
+            setSkills([...skills, e.target.value]);
             setShowSkillSearch(false);
         }
     }
 
     const removeSkill = (skillToRemove) => {
-        const result = skills.filter(skill => skill.id !== skillToRemove.id);
+        const result = skills.filter(skill => skill !== skillToRemove);
         setSkills(result);
     }
 
-    const addJob = () => {
-        userJobData.columns.forEach(column => {
-            if (column.name === jobStage) {
-                column.jobs.push({ id: uuidv4(), color, company, jobTitle, city, state, created: new Date() });
-            }
-        });
+    const addJob = async () => {
+        const newJob = {
+            color, 
+            company,
+            companyLogo,
+            jobTitle, 
+            city, 
+            state, 
+            skills, 
+            link: linkToJobPosting,  
+            contacts: linkedContacts.map(contact => contact.id), 
+            created: new Date() 
+        }
 
-        setUserJobData(userJobData);
+
+        await createJob(user.auth, newJob, jobStage, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
         setShow(false);
     }
 
@@ -127,7 +141,7 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
                     {
                         skills.map((skill, idx) => (
                             <div className='skill-badge d-flex justify-content-center align-items-center text-nowrap mt-2 me-2' key={idx}>
-                                {skill.name}<i className='fa-solid fa-xmark ms-2' onClick={() => removeSkill(skill)}/>
+                                {skill}<i className='fa-solid fa-xmark ms-2' onClick={() => removeSkill(skill)}/>
                             </div>
                         ))
                     }
