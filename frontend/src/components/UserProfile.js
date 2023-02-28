@@ -30,7 +30,7 @@ const UserProfile = ({ setShowEditProfileModal }) => {
             <div className='overview'>
                 <p className='fw-light mt-3'>Profile Overview:</p>
                 <p className='fw-light'><i className='fa-solid fa-chart-line me-1'/>{`Tracking ${user.data.columns.reduce((acc, column) => acc + column.jobs.length, 0)} jobs`}</p>
-                <p className='fw-light'><i className='fa-solid fa-circle-nodes me-1'/>{`Managing ${user.data.contacts.length} contacts`}</p>
+                <p className='fw-light'><i className='fa-solid fa-circle-nodes me-1'/>{`Networking with ${user.data.contacts.length} contacts`}</p>
             </div>
         </>
     );
