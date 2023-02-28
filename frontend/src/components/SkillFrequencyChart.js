@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Chart from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
+import { getJobs } from '../services/jobs';
 
 const SkillFrequencyChart = () => {
-    const labels = ["Java", "Docker", "Python", "Express.js", "SQL", "React.js", "JavaScript", "C++"];
+    const { user } = useSelector(state => state);
+    const [skillsFrequency, setSkillsFrequency] = useState({});
+
+    const labels = Object.keys(skillsFrequency);
     const data = {
         labels: labels,
         datasets: [
             {
                 backgroundColor: 'rgba(34, 139, 34, 0.2)',
                 borderColor: 'rgb(34, 139, 34)',
-                data: [2, 1, 4, 2, 6, 3, 1, 1],
+                data: Object.values(skillsFrequency),
                 borderWidth: 1
             },
         ],
@@ -33,13 +38,35 @@ const SkillFrequencyChart = () => {
             }
         },
         scales: {
-            y: {
+            x: {
                 ticks: {
                     stepSize: 1
                 }
             }
         }
     };
+
+    const setError = (e) => {
+        alert(e);
+    }
+
+    useEffect(() => {
+        async function getSkillsFrequency() {
+            const skillsFrequency = {};
+            const jobData = await getJobs(user.auth, setError);
+            jobData.forEach(data => data.jobs.forEach(job => job.skills.forEach(skill => {
+                if (skill in skillsFrequency) {
+                    skillsFrequency[skill] = skillsFrequency[skill] + 1;
+                } else {
+                    skillsFrequency[skill] = 1;
+                }
+            })));
+
+            setSkillsFrequency(skillsFrequency);
+        }
+
+        getSkillsFrequency();
+    }, []);
 
     return (
         <>
