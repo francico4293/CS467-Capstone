@@ -30,7 +30,18 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
     const dispatch = useDispatch();
 
     const handleClose = () => {
+        setCompany('');
+        setColor('');
+        setJobStage('');
+        setCompanyLogo(null);
+        setJobTitle('');
+        setLinkToJobPosting('');
+        setCity('');
+        setState('');
+        setContacts([]);
         setLinkedContacts([]);
+        setSkills([]);
+        setShowSkillSearch(false);
         setShow(false);
     }
 
@@ -65,7 +76,7 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
 
         const data = await getUser(user.auth, setError);
         dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
-        setShow(false);
+        handleClose();
     }
 
     const setError = (e) => {
@@ -82,8 +93,6 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
         setJobStage(selectedJobColumn);
         setColor('#563d7c');
     }, [show]);
-
-    console.log(state);
 
     return (
         <Offcanvas className={`${theme}`} show={show} onHide={handleClose} placement='end'>
@@ -109,7 +118,7 @@ const AddJobOffCanvas = ({ userJobData, setUserJobData, selectedJobColumn, show,
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Stage</Form.Label>
-                        <Form.Select onChange={e => setJobStage(e.target.value.toLowerCase())}>
+                        <Form.Select onChange={e => setJobStage(e.target.value)}>
                             {userJobData.columns.map((column, idx) => <option key={idx} selected={column.name === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
                         </Form.Select>
                     </Form.Group>
