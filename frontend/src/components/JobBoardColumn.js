@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/card';
 import JobCard from './JobCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const JobBoardColumn = ({ column, setShowAddJobOffCanvas, setSelectedJobColumn, ...props }) => {
+const JobBoardColumn = ({ column, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
     const handleAddJob = () => {
         setSelectedJobColumn(column.name);
         setShowAddJobOffCanvas(true);
@@ -32,7 +32,7 @@ const JobBoardColumn = ({ column, setShowAddJobOffCanvas, setSelectedJobColumn, 
                                     <Draggable key={job.id} draggableId={job.id} index={idx}>
                                         {provided => (
                                             <div className='d-flex flex-column' {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                <JobCard job={job}/>
+                                                <JobCard job={job} setJobToEdit={setJobToEdit} setShowEditJobOffCanvas={setShowEditJobOffCanvas}/>
                                             </div>
                                         )}
                                     </Draggable>

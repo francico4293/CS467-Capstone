@@ -6,7 +6,12 @@ import Image from 'react-bootstrap/Image';
 import ReactTimeAgo from 'react-time-ago';
 import Badge from 'react-bootstrap/Badge';
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, setJobToEdit, setShowEditJobOffCanvas }) => {
+    const editJobHandler = () => {
+        setJobToEdit(job);
+        setShowEditJobOffCanvas(true);
+    }
+
     return (
         <Card className='job-card m-2'>
             <div className='job-card-color' style={{ backgroundColor: `${job.color}` }}></div>
@@ -40,7 +45,7 @@ const JobCard = ({ job }) => {
                                 Job created <ReactTimeAgo date={job.created} locale='en-US'/>
                             </div>
                             <div>
-                                <i className='fa-solid fa-pen me-2'/>
+                                <i className='fa-solid fa-pen me-2' onClick={editJobHandler}/>
                                 <i className='fa-solid fa-trash'/>
                             </div>
                         </Col>

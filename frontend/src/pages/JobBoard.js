@@ -7,13 +7,16 @@ import Filter from '../components/Filter';
 import JobBoardColumn from '../components/JobBoardColumn';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import AddJobOffCanvas from '../components/AddJobOffCanvas';
+import EditJobOffCanvas from '../components/EditJobOffCanvas';
 import { useSelector } from 'react-redux';
 import { getJobs } from '../services/jobs';
 
 const JobBoard = () => {
     const [showAddJobOffCanvas, setShowAddJobOffCanvas] = useState(false);
+    const [showEditJobOffCanvas, setShowEditJobOffCanvas] = useState(false);
     const [selectedJobColumn, setSelectedJobColumn] = useState("");
     const [userJobData, setUserJobData] = useState({ columns: [] });
+    const [jobToEdit, setJobToEdit] = useState({});
     const user = useSelector(state => state.user);
 
     const setError = (e) => {
@@ -66,10 +69,15 @@ const JobBoard = () => {
                     <Col xs={10} sm={9} md={10} className='ms-auto'>
                         <AddJobOffCanvas
                             userJobData={userJobData}
-                            setUserJobData={setUserJobData}
                             selectedJobColumn={selectedJobColumn}
                             show={showAddJobOffCanvas}
                             setShow={setShowAddJobOffCanvas}
+                        />
+                        <EditJobOffCanvas
+                            userJobData={userJobData}
+                            jobToEdit={jobToEdit}
+                            show={showEditJobOffCanvas}
+                            setShow={setShowEditJobOffCanvas}
                         />
                         <Row className='mt-3 mb-3'>
                             <Col className='d-flex border-bottom justify-content-end pb-3'>
@@ -89,7 +97,9 @@ const JobBoard = () => {
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
                                                             <JobBoardColumn
                                                                 column={column}
+                                                                setJobToEdit={setJobToEdit}
                                                                 setShowAddJobOffCanvas={setShowAddJobOffCanvas}
+                                                                setShowEditJobOffCanvas={setShowEditJobOffCanvas}
                                                                 setSelectedJobColumn={setSelectedJobColumn}
                                                                 {...provided.dragHandleProps}
                                                             />
