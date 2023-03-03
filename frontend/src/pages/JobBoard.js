@@ -87,7 +87,7 @@ const JobBoard = () => {
                             </Col>
                         </Row>
                         <Droppable droppableId='job-columns' direction='horizontal' type='job-columns'>
-                            {provided => (
+                            {(provided, snapshot) => (
                                 <Row className='d-flex flex-nowrap d-inline-block horizontal-scrollable pb-5' {...provided.droppableProps} ref={provided.innerRef}>
                                     {
                                         userJobData.columns.map((column, idx) => {
@@ -97,6 +97,7 @@ const JobBoard = () => {
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
                                                             <JobBoardColumn
                                                                 column={column}
+                                                                isDragging={snapshot.isDraggingOver}
                                                                 setJobToEdit={setJobToEdit}
                                                                 setShowAddJobOffCanvas={setShowAddJobOffCanvas}
                                                                 setShowEditJobOffCanvas={setShowEditJobOffCanvas}

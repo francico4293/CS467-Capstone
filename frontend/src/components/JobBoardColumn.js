@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Card from 'react-bootstrap/card';
 import JobCard from './JobCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
-const JobBoardColumn = ({ column, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
+const JobBoardColumn = ({ column, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
+    const [showPopover, setShowPopover] = useState(false);
+    const { theme } = useSelector(state => state);
+
     const handleAddJob = () => {
         setSelectedJobColumn(column.name);
         setShowAddJobOffCanvas(true);
     }
+
+    const deleteHandler = () => {
+        setShowPopover(false);
+    }
+
+    useEffect(() => {
+        setShowPopover(false);
+    }, [isDragging]);
 
     return (
         <div className='test'>
@@ -15,7 +32,30 @@ const JobBoardColumn = ({ column, setJobToEdit, setShowAddJobOffCanvas, setShowE
                 {column.name.toUpperCase()}
                 <div>
                     <i className='fa-solid fa-pen me-2'/>
-                    <i className='fa-solid fa-trash'/>
+                    <OverlayTrigger
+                        trigger='click'
+                        placement='right'
+                        show={showPopover}
+                        overlay={
+                            <Popover id={theme}>
+                            <Popover.Header as="h3">Delete Job Column</Popover.Header>
+                            <Popover.Body>
+                                <Row>
+                                    <Col className='pb-3'>
+                                        Are you sure you want to delete this job column?
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className='d-flex justify-content-end border-top pt-1'>
+                                        <Button className='me-1' onClick={() => setShowPopover(false)}>Cancel</Button>
+                                        <Button onClick={deleteHandler}>Confirm</Button>
+                                    </Col>
+                                </Row>
+                            </Popover.Body>
+                        </Popover>
+                    }>
+                        <i className='fa-solid fa-trash' onClick={() => setShowPopover(true)}/>
+                    </OverlayTrigger>
                 </div>
             </h3>
             <Card className='add-job m-2' onClick={handleAddJob}>
