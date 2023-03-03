@@ -81,7 +81,8 @@ const ContactCard = ({ contact, setContactToEdit }) => {
                                                 </Col>
                                             </Row>
                                         </Popover.Body>
-                                    </Popover>}>
+                                    </Popover>
+                                }>
                                 <i className='fa-solid fa-trash' onClick={() => setShowPopover(true)}/>
                             </OverlayTrigger>
                         </Col>

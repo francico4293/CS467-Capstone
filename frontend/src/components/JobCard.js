@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import ReactTimeAgo from 'react-time-ago';
 import Badge from 'react-bootstrap/Badge';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import Button from 'react-bootstrap/Button';
 
 const JobCard = ({ job, setJobToEdit, setShowEditJobOffCanvas }) => {
+    const { theme }  = useSelector(state => state);
+    const [showPopover, setShowPopover] = useState(false);
+
+    const deleteHandler = () => {
+        setShowPopover(false);
+    }
+
     const editJobHandler = () => {
         setJobToEdit(job);
         setShowEditJobOffCanvas(true);
@@ -46,7 +57,30 @@ const JobCard = ({ job, setJobToEdit, setShowEditJobOffCanvas }) => {
                             </div>
                             <div>
                                 <i className='fa-solid fa-pen me-2' onClick={editJobHandler}/>
-                                <i className='fa-solid fa-trash'/>
+                                <OverlayTrigger
+                                    trigger='click'
+                                    placement='top'
+                                    show={showPopover}
+                                    overlay={
+                                        <Popover id={theme}>
+                                        <Popover.Header as="h3">Delete Job</Popover.Header>
+                                        <Popover.Body>
+                                            <Row>
+                                                <Col className='pb-3'>
+                                                    Are you sure you want to delete this job?
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col className='d-flex justify-content-end border-top pt-1'>
+                                                    <Button className='me-1' onClick={() => setShowPopover(false)}>Cancel</Button>
+                                                    <Button onClick={deleteHandler}>Confirm</Button>
+                                                </Col>
+                                            </Row>
+                                        </Popover.Body>
+                                    </Popover>
+                                }>
+                                    <i className='fa-solid fa-trash' onClick={() => setShowPopover(true)}/>
+                                </OverlayTrigger>
                             </div>
                         </Col>
                     </Row>
