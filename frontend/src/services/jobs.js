@@ -1,3 +1,11 @@
+import { 
+    ref, 
+    uploadBytes, 
+    getDownloadURL 
+} from 'firebase/storage';
+import { storage } from "../fire";
+import { v4 as uuidv4 } from 'uuid';
+
 const getJobs = async (userAuth, setError) => {
     const token = await userAuth.getIdToken();
     const response = await fetch(`/api/jobs/`, {
@@ -15,6 +23,10 @@ const getJobs = async (userAuth, setError) => {
 }
 
 const createJob = async(userAuth, jobData, columnName, setError) => {
+    if (jobData.companyLogo != null) {
+        jobData.companyLogo = await uploadCompanyLogo(jobData.companyLogo);
+    }
+
     const token = await userAuth.getIdToken();
     const response = await fetch('/api/jobs', {
         method: 'POST',
@@ -33,4 +45,10 @@ const createJob = async(userAuth, jobData, columnName, setError) => {
     }
 }
 
-export {getJobs, createJob}
+const uploadCompanyLogo = async (companyLogo) => {
+    const fileRef = ref(storage, 'company-logos/' + uuidv4() + '.svg');
+    await uploadBytes(fileRef, companyLogo);
+    return await getDownloadURL(fileRef);
+}
+
+export { getJobs, createJob };

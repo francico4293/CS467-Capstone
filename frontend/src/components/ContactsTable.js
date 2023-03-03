@@ -4,8 +4,6 @@ import Table from 'react-bootstrap/Table';
 
 const ContactsTable = ({ contacts, linkedContacts, setContacts, setLinkedContacts }) => {
     const { theme } = useSelector(state => state);
-
-    console.log(linkedContacts);
     
     const unlinkContact = (contactToUnlink) => {
         const result = linkedContacts.filter(linkedContact => linkedContact.id !== contactToUnlink.id);

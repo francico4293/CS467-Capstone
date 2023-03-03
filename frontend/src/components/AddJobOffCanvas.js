@@ -124,7 +124,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Company Logo (.svg)</Form.Label>
-                        <Form.Control type="file"/>
+                        <Form.Control type="file" onChange={e => setCompanyLogo((e.target.files[0]))}/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
