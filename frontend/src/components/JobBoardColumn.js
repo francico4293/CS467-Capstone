@@ -24,7 +24,7 @@ const JobBoardColumn = ({ column, setJobToEdit, setShowAddJobOffCanvas, setShowE
                 </Card.Body>
             </Card>
             <Droppable droppableId={column.name} direction='vertical'>
-                {provided => (
+                {(provided, snapshot) => (
                     <div className='drop-zone' {...provided.droppableProps} ref={provided.innerRef}>
                         {
                             column.jobs.map((job, idx) => {
@@ -32,7 +32,7 @@ const JobBoardColumn = ({ column, setJobToEdit, setShowAddJobOffCanvas, setShowE
                                     <Draggable key={job.id} draggableId={job.id} index={idx}>
                                         {provided => (
                                             <div className='d-flex flex-column' {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                <JobCard job={job} setJobToEdit={setJobToEdit} setShowEditJobOffCanvas={setShowEditJobOffCanvas}/>
+                                                <JobCard job={job} isDragging={snapshot.isDraggingOver} setJobToEdit={setJobToEdit} setShowEditJobOffCanvas={setShowEditJobOffCanvas}/>
                                             </div>
                                         )}
                                     </Draggable>

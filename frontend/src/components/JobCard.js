@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
@@ -10,7 +10,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Button from 'react-bootstrap/Button';
 
-const JobCard = ({ job, setJobToEdit, setShowEditJobOffCanvas }) => {
+const JobCard = ({ job, isDragging, setJobToEdit, setShowEditJobOffCanvas }) => {
     const { theme }  = useSelector(state => state);
     const [showPopover, setShowPopover] = useState(false);
 
@@ -22,6 +22,10 @@ const JobCard = ({ job, setJobToEdit, setShowEditJobOffCanvas }) => {
         setJobToEdit(job);
         setShowEditJobOffCanvas(true);
     }
+
+    useEffect(() => {
+        setShowPopover(false);
+    }, [isDragging]);
 
     return (
         <Card className='job-card m-2'>
