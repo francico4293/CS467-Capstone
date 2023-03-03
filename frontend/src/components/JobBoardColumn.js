@@ -8,9 +8,12 @@ import Popover from 'react-bootstrap/Popover';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 const JobBoardColumn = ({ column, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
     const [showPopover, setShowPopover] = useState(false);
+    const [editColumnName, setEditColumnName] = useState(false);
+    const [columnName, setColumnName] = useState(column.name.toUpperCase());
     const { theme } = useSelector(state => state);
 
     const handleAddJob = () => {
@@ -29,9 +32,24 @@ const JobBoardColumn = ({ column, isDragging, setJobToEdit, setShowAddJobOffCanv
     return (
         <div className='test'>
             <h3 className='d-flex justify-content-between fw-light fs-5 p-3 col-name' {...props}>
-                {column.name.toUpperCase()}
+                {
+                    editColumnName 
+                        ? <Form.Control 
+                            size='sm' 
+                            className='me-5' 
+                            autoFocus='true' 
+                            value={columnName.toUpperCase()}
+                            onChange={e => setColumnName(e.target.value)}
+                            onKeyDown={e => e.key === 'Enter' && setEditColumnName(false)}
+                        /> 
+                        : column.name.toUpperCase()
+                }
                 <div>
-                    <i className='fa-solid fa-pen me-2'/>
+                    {
+                        editColumnName 
+                            ? <i className='fa-solid fa-circle-check me-2' onClick={() => setEditColumnName(false)}/> 
+                            : <i className='fa-solid fa-pen me-2' onClick={() => setEditColumnName(true)}/>
+                    }
                     <OverlayTrigger
                         trigger='click'
                         placement='right'
