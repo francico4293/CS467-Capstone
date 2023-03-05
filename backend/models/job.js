@@ -55,4 +55,23 @@ deleteJob = async (uid, jobId) => {
     await db.collection('jobs').doc(jobId).delete();
 
 }
-module.exports = {createJob, getJobs, deleteJob}
+
+editJob = async (uid, jobId, jobData) => {
+    const userRef = db.collection('users').doc(uid);
+    const user = await userRef.get()
+    const userData = user.data()
+
+    let jobFound = userData.columns.some(column => column.jobs.includes(jobId))
+
+    if (!jobFound) {
+        throw new Error("Job does not belong to user")
+    }
+
+    const jobRef = db.collection('jobs').doc(jobId)
+    await jobRef.update(jobData)
+    const job = await jobRef.get()
+    return { ...job.data(), id: job.id }
+}
+
+
+module.exports = {createJob, getJobs, deleteJob, editJob}
