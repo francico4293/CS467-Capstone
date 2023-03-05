@@ -39,7 +39,7 @@ deleteJob = async (uid, jobId) => {
 
     const userRef = db.collection('users').doc(uid);
     const user = await userRef.get()
-    const userData = user.data().columns
+    const userData = user.data()
 
     userData.columns.forEach(column => {
         if (column.jobs.includes(jobId)) {

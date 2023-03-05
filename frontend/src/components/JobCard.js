@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,12 +9,23 @@ import Badge from 'react-bootstrap/Badge';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Button from 'react-bootstrap/Button';
+import { deleteJob } from '../services/jobs';
+import { getUser } from '../services/users';
 
 const JobCard = ({ job, isDragging, setJobToEdit, setShowEditJobOffCanvas }) => {
-    const { theme }  = useSelector(state => state);
+    const { user, theme }  = useSelector(state => state);
+    const dispatch = useDispatch();
     const [showPopover, setShowPopover] = useState(false);
 
-    const deleteHandler = () => {
+    const setError = (e) => {
+        alert(e)
+    }
+
+    const deleteHandler = async () => {
+        await deleteJob(user.auth, job.id, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
         setShowPopover(false);
     }
 

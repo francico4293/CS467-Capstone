@@ -53,7 +53,7 @@ const uploadCompanyLogo = async (companyLogo) => {
 
 const deleteJob = async (userAuth, jobId, setError) => {
     const token = await userAuth.getIdToken();
-    const response = await fetch(`/api/jobs/${jobId}}`, {
+    const response = await fetch(`/api/jobs/${jobId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
