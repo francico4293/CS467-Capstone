@@ -51,4 +51,19 @@ const uploadCompanyLogo = async (companyLogo) => {
     return await getDownloadURL(fileRef);
 }
 
-export { getJobs, createJob };
+const deleteJob = async (userAuth, jobId, setError) => {
+    const token = await userAuth.getIdToken();
+    const response = await fetch(`/api/jobs/${jobId}}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    if (response.status !== 204) {
+        const error = await response.json()
+        setError(error.error);
+    }
+}
+
+export { getJobs, createJob, deleteJob };
