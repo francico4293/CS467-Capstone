@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Row from 'react-bootstrap/Row';
@@ -7,18 +7,34 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { editSkill } from '../services/skills';
+import { getUser } from '../services/users';
 
 const EditSkillModal = ({ skillToEdit, show, setShow }) => {
-    const theme = useSelector(state => state.theme);
-    const [skillName, setSkillName] = useState(skillToEdit.skillName);
+    const {user, theme} = useSelector(state => state);
+    const dispatch = useDispatch();
+    const [skillName, setSkillName] = useState(skillToEdit.name);
     const [proficiency, setProficiency] = useState(skillToEdit.proficiency);
 
     const handleClose = () => {
         setShow(false);
     }
 
+    const handleSubmit = async () => {
+
+        await editSkill(user.auth, skillToEdit.id, {name: skillName, proficiency}, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: { data, auth: user.auth } });
+        handleClose()
+    }
+
+    const setError = (e) => {
+        alert(e)
+    }
+
     useEffect(() => {
-        setSkillName(skillToEdit.skillName);
+        setSkillName(skillToEdit.name);
         setProficiency(skillToEdit.proficiency);
     }, [show]);
 
@@ -52,7 +68,7 @@ const EditSkillModal = ({ skillToEdit, show, setShow }) => {
             <Button variant="secondary" onClick={handleClose}>
                 Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleSubmit}>
                 Save Changes
             </Button>
             </Modal.Footer>

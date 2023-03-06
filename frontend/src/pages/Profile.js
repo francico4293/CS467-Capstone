@@ -82,8 +82,7 @@ const Profile = () => {
                                 {skills.map((skill, idx) => (
                                     <Col lg={5} className='mt-3' key={idx}>
                                         <ProficiencyCard
-                                            skillName={skill.name}
-                                            proficiency={skill.proficiency}
+                                            skill={skill}
                                             setSkillToEdit={setSkillToEdit}
                                             setShowEditSkillModal={setShowEditSkillModal}
                                         />

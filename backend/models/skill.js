@@ -21,7 +21,7 @@ editSkill = async (uid, skillId, { name, proficiency}) => {
     const user = await userRef.get()
     const skillIds = user.data().skills
 
-    if (!skillids.includes(skillId)) {
+    if (!skillIds.includes(skillId)) {
         throw new Error("Skill does not belong to user")
     } 
 
