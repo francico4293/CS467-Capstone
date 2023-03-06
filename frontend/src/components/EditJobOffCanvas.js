@@ -12,6 +12,7 @@ import ContactsDropdown from './ContactsDropdown';
 import { states } from '../data/states';
 import { getUser } from '../services/users';
 import { editJob } from '../services/jobs';
+import Spinner from 'react-bootstrap/Spinner';
 
 const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -27,21 +28,11 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
+    const [updatingJob, setUpdatingJob] = useState(false);
     const { user, theme } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const handleClose = () => {
-        // setCompany('');
-        // setColor('');
-        // setJobStage('');
-        // setCompanyLogo(null);
-        // setJobTitle('');
-        // setLinkToJobPosting('');
-        // setCity('');
-        // setJobState('');
-        // setContacts([]);
-        // setLinkedContacts([]);
-        // setSkills([]);
         setShowSkillSearch(false);
         setShow(false);
     }
@@ -76,10 +67,12 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
             newJobData.companyLogo = companyLogo
         }
 
+        setUpdatingJob(true);
         await editJob(user.auth, jobToEdit.id, newJobData, setError)
 
         const data = await getUser(user.auth, setError);
         dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        setUpdatingJob(false);
         handleClose();
     }
 
@@ -197,8 +190,26 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 {unlinkedContacts && <ContactsDropdown contacts={unlinkedContacts} linkedContacts={linkedContacts} setContacts={setUnlinkedContacts} setLinkedContacts={setLinkedContacts}/>}
                 <Row className='mt-3'>
                     <Col className='d-flex justify-content-end'>
-                        <Button className='me-2' onClick={submitHandler}>Update</Button>
-                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button className='me-2' onClick={handleClose} variant='secondary'>Cancel</Button>
+                        {
+                            updatingJob
+                                ? (
+                                    <Button variant='primary' disabled>
+                                        <Spinner
+                                            as='span'
+                                            animation='border'
+                                            size='sm'
+                                            role='status'
+                                            className='me-1'
+                                        />
+                                        Updating Job
+                                    </Button>
+                                ) : (
+                                    <Button onClick={submitHandler}>
+                                        Update Job
+                                    </Button>
+                                )
+                        }
                     </Col>
                 </Row>
             </Offcanvas.Body>

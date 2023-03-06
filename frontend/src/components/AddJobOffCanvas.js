@@ -12,6 +12,7 @@ import ContactsDropdown from './ContactsDropdown';
 import { getUser } from '../services/users';
 import { createJob } from '../services/jobs';
 import { states } from '../data/states';
+import Spinner from 'react-bootstrap/Spinner';
 
 const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -26,6 +27,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
+    const [creatingJob, setCreatingJob] = useState(false);
     const { user, theme } = useSelector(state => state);
     const dispatch = useDispatch();
 
@@ -71,11 +73,12 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
             created: new Date() 
         }
 
-
+        setCreatingJob(true);
         await createJob(user.auth, newJob, jobStage, setError)
 
         const data = await getUser(user.auth, setError);
         dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        setCreatingJob(false);
         handleClose();
     }
 
@@ -180,8 +183,26 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                 {contacts && <ContactsDropdown contacts={contacts} linkedContacts={linkedContacts} setContacts={setContacts} setLinkedContacts={setLinkedContacts}/>}
                 <Row className='mt-3'>
                     <Col className='d-flex justify-content-end'>
-                        <Button className='me-2' onClick={addJob}>Create</Button>
-                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button className='me-2' variant='secondary' onClick={handleClose}>Cancel</Button>
+                        {
+                            creatingJob
+                                ? (
+                                    <Button variant='primary' disabled>
+                                        <Spinner
+                                            as='span'
+                                            animation='border'
+                                            size='sm'
+                                            role='status'
+                                            className='me-1'
+                                        />
+                                        Creating Job
+                                    </Button>
+                                ) : (
+                                    <Button onClick={addJob}>
+                                        Create Job
+                                    </Button>
+                                )
+                        }
                     </Col>
                 </Row>
             </Offcanvas.Body>
