@@ -122,7 +122,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                     <Form.Group as={Col}>
                         <Form.Label>Job Stage</Form.Label>
                         <Form.Select onChange={e => setJobStage(e.target.value)}>
-                            {userJobData.columns.map((column, idx) => <option key={idx} selected={column.name === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
+                            {userJobData.columns.map((column, idx) => <option key={idx} value={column.id} selected={column.id === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col}>

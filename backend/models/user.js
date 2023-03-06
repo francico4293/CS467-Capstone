@@ -1,21 +1,16 @@
 const { db } = require('../fire-admin');
 
 createUser = async (uid, firstName, lastName, email) => {
+    const column1 = await db.collection('columns').add({name: "Interested", jobs: []})
+    const column2 = await db.collection('columns').add({name: "Applied", jobs: []})
+    
     const docRef = db.collection('users').doc(uid);
     await docRef.set({
         firstName,
         lastName,
         email,
         description: '',
-        columns: [
-            {
-                name: "Interested",
-                jobs: []
-            },
-            {
-                name: 'Applied',
-                jobs: []
-            }],
+        columns: [column1.id, column2.id],
         contacts: [],
         skills: []
     });
@@ -25,12 +20,19 @@ createUser = async (uid, firstName, lastName, email) => {
 }
 
 getUser = async (uid, email) => {
-    const docRef = db.collection('users').doc(uid);
-    const doc = await docRef.get()
-    if (!doc.exists) {
+    const userRef = db.collection('users').doc(uid);
+    const user = await userRef.get()
+    if (!user.exists) {
         return createUser(uid, '', '', email)
     } else {
-        return { ...doc.data(), id: doc.id }
+        const userData = user.data()
+        const populatedColumns = await Promise.all(userData.columns.map(async columnId => {
+            const columnRef = db.collection('columns').doc(columnId)
+            const column = await columnRef.get()
+            return {...column.data(), id: columnId}
+        }))
+
+        return { ...userData, columns: populatedColumns, id: user.id }
     }
 }
 

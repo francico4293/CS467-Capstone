@@ -6,7 +6,7 @@ jobsRouter.post('/', async (req, res) => {
         return res.status(401).json({ error: 'token missing or invalid' })
     }
     const { uid } = req.currentUser
-    const job = await createJob(uid, req.body.columnName, req.body.jobData)
+    const job = await createJob(uid, req.body.columnId, req.body.jobData)
     res.status(201).json(job)
 })
 

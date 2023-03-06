@@ -22,7 +22,7 @@ const getJobs = async (userAuth, setError) => {
     }
 }
 
-const createJob = async(userAuth, jobData, columnName, setError) => {
+const createJob = async(userAuth, jobData, columnId, setError) => {
     if (jobData.companyLogo != null) {
         jobData.companyLogo = await uploadCompanyLogo(jobData.companyLogo);
     }
@@ -30,7 +30,7 @@ const createJob = async(userAuth, jobData, columnName, setError) => {
     const token = await userAuth.getIdToken();
     const response = await fetch('/api/jobs', {
         method: 'POST',
-        body: JSON.stringify({jobData, columnName}),
+        body: JSON.stringify({jobData, columnId}),
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

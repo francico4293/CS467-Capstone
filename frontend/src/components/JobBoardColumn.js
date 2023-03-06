@@ -17,7 +17,7 @@ const JobBoardColumn = ({ column, companyFilter, skillFilter, isDragging, setJob
     const { theme } = useSelector(state => state);
 
     const handleAddJob = () => {
-        setSelectedJobColumn(column.name);
+        setSelectedJobColumn(column.id);
         setShowAddJobOffCanvas(true);
     }
 

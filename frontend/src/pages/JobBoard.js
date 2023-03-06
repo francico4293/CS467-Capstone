@@ -80,7 +80,6 @@ const JobBoard = () => {
         }
     }
 
-    console.log(skillFilter);
 
     return (
         <Container fluid>

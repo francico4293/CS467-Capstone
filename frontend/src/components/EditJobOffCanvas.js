@@ -54,7 +54,8 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
         const newJobData = {
             color, 
             company,
-            jobTitle, 
+            jobTitle,
+            columnId: jobStage,
             city, 
             state: jobState, 
             skills, 
@@ -92,7 +93,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     useEffect(() => {
         setCompany(jobToEdit.company);
         setColor(jobToEdit.color);
-        setJobStage(jobToEdit.jobStage);
+        setJobStage(jobToEdit.columnId);
         setCompanyLogo(null);
         setJobTitle(jobToEdit.jobTitle);
         setLinkToJobPosting(jobToEdit.link);
@@ -128,8 +129,8 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>Job Stage</Form.Label>
-                        <Form.Select onChange={e => setJobStage(e.target.value)}>
-                            {userJobData.columns.map((column, idx) => <option key={idx} selected={column.name === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
+                        <Form.Select onChange={e => {setJobStage(e.target.value)}}>
+                            {userJobData.columns.map((column, idx) => <option key={idx} value={column.id} selected={column.id === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col}>
