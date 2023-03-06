@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -10,6 +10,8 @@ import { getContacts } from '../services/contacts';
 import ContactsTable from './ContactsTable';
 import ContactsDropdown from './ContactsDropdown';
 import { states } from '../data/states';
+import { getUser } from '../services/users';
+import { editJob } from '../services/jobs';
 
 const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -26,6 +28,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [skills, setSkills] = useState([]);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
     const { user, theme } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         // setCompany('');
@@ -55,6 +58,31 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
         setSkills(result);
     }
 
+    const submitHandler = async () => {
+
+        const newJobData = {
+            color, 
+            company,
+            jobTitle, 
+            city, 
+            state: jobState, 
+            skills, 
+            link: linkToJobPosting,  
+            contacts: linkedContacts.map(contact => contact.id), 
+            created: jobToEdit.created
+        }
+
+        if (companyLogo) {
+            newJobData.companyLogo = companyLogo
+        }
+
+        await editJob(user.auth, jobToEdit.id, newJobData, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        handleClose();
+    }
+
     const setError = (e) => {
         alert(e);
     }
@@ -72,7 +100,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
         setCompany(jobToEdit.company);
         setColor(jobToEdit.color);
         setJobStage(jobToEdit.jobStage);
-        setCompanyLogo(jobToEdit.companyLogo);
+        setCompanyLogo(null);
         setJobTitle(jobToEdit.jobTitle);
         setLinkToJobPosting(jobToEdit.link);
         setCity(jobToEdit.city);
@@ -113,7 +141,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Company Logo (.svg)</Form.Label>
-                        <Form.Control type="file"/>
+                        <Form.Control type="file" onChange={e => setCompanyLogo((e.target.files[0]))}/>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
@@ -169,7 +197,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 {unlinkedContacts && <ContactsDropdown contacts={unlinkedContacts} linkedContacts={linkedContacts} setContacts={setUnlinkedContacts} setLinkedContacts={setLinkedContacts}/>}
                 <Row className='mt-3'>
                     <Col className='d-flex justify-content-end'>
-                        <Button className='me-2'>Update</Button>
+                        <Button className='me-2' onClick={submitHandler}>Update</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </Col>
                 </Row>

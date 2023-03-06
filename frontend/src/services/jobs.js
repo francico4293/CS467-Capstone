@@ -66,4 +66,27 @@ const deleteJob = async (userAuth, jobId, setError) => {
     }
 }
 
-export { getJobs, createJob, deleteJob };
+const editJob = async (userAuth, jobId, jobData, setError) => {
+    if (jobData.companyLogo != null) {
+        jobData.companyLogo = await uploadCompanyLogo(jobData.companyLogo);
+    }
+
+    const token = await userAuth.getIdToken();
+    const response = await fetch(`/api/jobs/${jobId}`, {
+        method: 'PUT',
+        body: JSON.stringify(jobData),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    if (response.status === 200) {
+        const data = await response.json()
+        return data
+    } else {
+        const error = await response.json()
+        setError(error.error);
+    }
+}
+
+export { getJobs, createJob, deleteJob, editJob };
