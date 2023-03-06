@@ -39,7 +39,7 @@ getSkills = async (uid) => {
     const skills = await Promise.all(skillIds.map(async skillId => {
         const skillRef = db.collection('skills').doc(skillId)
         const skill = await skillRef.get()
-        return {...skill.data(), id: skillid}
+        return {...skill.data(), id: skillId}
     }))
     return skills
 }

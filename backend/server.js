@@ -18,7 +18,7 @@ app.use(middleware.decodeIDToken)
 app.use('/api/users', usersRouter)
 app.use('/api/contacts', contactsRouter)
 app.use('/api/jobs', jobsRouter)
-app.use('api/skills', skillsRouter)
+app.use('/api/skills', skillsRouter)
 
 
 // send static files if no route matches

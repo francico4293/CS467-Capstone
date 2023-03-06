@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Row from 'react-bootstrap/Row';
@@ -7,11 +7,28 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { createSkill } from '../services/skills';
+import { getUser } from '../services/users';
 
 const AddSkillModal = ({ show, setShow }) => {
-    const theme = useSelector(state => state.theme);
+    const {user, theme} = useSelector(state => state);
+    const dispatch = useDispatch();
     const [skillName, setSkillName] = useState('');
     const [proficiency, setProficiency] = useState(50);
+
+    const setError = (e) => {
+        alert(e)
+    }
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+
+        await createSkill(user.auth, {name: skillName, proficiency}, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        handleClose();
+    }
 
     const handleClose = () => {
         setSkillName('');
@@ -49,7 +66,7 @@ const AddSkillModal = ({ show, setShow }) => {
             <Button variant="secondary" onClick={handleClose}>
                 Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={submitHandler}>
                 Save Changes
             </Button>
             </Modal.Footer>
