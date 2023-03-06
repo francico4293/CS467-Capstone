@@ -51,7 +51,7 @@ const JobCard = ({ job, isDragging, setJobToEdit, setShowEditJobOffCanvas }) => 
                     />
                     <Row>
                         <Col className='fw-bold fs-5'>
-                            {job.company}{job.link ? <i className='fa-solid fa-link ms-1'/> : <></>}
+                            {job.company}{job.link && <a href={job.link} target='_blank'><i className='fa-solid fa-link ms-1'/></a>}
                         </Col>
                     </Row>
                     <Row>

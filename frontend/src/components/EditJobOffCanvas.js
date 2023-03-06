@@ -13,6 +13,7 @@ import { states } from '../data/states';
 import { getUser } from '../services/users';
 import { editJob } from '../services/jobs';
 import Spinner from 'react-bootstrap/Spinner';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -58,7 +59,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
             city, 
             state: jobState, 
             skills, 
-            link: linkToJobPosting,  
+            link: linkToJobPosting !== '' ? 'https://' +  linkToJobPosting : linkToJobPosting,  
             contacts: linkedContacts.map(contact => contact.id), 
             created: jobToEdit.created
         }
@@ -126,12 +127,10 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                     </FormGroup>
                 </Row>
                 <Row className='mb-2'>
-                    <Form.Group as={Col}>
-                        <Form.Label>Job Stage</Form.Label>
-                        <Form.Select onChange={e => setJobStage(e.target.value)}>
-                            {userJobData.columns.map((column, idx) => <option key={idx} selected={column.name === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
-                        </Form.Select>
-                    </Form.Group>
+                    <FormGroup as={Col}>
+                        <Form.Label>Job Title</Form.Label>
+                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)}/>
+                    </FormGroup>
                     <Form.Group as={Col}>
                         <Form.Label>Company Logo (.svg)</Form.Label>
                         <Form.Control type="file" onChange={e => setCompanyLogo((e.target.files[0]))}/>
@@ -139,12 +138,11 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 </Row>
                 <Row className='mb-2'>
                     <FormGroup as={Col}>
-                        <Form.Label>Job Title</Form.Label>
-                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)}/>
-                    </FormGroup>
-                    <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
-                        <Form.Control value={linkToJobPosting} onChange={e => setLinkToJobPosting(e.target.value)}/>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>https://</InputGroup.Text>
+                            <Form.Control value={linkToJobPosting} onChange={e => setLinkToJobPosting(e.target.value)}/>
+                        </InputGroup>
                     </FormGroup>
                 </Row>
                 <Row className='mb-3'>

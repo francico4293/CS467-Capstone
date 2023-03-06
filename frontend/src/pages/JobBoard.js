@@ -10,6 +10,7 @@ import AddJobOffCanvas from '../components/AddJobOffCanvas';
 import EditJobOffCanvas from '../components/EditJobOffCanvas';
 import { useSelector } from 'react-redux';
 import { getJobs } from '../services/jobs';
+import { getContacts } from '../services/contacts';
 
 const JobBoard = () => {
     const [showAddJobOffCanvas, setShowAddJobOffCanvas] = useState(false);
@@ -30,24 +31,28 @@ const JobBoard = () => {
 
     useEffect(() => {
         async function populateJobs() {
-            const jobData = await getJobs(user.auth, setError)
-            setUserJobData({columns: jobData})
+            const jobData = await getJobs(user.auth, setError);
+            setUserJobData({columns: jobData});
         }
-        populateJobs()
+
+        async function populateContacts() {
+            const contacts = await getContacts(user.auth, setError);
+            setContacts(contacts);
+        }
+
+        populateJobs();
+        populateContacts();
     }, [user])
 
     useEffect(() => {
         const companys = new Set();
         const skills = new Set();
-        const contacts = new Set();
 
         userJobData.columns.forEach(column => column.jobs.forEach(job => companys.add(job.company)));
         userJobData.columns.forEach(column => column.jobs.forEach(job => job.skills.forEach(skill => skills.add(skill))));
-        // userJobData.columns.forEach(column => column.jobs.forEach(job => job.contacts.forEach(contact => console.log(contact))));
 
         setCompanys(Array.from(companys));
         setSkills(Array.from(skills));
-        // setContacts(Array.from(contacts));
     }, [userJobData]);
 
     const addColumn = () => {
@@ -79,8 +84,6 @@ const JobBoard = () => {
             }
         }
     }
-
-    console.log(skillFilter);
 
     return (
         <Container fluid>

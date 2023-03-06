@@ -9,8 +9,6 @@ const Filter = ({ filterName, defaultItem, items, setItem }) => {
         setItem(item);
     }
 
-    console.log(selected);
-
     return (
         <Dropdown className='ms-2'>
             <Dropdown.Toggle variant='secondary' id="dropdown-basic">
