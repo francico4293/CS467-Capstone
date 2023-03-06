@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-const JobBoardColumn = ({ column, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
+const JobBoardColumn = ({ column, companyFilter, skillFilter, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
     const [showPopover, setShowPopover] = useState(false);
     const [editColumnName, setEditColumnName] = useState(false);
     const [columnName, setColumnName] = useState(column.name.toUpperCase());
@@ -85,16 +85,18 @@ const JobBoardColumn = ({ column, isDragging, setJobToEdit, setShowAddJobOffCanv
                 {(provided, snapshot) => (
                     <div className='drop-zone' {...provided.droppableProps} ref={provided.innerRef}>
                         {
-                            column.jobs.map((job, idx) => {
-                                return (
-                                    <Draggable key={job.id} draggableId={job.id} index={idx}>
-                                        {provided => (
-                                            <div className='d-flex flex-column' {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                <JobCard job={job} isDragging={snapshot.isDraggingOver} setJobToEdit={setJobToEdit} setShowEditJobOffCanvas={setShowEditJobOffCanvas}/>
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                );
+                            column.jobs.filter(job => companyFilter === null || job.company === companyFilter)
+                                .filter(job => skillFilter === null || job.skills.includes(skillFilter))
+                                .map((job, idx) => {
+                                    return (
+                                        <Draggable key={job.id} draggableId={job.id} index={idx}>
+                                            {provided => (
+                                                <div className='d-flex flex-column' {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                    <JobCard job={job} isDragging={snapshot.isDraggingOver} setJobToEdit={setJobToEdit} setShowEditJobOffCanvas={setShowEditJobOffCanvas}/>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    );
                             })
                         }
                         {provided.placeholder}

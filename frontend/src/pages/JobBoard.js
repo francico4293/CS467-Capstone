@@ -20,6 +20,8 @@ const JobBoard = () => {
     const [companys, setCompanys] = useState([]);
     const [skills, setSkills] = useState([]);
     const [contacts, setContacts] = useState([]);
+    const [companyFilter, setCompanyFilter] = useState(null);
+    const [skillFilter, setSkillFilter] = useState(null);
     const user = useSelector(state => state.user);
 
     const setError = (e) => {
@@ -41,11 +43,11 @@ const JobBoard = () => {
 
         userJobData.columns.forEach(column => column.jobs.forEach(job => companys.add(job.company)));
         userJobData.columns.forEach(column => column.jobs.forEach(job => job.skills.forEach(skill => skills.add(skill))));
-        userJobData.columns.forEach(column => column.jobs.forEach(job => job.contacts.forEach(contact => console.log(contact))));
+        // userJobData.columns.forEach(column => column.jobs.forEach(job => job.contacts.forEach(contact => console.log(contact))));
 
         setCompanys(Array.from(companys));
         setSkills(Array.from(skills));
-        setContacts(Array.from(contacts));
+        // setContacts(Array.from(contacts));
     }, [userJobData]);
 
     const addColumn = () => {
@@ -78,6 +80,8 @@ const JobBoard = () => {
         }
     }
 
+    console.log(skillFilter);
+
     return (
         <Container fluid>
             <Row>
@@ -98,9 +102,9 @@ const JobBoard = () => {
                         />
                         <Row className='mt-3 mb-3'>
                             <Col className='d-flex border-bottom justify-content-end pb-3'>
-                                <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={companys} setItems={null} />
-                                <Filter filterName={'Filter by Skill'} defaultItem={'All skills'} items={skills} setItems={null} />
-                                <Filter filterName={'Filter by Contact'} defaultItem={'All contacts'} items={contacts} setItems={null} />
+                                <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={companys} setItem={setCompanyFilter} />
+                                <Filter filterName={'Filter by Skill'} defaultItem={'All skills'} items={skills} setItem={setSkillFilter} />
+                                <Filter filterName={'Filter by Contact'} defaultItem={'All contacts'} items={contacts} setItem={null} />
                             </Col>
                         </Row>
                         <Droppable droppableId='job-columns' direction='horizontal' type='job-columns'>
@@ -117,6 +121,8 @@ const JobBoard = () => {
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
                                                             <JobBoardColumn
                                                                 column={column}
+                                                                companyFilter={companyFilter}
+                                                                skillFilter={skillFilter}
                                                                 isDragging={snapshot.isDraggingOver}
                                                                 setJobToEdit={setJobToEdit}
                                                                 setShowAddJobOffCanvas={setShowAddJobOffCanvas}
