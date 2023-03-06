@@ -13,6 +13,7 @@ import { states } from '../data/states';
 import { getUser } from '../services/users';
 import { editJob } from '../services/jobs';
 import Spinner from 'react-bootstrap/Spinner';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -59,7 +60,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
             city, 
             state: jobState, 
             skills, 
-            link: linkToJobPosting,  
+            link: linkToJobPosting !== '' ? 'https://' +  linkToJobPosting : linkToJobPosting,  
             contacts: linkedContacts.map(contact => contact.id), 
             created: jobToEdit.created
         }
@@ -145,7 +146,10 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
-                        <Form.Control value={linkToJobPosting} onChange={e => setLinkToJobPosting(e.target.value)}/>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>https://</InputGroup.Text>
+                            <Form.Control value={linkToJobPosting} onChange={e => setLinkToJobPosting(e.target.value)}/>
+                        </InputGroup>
                     </FormGroup>
                 </Row>
                 <Row className='mb-3'>

@@ -33,7 +33,11 @@ const ContactCard = ({ contact, setContactToEdit }) => {
                 <Row className='border-bottom pb-2'>
                     <Col xs={9}>
                         <Card.Title>
-                            {contact.firstName} {contact.lastName}{contact.linkedInProfile ? <i className='fa-brands fa-linkedin ms-2'/> : <></>}
+                            {
+                                contact.firstName} {contact.lastName}{contact.linkedInProfile && <a href={contact.linkedInProfile} target='_blank'>
+                                    <i className='fa-brands fa-linkedin ms-2'/>
+                                </a>
+                            }
                         </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{contact.company}</Card.Subtitle>
                         <Card.Subtitle className="mb-2 text-muted">{contact.jobTitle}</Card.Subtitle>

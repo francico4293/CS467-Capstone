@@ -13,6 +13,7 @@ import { getUser } from '../services/users';
 import { createJob } from '../services/jobs';
 import { states } from '../data/states';
 import Spinner from 'react-bootstrap/Spinner';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     const [company, setCompany] = useState('');
@@ -68,7 +69,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
             city, 
             state, 
             skills, 
-            link: linkToJobPosting,  
+            link: linkToJobPosting !== '' ? 'https://' +  linkToJobPosting : linkToJobPosting,  
             contacts: linkedContacts.map(contact => contact.id), 
             created: new Date() 
         }
@@ -137,7 +138,10 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
-                        <Form.Control onChange={e => setLinkToJobPosting(e.target.value)}/>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>https://</InputGroup.Text>
+                            <Form.Control onChange={e => setLinkToJobPosting(e.target.value)}/>
+                        </InputGroup>
                     </FormGroup>
                 </Row>
                 <Row className='mb-3'>
