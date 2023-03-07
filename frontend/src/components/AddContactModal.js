@@ -11,6 +11,7 @@ import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../utils/imageUtils';
 import Spinner from 'react-bootstrap/Spinner';
 import validator from 'validator';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const AddContactModal = ({ show, setShow }) => {
     const { theme, user } = useSelector(state => state);
@@ -62,7 +63,17 @@ const AddContactModal = ({ show, setShow }) => {
             photo = file;
         }
 
-        const newContact = {firstName, lastName, company, contactPhoto, jobTitle, color, email, phoneNumber, linkedInProfile}
+        const newContact = {
+            firstName, 
+            lastName, 
+            company, 
+            contactPhoto, 
+            jobTitle, 
+            color, 
+            email, 
+            phoneNumber, 
+            linkedInProfile: linkedInProfile !== '' ? 'https://' + linkedInProfile : linkedInProfile
+        }
         await createContact(user.auth, newContact, photo, setError)
 
         const data = await getUser(user.auth, setError);
@@ -200,7 +211,10 @@ const AddContactModal = ({ show, setShow }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>LinkedIn profile</Form.Label>
-                        <Form.Control value={linkedInProfile} onChange={e => setLinkedInProfile(e.target.value)} />
+                        <InputGroup>
+                            <InputGroup.Text>https://</InputGroup.Text>
+                            <Form.Control value={linkedInProfile} onChange={e => setLinkedInProfile(e.target.value)}/>
+                        </InputGroup>
                     </Form.Group>
                     <Form.Group as={Col} xs={4}>
                         <Form.Label>Contact color</Form.Label>

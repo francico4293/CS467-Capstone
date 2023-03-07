@@ -11,6 +11,7 @@ import validator from 'validator';
 import Spinner from 'react-bootstrap/Spinner';
 import { editContact } from '../services/contacts';
 import { getUser } from '../services/users';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const EditContactModal = ({ show, contact, setContactToEdit }) => {
     const { theme, user } = useSelector(state => state);
@@ -71,7 +72,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
             color,
             email,
             phoneNumber,
-            linkedInProfile,
+            linkedInProfile: linkedInProfile !== '' ? 'https://' + linkedInProfile : linkedInProfile,
         }
         await editContact(user.auth, contact.id, newContactInfo, photo, setError)
 
@@ -201,7 +202,10 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
                         <Form.Label>LinkedIn profile</Form.Label>
-                        <Form.Control value={linkedInProfile} onChange={e => setLinkedInProfile(e.target.value)} />
+                        <InputGroup>
+                            <InputGroup.Text>https://</InputGroup.Text>
+                            <Form.Control value={linkedInProfile} onChange={e => setLinkedInProfile(e.target.value)}/>
+                        </InputGroup>
                     </Form.Group>
                     <Form.Group as={Col} xs={4}>
                         <Form.Label>Contact color</Form.Label>
