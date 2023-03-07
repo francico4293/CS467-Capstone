@@ -8,9 +8,11 @@ import JobBoardColumn from '../components/JobBoardColumn';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import AddJobOffCanvas from '../components/AddJobOffCanvas';
 import EditJobOffCanvas from '../components/EditJobOffCanvas';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getJobs } from '../services/jobs';
 import { getContacts } from '../services/contacts';
+import { getUser } from '../services/users';
+import { createColumn } from '../services/columns';
 import ContactsFilter from '../components/ContactsFilter';
 
 const JobBoard = () => {
@@ -26,6 +28,7 @@ const JobBoard = () => {
     const [skillFilter, setSkillFilter] = useState(null);
     const [contactFilter, setContactFilter] = useState(null);
     const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     const setError = (e) => {
         alert(e)
@@ -57,8 +60,11 @@ const JobBoard = () => {
         setSkills(Array.from(skills));
     }, [userJobData]);
 
-    const addColumn = () => {
-        setUserJobData({ columns: [...userJobData.columns, { name: `Column ${userJobData.columns.length + 1}`, jobs: [] }] });
+    const addColumn = async () => {
+        await createColumn(user.auth, { name: `Column ${userJobData.columns.length + 1}`}, setError)
+
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
     }
 
     const onDragEndHandler = (result) => {

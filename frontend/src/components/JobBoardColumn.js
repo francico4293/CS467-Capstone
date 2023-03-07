@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/card';
 import JobCard from './JobCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -9,25 +9,50 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { editColumn, deleteColumn } from '../services/columns';
+import { getUser } from '../services/users';
 
 const JobBoardColumn = ({ column, companyFilter, skillFilter, contactFilter, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
     const [showPopover, setShowPopover] = useState(false);
     const [editColumnName, setEditColumnName] = useState(false);
     const [columnName, setColumnName] = useState(column.name.toUpperCase());
-    const { theme } = useSelector(state => state);
+    const { user, theme } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const handleAddJob = () => {
         setSelectedJobColumn(column.id);
         setShowAddJobOffCanvas(true);
     }
 
-    const deleteHandler = () => {
+    const setError = (e) => {
+        alert(e)
+    }
+
+    const deleteHandler = async () => {
+        await deleteColumn(user.auth, column.id, setError)
+        const data = await getUser(user.auth, setError);
+        dispatch({ type: 'SET_USER', payload: { data, auth: user.auth } });
         setShowPopover(false);
+    }
+
+
+    const editHandler = async () => {
+        if (columnName !== column.name){
+            await editColumn(user.auth, column.id, {name: columnName}, setError)
+            const data = await getUser(user.auth, setError);
+            dispatch({ type: 'SET_USER', payload: { data, auth: user.auth } });
+        } else {
+            setEditColumnName(false)
+        }
     }
 
     useEffect(() => {
         setShowPopover(false);
     }, [isDragging]);
+
+    useEffect(() => {
+        setEditColumnName(false)
+    }, [column]);
 
     return (
         <div className='test'>
@@ -40,7 +65,7 @@ const JobBoardColumn = ({ column, companyFilter, skillFilter, contactFilter, isD
                             autoFocus='true' 
                             value={columnName.toUpperCase()}
                             onChange={e => setColumnName(e.target.value)}
-                            onKeyDown={e => e.key === 'Enter' && setEditColumnName(false)}
+                            onKeyDown={e => e.key === 'Enter' && editHandler()}
                         /> 
                         : column.name.toUpperCase()
                 }
