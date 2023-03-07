@@ -138,7 +138,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
-                        <InputGroup className="mb-3">
+                        <InputGroup>
                             <InputGroup.Text>https://</InputGroup.Text>
                             <Form.Control onChange={e => setLinkToJobPosting(e.target.value)}/>
                         </InputGroup>

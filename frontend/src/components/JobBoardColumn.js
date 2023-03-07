@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-const JobBoardColumn = ({ column, companyFilter, skillFilter, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
+const JobBoardColumn = ({ column, companyFilter, skillFilter, contactFilter, isDragging, setJobToEdit, setShowAddJobOffCanvas, setShowEditJobOffCanvas, setSelectedJobColumn, ...props }) => {
     const [showPopover, setShowPopover] = useState(false);
     const [editColumnName, setEditColumnName] = useState(false);
     const [columnName, setColumnName] = useState(column.name.toUpperCase());
@@ -87,6 +87,7 @@ const JobBoardColumn = ({ column, companyFilter, skillFilter, isDragging, setJob
                         {
                             column.jobs.filter(job => companyFilter === null || job.company === companyFilter)
                                 .filter(job => skillFilter === null || job.skills.includes(skillFilter))
+                                .filter(job => contactFilter === null || job.contacts.includes(contactFilter))
                                 .map((job, idx) => {
                                     return (
                                         <Draggable key={job.id} draggableId={job.id} index={idx}>

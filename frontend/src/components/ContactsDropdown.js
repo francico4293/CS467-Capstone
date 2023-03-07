@@ -19,7 +19,9 @@ const ContactsDropdown = ({ contacts, linkedContacts, setContacts, setLinkedCont
                         ? <Dropdown.Item>No linkable contacts</Dropdown.Item>
                         : (
                             contacts.map((contact, idx) => (
-                                <Dropdown.Item key={idx} onClick={() => handleLinkContact(contact)}>{`${contact.firstName} ${contact.lastName}`}</Dropdown.Item>
+                                <Dropdown.Item key={idx} onClick={() => handleLinkContact(contact)}>
+                                    {`${contact.firstName} ${contact.lastName} - ${contact.company}`}
+                                </Dropdown.Item>
                             ))
                         )
                 }

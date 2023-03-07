@@ -11,7 +11,7 @@ const Filter = ({ filterName, defaultItem, items, setItem }) => {
 
     return (
         <Dropdown className='ms-2'>
-            <Dropdown.Toggle variant='secondary' id="dropdown-basic">
+            <Dropdown.Toggle variant='secondary'>
                 {filterName}
             </Dropdown.Toggle>
 
@@ -24,7 +24,9 @@ const Filter = ({ filterName, defaultItem, items, setItem }) => {
                     ))
                 }
                 <Dropdown.Divider/>
-                <Dropdown.Item onClick={() => clickHandler(null)}>{defaultItem}</Dropdown.Item>
+                <Dropdown.Item className={selected === null && 'fw-bolder'} onClick={() => clickHandler(null)}>
+                    {defaultItem}{selected === null && <i className='fa-solid fa-filter ms-1'/>}
+                </Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

@@ -11,6 +11,7 @@ import EditJobOffCanvas from '../components/EditJobOffCanvas';
 import { useSelector } from 'react-redux';
 import { getJobs } from '../services/jobs';
 import { getContacts } from '../services/contacts';
+import ContactsFilter from '../components/ContactsFilter';
 
 const JobBoard = () => {
     const [showAddJobOffCanvas, setShowAddJobOffCanvas] = useState(false);
@@ -23,6 +24,7 @@ const JobBoard = () => {
     const [contacts, setContacts] = useState([]);
     const [companyFilter, setCompanyFilter] = useState(null);
     const [skillFilter, setSkillFilter] = useState(null);
+    const [contactFilter, setContactFilter] = useState(null);
     const user = useSelector(state => state.user);
 
     const setError = (e) => {
@@ -79,8 +81,8 @@ const JobBoard = () => {
             } else {
                 const sourceJobs = userJobData.columns.filter(column => column.name === source.droppableId)[0].jobs;
                 const destinationJobs = userJobData.columns.filter(column => column.name === destination.droppableId)[0].jobs;
-                const [reorderJob] = sourceJobs.splice(source.index, 1);
-                destinationJobs.splice(destination.index, 0, reorderJob);
+                const [reorderedJob] = sourceJobs.splice(source.index, 1);
+                destinationJobs.splice(destination.index, 0, reorderedJob);
             }
         }
     }
@@ -107,7 +109,7 @@ const JobBoard = () => {
                             <Col className='d-flex border-bottom justify-content-end pb-3'>
                                 <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={companys} setItem={setCompanyFilter} />
                                 <Filter filterName={'Filter by Skill'} defaultItem={'All skills'} items={skills} setItem={setSkillFilter} />
-                                <Filter filterName={'Filter by Contact'} defaultItem={'All contacts'} items={contacts} setItem={null} />
+                                <ContactsFilter contacts={contacts} setContactFilter={setContactFilter}/>
                             </Col>
                         </Row>
                         <Droppable droppableId='job-columns' direction='horizontal' type='job-columns'>
@@ -126,6 +128,7 @@ const JobBoard = () => {
                                                                 column={column}
                                                                 companyFilter={companyFilter}
                                                                 skillFilter={skillFilter}
+                                                                contactFilter={contactFilter}
                                                                 isDragging={snapshot.isDraggingOver}
                                                                 setJobToEdit={setJobToEdit}
                                                                 setShowAddJobOffCanvas={setShowAddJobOffCanvas}
