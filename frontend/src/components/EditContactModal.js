@@ -12,6 +12,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { editContact } from '../services/contacts';
 import { getUser } from '../services/users';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { formatPhoneNumber, isPhoneNumberValid } from '../utils/phoneNumberUtils';
 
 const EditContactModal = ({ show, contact, setContactToEdit }) => {
     const { theme, user } = useSelector(state => state);
@@ -29,6 +30,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
     const [email, setEmail] = useState(contact.email || '');
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState(contact.phoneNumber || '');
+    const [phoneNumberClicked, setPhoneNumberClicked] = useState(false);
     const [linkedInProfile, setLinkedInProfile] = useState(contact.linkedInProfile || '');
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
@@ -46,7 +48,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        if (firstName === '' || lastName === '' || company === '' || jobTitle === '' || (email !== '' && !validator.isEmail(email))) {
+        if (firstName === '' || lastName === '' || company === '' || jobTitle === '' || (email !== '' && !validator.isEmail(email)) || (phoneNumber !== '' && !isPhoneNumberValid(phoneNumber))) {
             email !== '' && !validator.isEmail(email) && setIsInvalidEmail(true);
             firstName === '' && setFirstNameClicked(true);
             lastName === '' && setLastNameClicked(true);
@@ -88,34 +90,9 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
         setCompanyClicked(false);
         setJobTitleClicked(false);
         setIsInvalidEmail(false);
+        setPhoneNumberClicked(false);
         setContactToEdit(null);
     }
-
-    // BEGIN CODE CITATION
-    // The following code is not my own
-    // Author: TomDuffyTech
-    // Source: https://www.youtube.com/watch?v=MqJzsDC1N0U
-    // Decription: The below function removes a non-digit character from the provided phone number.
-    // it then conditionally formats the phone number based on the length. For a phone number length
-    // less than 4, the phone number is returned as is. For a phone number length less than 7, parens
-    // are wrapped around the first three digits. For any other phone number length, parens are wrapped
-    // around the first three digits and a hyphen is added after the next grouping of three digits.
-    const formatPhoneNumber = (phoneNumber) => {
-        phoneNumber = phoneNumber.replace(/[^\d]/g, '');
-
-        const phoneNumberLength = phoneNumber.length;
-
-        if (phoneNumberLength < 4) {
-            return phoneNumber;
-        }
-
-        if (phoneNumberLength < 7) {
-            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-        }
-
-        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
-    }
-    // END CODE CITATION
 
     return (
         <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
@@ -222,7 +199,16 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Phone number</Form.Label>
-                        <Form.Control value={phoneNumber} onChange={e => setPhoneNumber(formatPhoneNumber(e.target.value))} />
+                        <Form.Control 
+                            value={phoneNumber} 
+                            onChange={e => setPhoneNumber(formatPhoneNumber(e.target.value))} 
+                            isValid={isPhoneNumberValid(phoneNumber)}
+                            isInvalid={phoneNumberClicked && phoneNumber !== '' && !isPhoneNumberValid(phoneNumber)}
+                            onClick={() => setPhoneNumberClicked(false)}
+                            onBlur={() => setPhoneNumberClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid' />
+                        <Form.Control.Feedback type='invalid'>Invalid phone number</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
