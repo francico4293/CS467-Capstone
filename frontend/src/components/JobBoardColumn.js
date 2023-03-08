@@ -106,7 +106,7 @@ const JobBoardColumn = ({ column, companyFilter, skillFilter, contactFilter, isD
                     <i className='fa-solid fa-plus fa-2x'/>
                 </Card.Body>
             </Card>
-            <Droppable droppableId={column.name} direction='vertical'>
+            <Droppable droppableId={column.id} direction='vertical'>
                 {(provided, snapshot) => (
                     <div className='drop-zone' {...provided.droppableProps} ref={provided.innerRef}>
                         {

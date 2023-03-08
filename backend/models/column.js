@@ -16,7 +16,7 @@ createColumn = async (uid, { name }) => {
     return { ...column.data(), id: column.id }
 }
 
-editColumn = async (uid, columnId, { name }) => {
+editColumn = async (uid, columnId, props) => {
     const userRef = db.collection('users').doc(uid);
     const user = await userRef.get()
     const columnIds = user.data().columns
@@ -26,7 +26,7 @@ editColumn = async (uid, columnId, { name }) => {
     } 
 
     const columnRef = db.collection('columns').doc(columnId)
-    await columnRef.update({ name })
+    await columnRef.update(props)
     const column = await columnRef.get()
     return { ...column.data(), id: column.id }
 }

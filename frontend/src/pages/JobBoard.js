@@ -9,10 +9,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import AddJobOffCanvas from '../components/AddJobOffCanvas';
 import EditJobOffCanvas from '../components/EditJobOffCanvas';
 import { useSelector, useDispatch } from 'react-redux';
-import { getJobs } from '../services/jobs';
+import { editJob, getJobs } from '../services/jobs';
 import { getContacts } from '../services/contacts';
-import { getUser } from '../services/users';
-import { createColumn } from '../services/columns';
+import { getUser, editUser } from '../services/users';
+import { createColumn, editColumn } from '../services/columns';
 import ContactsFilter from '../components/ContactsFilter';
 
 const JobBoard = () => {
@@ -37,7 +37,7 @@ const JobBoard = () => {
     useEffect(() => {
         async function populateJobs() {
             const jobData = await getJobs(user.auth, setError);
-            setUserJobData({columns: jobData});
+            setUserJobData({ columns: jobData });
         }
 
         async function populateContacts() {
@@ -61,13 +61,13 @@ const JobBoard = () => {
     }, [userJobData]);
 
     const addColumn = async () => {
-        await createColumn(user.auth, { name: `Column ${userJobData.columns.length + 1}`}, setError)
+        await createColumn(user.auth, { name: `Column ${userJobData.columns.length + 1}` }, setError)
 
         const data = await getUser(user.auth, setError);
-        dispatch({ type: 'SET_USER', payload: {data, auth: user.auth} });
+        dispatch({ type: 'SET_USER', payload: { data, auth: user.auth } });
     }
 
-    const onDragEndHandler = (result) => {
+    const onDragEndHandler = async (result) => {
         const { destination, source, type } = result;
 
         if (!result.destination) {
@@ -79,16 +79,26 @@ const JobBoard = () => {
             const [sourceColumn] = newColumns.splice(source.index, 1);
             newColumns.splice(destination.index, 0, sourceColumn);
             setUserJobData({ columns: newColumns });
+
+            await editUser(user.auth, {columns: newColumns.map(col => col.id)}, setError)
         } else {
             if (source.droppableId === destination.droppableId) {
-                const jobs = userJobData.columns.filter(column => column.name === source.droppableId)[0].jobs;
+                const jobs = userJobData.columns.filter(column => column.id === source.droppableId)[0].jobs;
                 const [reorderedJob] = jobs.splice(source.index, 1);
                 jobs.splice(destination.index, 0, reorderedJob);
+
+                await editColumn(user.auth, source.droppableId, {jobs: jobs.map(job => job.id)}, setError)
             } else {
-                const sourceJobs = userJobData.columns.filter(column => column.name === source.droppableId)[0].jobs;
-                const destinationJobs = userJobData.columns.filter(column => column.name === destination.droppableId)[0].jobs;
+                const sourceJobs = userJobData.columns.filter(column => column.id === source.droppableId)[0].jobs;
+                const destinationJobs = userJobData.columns.filter(column => column.id === destination.droppableId)[0].jobs;
                 const [reorderedJob] = sourceJobs.splice(source.index, 1);
                 destinationJobs.splice(destination.index, 0, reorderedJob);
+
+                const editSuccess = await editJob(user.auth, reorderedJob.id, { columnId: destination.droppableId }, setError)
+                if (editSuccess) {
+                    await editColumn(user.auth, destination.droppableId, {jobs: destinationJobs.map(job => job.id)}, setError)
+                }
+
             }
         }
     }
@@ -115,19 +125,19 @@ const JobBoard = () => {
                             <Col className='d-flex border-bottom justify-content-end pb-3'>
                                 <Filter filterName={'Filter by Company'} defaultItem={'All companies'} items={companys} setItem={setCompanyFilter} />
                                 <Filter filterName={'Filter by Skill'} defaultItem={'All skills'} items={skills} setItem={setSkillFilter} />
-                                <ContactsFilter contacts={contacts} setContactFilter={setContactFilter}/>
+                                <ContactsFilter contacts={contacts} setContactFilter={setContactFilter} />
                             </Col>
                         </Row>
                         <Droppable droppableId='job-columns' direction='horizontal' type='job-columns'>
                             {(provided, snapshot) => (
-                                <Row className='d-flex flex-nowrap d-inline-block horizontal-scrollable pb-5' 
-                                    {...provided.droppableProps} 
+                                <Row className='d-flex flex-nowrap d-inline-block horizontal-scrollable pb-5'
+                                    {...provided.droppableProps}
                                     ref={provided.innerRef}
                                 >
                                     {
                                         userJobData.columns.map((column, idx) => {
                                             return (
-                                                <Draggable key={column.name} draggableId={column.name} index={idx}>
+                                                <Draggable key={column.id} draggableId={column.id} index={idx}>
                                                     {provided => (
                                                         <div className='col' {...provided.draggableProps} ref={provided.innerRef}>
                                                             <JobBoardColumn
