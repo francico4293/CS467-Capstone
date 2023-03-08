@@ -12,6 +12,7 @@ import { getCroppedImg } from '../utils/imageUtils';
 import Spinner from 'react-bootstrap/Spinner';
 import validator from 'validator';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { PatternFormat } from 'react-number-format';
 
 const AddContactModal = ({ show, setShow }) => {
     const { theme, user } = useSelector(state => state);
@@ -100,19 +101,31 @@ const AddContactModal = ({ show, setShow }) => {
         setShow(false);
     }
 
+    // BEGIN CODE CITATION
+    // The following code is not my own
+    // Author: TomDuffyTech
+    // Source: https://www.youtube.com/watch?v=MqJzsDC1N0U
+    // Decription: The below function removes a non-digit character from the provided phone number.
+    // it then conditionally formats the phone number based on the length. For a phone number length
+    // less than 4, the phone number is returned as is. For a phone number length less than 7, parens
+    // are wrapped around the first three digits. For any other phone number length, parens are wrapped
+    // around the first three digits and a hyphen is added after the next grouping of three digits.
     const formatPhoneNumber = (phoneNumber) => {
+        phoneNumber = phoneNumber.replace(/[^\d]/g, '');
+
         const phoneNumberLength = phoneNumber.length;
 
-        if (phoneNumberLength === 4) {
-            phoneNumber = phoneNumber.slice(0, 3) + '-' + phoneNumber.slice(3);
+        if (phoneNumberLength < 4) {
+            return phoneNumber;
         }
 
-        if (phoneNumberLength === 8) {
-            phoneNumber = phoneNumber.slice(0, 7) + '-' + phoneNumber.slice(7);
+        if (phoneNumberLength < 7) {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
         }
 
-        setPhoneNumber(phoneNumber);
+        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
     }
+    // END CODE CITATION
 
     return (
         <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
@@ -219,7 +232,10 @@ const AddContactModal = ({ show, setShow }) => {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Phone number</Form.Label>
-                        <Form.Control value={phoneNumber} onChange={e => formatPhoneNumber(e.target.value)} />
+                        <Form.Control 
+                            value={phoneNumber} 
+                            onChange={e => setPhoneNumber(formatPhoneNumber(e.target.value))} 
+                        />
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>
