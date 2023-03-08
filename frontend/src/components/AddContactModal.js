@@ -100,6 +100,20 @@ const AddContactModal = ({ show, setShow }) => {
         setShow(false);
     }
 
+    const formatPhoneNumber = (phoneNumber) => {
+        const phoneNumberLength = phoneNumber.length;
+
+        if (phoneNumberLength === 4) {
+            phoneNumber = phoneNumber.slice(0, 3) + '-' + phoneNumber.slice(3);
+        }
+
+        if (phoneNumberLength === 8) {
+            phoneNumber = phoneNumber.slice(0, 7) + '-' + phoneNumber.slice(7);
+        }
+
+        setPhoneNumber(phoneNumber);
+    }
+
     return (
         <Modal id={`${theme}`} show={show} onHide={hideHandler} centered>
             <Modal.Header closeButton>
@@ -205,7 +219,7 @@ const AddContactModal = ({ show, setShow }) => {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Phone number</Form.Label>
-                        <Form.Control value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+                        <Form.Control value={phoneNumber} onChange={e => formatPhoneNumber(e.target.value)} />
                     </Form.Group>
                 </Row>
                 <Row className='mb-2'>

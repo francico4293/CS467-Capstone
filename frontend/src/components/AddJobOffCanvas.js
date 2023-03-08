@@ -17,16 +17,20 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     const [company, setCompany] = useState('');
+    const [companyClicked, setCompanyClicked] = useState(false);
     const [color, setColor] = useState('');
     const [jobStage, setJobStage] = useState('');
     const [companyLogo, setCompanyLogo] = useState(null);
     const [jobTitle, setJobTitle] = useState('');
+    const [jobTitleClicked, setJobTitleClicked] = useState(false);
     const [linkToJobPosting, setLinkToJobPosting] = useState('');
     const [city, setCity] = useState('');
-    const [state, setState] = useState('');
+    const [cityClicked, setCityClicked] = useState(false);
+    const [state, setState] = useState('Alabama');
     const [contacts, setContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
+    const [showSkillAlert, setShowSkillAlert] = useState(false);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
     const [creatingJob, setCreatingJob] = useState(false);
     const { user, theme } = useSelector(state => state);
@@ -34,16 +38,20 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
 
     const handleClose = () => {
         setCompany('');
+        setCompanyClicked(false);
         setColor('');
         setJobStage('');
         setCompanyLogo(null);
         setJobTitle('');
+        setJobTitleClicked(false);
         setLinkToJobPosting('');
         setCity('');
+        setCityClicked(false);
         setState('');
         setContacts([]);
         setLinkedContacts([]);
         setSkills([]);
+        setShowSkillAlert(false);
         setShowSkillSearch(false);
         setShow(false);
     }
@@ -61,6 +69,14 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     }
 
     const addJob = async () => {
+        if (company === '' || jobTitle === '' || city === '' || skills.length === 0) {
+            company === '' && setCompanyClicked(true);
+            jobTitle === '' && setJobTitleClicked(true);
+            city === '' && setCityClicked(true);
+            skills.length === 0 && setShowSkillAlert(true);
+            return;
+        }
+
         const newJob = {
             color, 
             company,
@@ -87,6 +103,11 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
         alert(e)
     }
 
+    const skillSearchHandler = () => {
+        setShowSkillAlert(false);
+        setShowSkillSearch(true);
+    }
+
     useEffect(() => {
         const loadContacts = async () => {
             const contacts = await getContacts(user.auth, setError);
@@ -107,8 +128,16 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                 <Offcanvas.Title className='border-bottom mb-3'>Job Info</Offcanvas.Title>
                 <Row className='mb-2'>
                     <FormGroup as={Col} xs={9}>
-                        <Form.Label>Company</Form.Label>
-                        <Form.Control onChange={e => setCompany(e.target.value)}/>
+                        <Form.Label>Company*</Form.Label>
+                        <Form.Control
+                            value={company}
+                            onChange={e => setCompany(e.target.value)}
+                            isValid={company !== ''}
+                            isInvalid={companyClicked && company === ''}
+                            onBlur={() => setCompanyClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a company name</Form.Control.Feedback>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Job Color</Form.Label>
@@ -121,7 +150,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
-                        <Form.Label>Job Stage</Form.Label>
+                        <Form.Label>Job Stage*</Form.Label>
                         <Form.Select onChange={e => setJobStage(e.target.value)}>
                             {userJobData.columns.map((column, idx) => <option key={idx} value={column.id} selected={column.id === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
                         </Form.Select>
@@ -133,8 +162,16 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                 </Row>
                 <Row className='mb-2'>
                     <FormGroup as={Col}>
-                        <Form.Label>Job Title</Form.Label>
-                        <Form.Control onChange={e => setJobTitle(e.target.value)}/>
+                        <Form.Label>Job Title*</Form.Label>
+                        <Form.Control 
+                            value={jobTitle}
+                            onChange={e => setJobTitle(e.target.value)}
+                            isValid={jobTitle !== ''}
+                            isInvalid={jobTitleClicked && jobTitle === ''}
+                            onBlur={() => setJobTitleClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a job title</Form.Control.Feedback>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
@@ -146,17 +183,25 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                 </Row>
                 <Row className='mb-3'>
                     <FormGroup as={Col}>
-                        <Form.Label>City</Form.Label>
-                        <Form.Control onChange={e => setCity(e.target.value)}/>
+                        <Form.Label>City*</Form.Label>
+                        <Form.Control 
+                            onChange={e => setCity(e.target.value)}
+                            isValid={city !== ''}
+                            isInvalid={cityClicked && city === ''}
+                            onBlur={() => setCityClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a city</Form.Control.Feedback>
                     </FormGroup>
                     <FormGroup as={Col}>
-                        <Form.Label>State</Form.Label>
+                        <Form.Label>State*</Form.Label>
                         <Form.Select onChange={e => setState(e.target.value)}>(
                             {states.map((state, idx) => <option key={idx}>{state.name}</option>)}
                         </Form.Select>
                     </FormGroup>
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
+                {showSkillAlert && <p className='text-danger'><i className='fa-solid fa-triangle-exclamation me-1'/>At least one job skill is required</p>}
                 <div className='d-flex flex-wrap'>
                     {
                         skills.map((skill, idx) => (
@@ -176,7 +221,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                             </Row>
                         ) : (
                             <div className='d-flex mb-3'>
-                                <div className='add-skill bg-primary-outline d-flex justify-content-center align-items-center mt-2 me-2' onClick={() => setShowSkillSearch(true)}>
+                                <div className='add-skill bg-primary-outline d-flex justify-content-center align-items-center mt-2 me-2' onClick={skillSearchHandler}>
                                     <i className='fa-solid fa-plus me-1'/>Add Skill
                                 </div>
                             </div>
