@@ -17,23 +17,42 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     const [company, setCompany] = useState('');
+    const [companyClicked, setCompanyClicked] = useState(false);
     const [color, setColor] = useState('');
     const [jobStage, setJobStage] = useState('');
     const [companyLogo, setCompanyLogo] = useState(null);
     const [jobTitle, setJobTitle] = useState('');
+    const [jobTitleClicked, setJobTitleClicked] = useState(false);
     const [linkToJobPosting, setLinkToJobPosting] = useState('');
     const [city, setCity] = useState('');
+    const [cityClicked, setCityClicked] = useState(false);
     const [jobState, setJobState] = useState('');
     const [contacts, setContacts] = useState([]);
     const [unlinkedContacts, setUnlinkedContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
+    const [showSkillsAlert, setShowSkillsAlert] = useState(false); 
     const [showSkillSearch, setShowSkillSearch] = useState(false);
     const [updatingJob, setUpdatingJob] = useState(false);
     const { user, theme } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const handleClose = () => {
+        setCompany(jobToEdit.company);
+        setCompanyClicked(false);
+        setColor(jobToEdit.color);
+        setJobStage(jobToEdit.columnId);
+        setCompanyLogo(null);
+        setJobTitle(jobToEdit.jobTitle);
+        setJobTitleClicked(false);
+        setLinkToJobPosting(jobToEdit.link);
+        setCity(jobToEdit.city);
+        setCityClicked(false);
+        setJobState(jobToEdit.state);
+        setLinkedContacts(contacts.filter(contact => jobToEdit.contacts.includes(contact.id)));
+        setUnlinkedContacts(contacts.filter(contact => !jobToEdit.contacts.includes(contact.id)));
+        setSkills(jobToEdit.skills);
+        setShowSkillsAlert(false);
         setShowSkillSearch(false);
         setShow(false);
     }
@@ -51,6 +70,13 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
     }
 
     const submitHandler = async () => {
+        if (company === '' || jobTitle === '' || city === '' || skills.length === 0) {
+            company === '' && setCompanyClicked(true);
+            jobTitle === '' && setJobTitleClicked(true); 
+            city === '' && setCityClicked(true);
+            skills.length === 0 && setShowSkillsAlert(true);
+            return;
+        }
 
         const newJobData = {
             color, 
@@ -115,8 +141,16 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 <Offcanvas.Title className='border-bottom mb-3'>Job Info</Offcanvas.Title>
                 <Row className='mb-2'>
                     <FormGroup as={Col} xs={9}>
-                        <Form.Label>Company</Form.Label>
-                        <Form.Control value={company} onChange={e => setCompany(e.target.value)}/>
+                        <Form.Label>Company*</Form.Label>
+                        <Form.Control
+                            value={company}
+                            onChange={e => setCompany(e.target.value)}
+                            isValid={company !== ''}
+                            isInvalid={companyClicked && company === ''}
+                            onBlur={() => setCompanyClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a company name</Form.Control.Feedback>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Job Color</Form.Label>
@@ -129,7 +163,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 </Row>
                 <Row className='mb-2'>
                     <Form.Group as={Col}>
-                        <Form.Label>Job Stage</Form.Label>
+                        <Form.Label>Job Stage*</Form.Label>
                         <Form.Select onChange={e => {setJobStage(e.target.value)}}>
                             {userJobData.columns.map((column, idx) => <option key={idx} value={column.id} selected={column.id === jobStage}>{column.name.charAt(0).toUpperCase() + column.name.slice(1)}</option>)}
                         </Form.Select>
@@ -141,8 +175,16 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 </Row>
                 <Row className='mb-2'>
                     <FormGroup as={Col}>
-                        <Form.Label>Job Title</Form.Label>
-                        <Form.Control value={jobTitle} onChange={e => setJobTitle(e.target.value)}/>
+                        <Form.Label>Job Title*</Form.Label>
+                        <Form.Control 
+                            value={jobTitle}
+                            onChange={e => setJobTitle(e.target.value)}
+                            isValid={jobTitle !== ''}
+                            isInvalid={jobTitleClicked && jobTitle === ''}
+                            onBlur={() => setJobTitleClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a job title</Form.Control.Feedback>
                     </FormGroup>
                     <FormGroup as={Col}>
                         <Form.Label>Link to Job Posting</Form.Label>
@@ -154,17 +196,26 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                 </Row>
                 <Row className='mb-3'>
                     <FormGroup as={Col}>
-                        <Form.Label>City</Form.Label>
-                        <Form.Control value={city} onChange={e => setCity(e.target.value)}/>
+                        <Form.Label>City*</Form.Label>
+                        <Form.Control 
+                            value={city}
+                            onChange={e => setCity(e.target.value)}
+                            isValid={city !== ''}
+                            isInvalid={cityClicked && city === ''}
+                            onBlur={() => setCityClicked(true)}
+                        />
+                        <Form.Control.Feedback type='valid'/>
+                        <Form.Control.Feedback type='invalid'>Please provide a city</Form.Control.Feedback>
                     </FormGroup>
                     <FormGroup as={Col}>
-                        <Form.Label>State</Form.Label>
+                        <Form.Label>State*</Form.Label>
                         <Form.Select onChange={e => setJobState(e.target.value)}>(
                             {states.map((state, idx) => <option selected={jobState === state.name} key={idx}>{state.name}</option>)}
                         </Form.Select>
                     </FormGroup>
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
+                {showSkillsAlert && <p className='text-danger'><i className='fa-solid fa-triangle-exclamation me-1'/>At least one job skill is required</p>}
                 <div className='d-flex flex-wrap'>
                     {
                         skills && skills.map((skill, idx) => (

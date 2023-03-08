@@ -30,7 +30,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     const [contacts, setContacts] = useState([]);
     const [linkedContacts, setLinkedContacts] = useState([]);
     const [skills, setSkills] = useState([]);
-    const [showSkillAlert, setShowSkillAlert] = useState(false);
+    const [showSkillsAlert, setShowSkillsAlert] = useState(false);
     const [showSkillSearch, setShowSkillSearch] = useState(false);
     const [creatingJob, setCreatingJob] = useState(false);
     const { user, theme } = useSelector(state => state);
@@ -51,7 +51,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
         setContacts([]);
         setLinkedContacts([]);
         setSkills([]);
-        setShowSkillAlert(false);
+        setShowSkillsAlert(false);
         setShowSkillSearch(false);
         setShow(false);
     }
@@ -73,7 +73,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
             company === '' && setCompanyClicked(true);
             jobTitle === '' && setJobTitleClicked(true);
             city === '' && setCityClicked(true);
-            skills.length === 0 && setShowSkillAlert(true);
+            skills.length === 0 && setShowSkillsAlert(true);
             return;
         }
 
@@ -104,7 +104,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
     }
 
     const skillSearchHandler = () => {
-        setShowSkillAlert(false);
+        setShowSkillsAlert(false);
         setShowSkillSearch(true);
     }
 
@@ -185,6 +185,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                     <FormGroup as={Col}>
                         <Form.Label>City*</Form.Label>
                         <Form.Control 
+                            value={city}
                             onChange={e => setCity(e.target.value)}
                             isValid={city !== ''}
                             isInvalid={cityClicked && city === ''}
@@ -201,7 +202,7 @@ const AddJobOffCanvas = ({ userJobData, selectedJobColumn, show, setShow }) => {
                     </FormGroup>
                 </Row>
                 <Offcanvas.Title className='border-bottom mb-2'>Job Skills</Offcanvas.Title>
-                {showSkillAlert && <p className='text-danger'><i className='fa-solid fa-triangle-exclamation me-1'/>At least one job skill is required</p>}
+                {showSkillsAlert && <p className='text-danger'><i className='fa-solid fa-triangle-exclamation me-1'/>At least one job skill is required</p>}
                 <div className='d-flex flex-wrap'>
                     {
                         skills.map((skill, idx) => (
