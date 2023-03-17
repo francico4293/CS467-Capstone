@@ -74,7 +74,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
             color,
             email,
             phoneNumber,
-            linkedInProfile: linkedInProfile !== '' ? 'https://' + linkedInProfile : linkedInProfile,
+            linkedInProfile: linkedInProfile.slice(0, 8) !== 'https://' ? 'https://' + linkedInProfile : linkedInProfile,
         }
         await editContact(user.auth, contact.id, newContactInfo, photo, setError)
 
@@ -216,7 +216,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
                         <Form.Label>LinkedIn profile</Form.Label>
                         <InputGroup>
                             <InputGroup.Text>https://</InputGroup.Text>
-                            <Form.Control value={linkedInProfile} onChange={e => setLinkedInProfile(e.target.value)}/>
+                            <Form.Control value={linkedInProfile.slice(8)} onChange={e => setLinkedInProfile(e.target.value)}/>
                         </InputGroup>
                     </Form.Group>
                     <Form.Group as={Col} xs={4}>

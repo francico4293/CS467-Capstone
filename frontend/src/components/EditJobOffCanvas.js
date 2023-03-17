@@ -85,8 +85,8 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
             columnId: jobStage,
             city, 
             state: jobState, 
-            skills, 
-            link: linkToJobPosting !== '' ? 'https://' +  linkToJobPosting : linkToJobPosting,  
+            skills,
+            link: linkToJobPosting.slice(0, 8) !== 'https://' ? 'https://' +  linkToJobPosting : linkToJobPosting,  
             contacts: linkedContacts.map(contact => contact.id), 
             created: jobToEdit.created
         }
@@ -190,7 +190,7 @@ const EditJobOffCanvas = ({ userJobData, jobToEdit, show, setShow }) => {
                         <Form.Label>Link to Job Posting</Form.Label>
                         <InputGroup>
                             <InputGroup.Text>https://</InputGroup.Text>
-                            <Form.Control value={linkToJobPosting} onChange={e => setLinkToJobPosting(e.target.value)}/>
+                            <Form.Control value={linkToJobPosting.slice(8)} onChange={e => setLinkToJobPosting(e.target.value)}/>
                         </InputGroup>
                     </FormGroup>
                 </Row>
