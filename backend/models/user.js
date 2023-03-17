@@ -37,11 +37,18 @@ getUser = async (uid, email) => {
 }
 
 editUser = async (uid, props) => {
-    const docRef = db.collection('users').doc(uid);
-    await docRef.update(props)
+    const userRef = db.collection('users').doc(uid);
+    await userRef.update(props)
 
-    const doc = await docRef.get()
-    return { ...doc.data(), id: doc.id }
+    const user = await userRef.get()
+    const userData = user.data()
+    const populatedColumns = await Promise.all(userData.columns.map(async columnId => {
+        const columnRef = db.collection('columns').doc(columnId)
+        const column = await columnRef.get()
+        return {...column.data(), id: columnId}
+    }))
+
+    return { ...userData, columns: populatedColumns, id: user.id }
 }
 
 deleteUser = async (uid) => {
