@@ -13,6 +13,7 @@ import { editContact } from '../services/contacts';
 import { getUser } from '../services/users';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { formatPhoneNumber, isPhoneNumberValid } from '../utils/phoneNumberUtils';
+import { formatLink } from '../utils/linkUtils';
 
 const EditContactModal = ({ show, contact, setContactToEdit }) => {
     const { theme, user } = useSelector(state => state);
@@ -92,14 +93,6 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
         setIsInvalidEmail(false);
         setPhoneNumberClicked(false);
         setContactToEdit(null);
-    }
-
-    const formatLink = (link) => {
-        if (link.length >= 8 && link.slice(0, 8) === "https://") {
-            return link.slice(8);
-        }
-
-        return link;
     }
 
     return (
