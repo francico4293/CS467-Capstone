@@ -74,7 +74,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
             color,
             email,
             phoneNumber,
-            linkedInProfile: linkedInProfile !== '' ? 'https://' + linkedInProfile : linkedInProfile,
+            linkedInProfile: linkedInProfile === '' ? linkedInProfile : 'https://' + formatLink(linkedInProfile),
         }
         await editContact(user.auth, contact.id, newContactInfo, photo, setError)
 
@@ -92,6 +92,14 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
         setIsInvalidEmail(false);
         setPhoneNumberClicked(false);
         setContactToEdit(null);
+    }
+
+    const formatLink = (link) => {
+        if (link.length >= 8 && link.slice(0, 8) === "https://") {
+            return link.slice(8);
+        }
+
+        return link;
     }
 
     return (
@@ -216,7 +224,7 @@ const EditContactModal = ({ show, contact, setContactToEdit }) => {
                         <Form.Label>LinkedIn profile</Form.Label>
                         <InputGroup>
                             <InputGroup.Text>https://</InputGroup.Text>
-                            <Form.Control value={linkedInProfile} onChange={e => setLinkedInProfile(e.target.value)}/>
+                            <Form.Control value={formatLink(linkedInProfile)} onChange={e => setLinkedInProfile(e.target.value)}/>
                         </InputGroup>
                     </Form.Group>
                     <Form.Group as={Col} xs={4}>
